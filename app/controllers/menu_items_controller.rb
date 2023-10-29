@@ -5,6 +5,12 @@ class MenuItemsController < ApplicationController
       @restaurant = Restaurant.find(params[:restaurant_id])
       @menu_item = @restaurant.menu_items.build
     end
+
+    def index
+        @restaurant = Restaurant.find(params[:restaurant_id])
+        @menu_items = @restaurant.menu_items
+      end
+      
   
     def create
       @restaurant = Restaurant.find(params[:restaurant_id])
@@ -16,6 +22,13 @@ class MenuItemsController < ApplicationController
       end
     end
   
+    before_action :set_restaurant
+
+    private
+
+    def set_restaurant
+    @restaurant = Restaurant.find(params[:restaurant_id])
+    end
     private
   
     def menu_item_params

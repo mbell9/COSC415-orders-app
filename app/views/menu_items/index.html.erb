@@ -1,0 +1,9 @@
+<h1>Menu Items for <%= @restaurant.name %></h1>
+
+<ul>
+  <% @menu_items.each do |item| %>
+    <li>
+      <strong><%= item.name %></strong>: $<%= item.price %>
+    </li>
+  <% end %>
+</ul>
