@@ -50,6 +50,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 5.0' # Use the appropriate version.
   gem 'capybara', '>= 3.26'
   gem 'factory_bot_rails', '~> 6.2'
+  gem 'shoulda-matchers', '~> 4.0'
 end
 
 group :development do
