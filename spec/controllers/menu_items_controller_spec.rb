@@ -3,36 +3,35 @@
 require 'rails_helper'
 
 RSpec.describe MenuItemsController, type: :controller do
-  let(:valid_attributes) { { name: "Pizza", price: 10.0 } }
-  let(:invalid_attributes) { { name: "", price: -5 } }
+  let!(:restaurant) { create(:restaurant) }
 
   describe "POST #create" do
-    context "with valid params" do
-      it "creates a new MenuItem" do
+    context "with valid attributes" do
+      it "creates a new menu item" do
         expect {
-          post :create, params: { menu_item: valid_attributes }
+          post :create, params: { restaurant_id: restaurant.id, menu_item: attributes_for(:menu_item) }
         }.to change(MenuItem, :count).by(1)
       end
 
-      it "redirects to the created menu item" do
-        post :create, params: { menu_item: valid_attributes }
-        expect(response).to redirect_to(MenuItem.last)
+      it "redirects to the restaurant" do
+        post :create, params: { restaurant_id: restaurant.id, menu_item: attributes_for(:menu_item) }
+        expect(response).to redirect_to restaurant
       end
     end
 
-    context "with invalid params" do
-      it "does not create a new MenuItem" do
+    context "with invalid attributes" do
+      it "does not save the new menu item" do
         expect {
-          post :create, params: { menu_item: invalid_attributes }
+          post :create, params: { restaurant_id: restaurant.id, menu_item: attributes_for(:menu_item, name: nil) }
         }.not_to change(MenuItem, :count)
       end
 
       it "re-renders the 'new' template" do
-        post :create, params: { menu_item: invalid_attributes }
-        expect(response).to render_template(:new)
+        post :create, params: { restaurant_id: restaurant.id, menu_item: attributes_for(:menu_item, name: nil) }
+        expect(response).to render_template :new
       end
     end
   end
 
-  # ... Similar tests for #update and #destroy ...
+  # ... any other controller action tests ...
 end
