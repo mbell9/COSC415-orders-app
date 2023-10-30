@@ -42,6 +42,14 @@ RSpec.describe CustomersController, type: :controller do
         expect(customer.name).to eq("my new name")
       end
 
+      it 'reformates the phone number' do
+        # test that the customer's attributes get updated with the provided data
+        customer = FactoryBot.create(:customer)
+        put :update, params: { id: customer.id, customer: {phone_number: "111.222.3333"} }
+        customer.reload
+        expect(customer.phone_number).to eq("111-222-3333")
+      end
+
       it 'redirects to the customer profile' do
         # test that after a successful update, it redirects back to the profile
         customer = FactoryBot.create(:customer)
@@ -68,3 +76,12 @@ RSpec.describe CustomersController, type: :controller do
     end
   end
 end
+
+# add test for create right
+# add test for create with missing attribute
+# add test for create with wrong attribute
+# add test for update right
+# add test for update with missing attribute
+# add test for update with wrong attribute
+# for update show only relevant attributes are affected
+# show how phone number is reformatted

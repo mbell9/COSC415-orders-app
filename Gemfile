@@ -53,6 +53,7 @@ group :development, :test do
   gem 'factory_bot_rails', '~> 6.2'
   gem 'shoulda-matchers', '~> 4.0'
   gem 'rails-controller-testing'
+  gem 'simplecov'
 end
 
 group :development do
