@@ -7,3 +7,10 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+5.times do
+  restaurant = FactoryBot.create(:restaurant)
+  3.times do
+    FactoryBot.create(:menu_item, restaurant: restaurant)
+  end
+end
