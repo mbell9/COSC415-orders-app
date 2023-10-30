@@ -1,10 +1,10 @@
-# spec/factories/menu_items.rb
+require 'faker'
 
 FactoryBot.define do
-    factory :menu_item do
-      name { "Sample Dish" }
-      description { "A delightful sample dish." }
-      price { 10.99 }
-      association :restaurant
-    end
+  factory :menu_item do
+    name { Faker::Food.dish }
+    description { Faker::Lorem.sentence }
+    price { Faker::Commerce.price }
+    restaurant
   end
+end
