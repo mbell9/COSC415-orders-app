@@ -10,5 +10,7 @@ Rails.application.routes.draw do
   resources :restaurants do
     resources :menu_items, only: [:index, :new, :create]
   end
+
+  resources :menu_items, only: [:show, :edit, :update, :destroy]
   
 end
