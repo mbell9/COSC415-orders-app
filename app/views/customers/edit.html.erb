@@ -1,0 +1,34 @@
+
+
+<div class="customer-edit">
+  <h1>Edit Customer Profile</h1>
+
+  <%= form_with(model: @customer, data: { turbo: false }) do |form| %>
+    <div class="field">
+      <%= form.label :name %><br>
+      <%= form.text_field :name, value: "" %>
+    </div>
+
+    <div class="field">
+      <%= form.label :email %><br>
+      <%= form.text_field :email, value: "" %>
+    </div>
+
+    <div class="field">
+      <%= form.label :phone_number %><br>
+      <%= form.text_field :phone_number, value: "" %>
+    </div>
+
+    <div class="field">
+      <%= form.label :address %><br>
+      <%= form.text_area :address, value: "" %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+  <% end %>
+
+  <br>
+  <div class = "actions"><%= link_to 'Back', customer_path(@customer) %></div>
+</div>
