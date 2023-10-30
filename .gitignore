@@ -36,3 +36,5 @@
 
 coverage/
 Gemfile.lock
+chromedriver
+.DS_Store

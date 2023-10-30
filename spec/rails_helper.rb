@@ -1,7 +1,20 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 require 'simplecov'
+require 'capybara/rspec'
+# require 'webdrivers'
 SimpleCov.start 'rails'
+
+
+# Selenium::WebDriver::Chrome::Service.driver_path = "/Users/wael/Desktop/Fall 2023/COSC415/Project/chromedriver"
+# Capybara.register_driver :selenium do |app|
+#   Capybara::Selenium::Driver.new(app, browser: :chrome)
+# end
+
+# Capybara.javascript_driver = :selenium
+# Capybara.default_driver = :selenium
+
+
 
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'

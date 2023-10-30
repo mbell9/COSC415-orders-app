@@ -76,12 +76,3 @@ RSpec.describe CustomersController, type: :controller do
     end
   end
 end
-
-# add test for create right
-# add test for create with missing attribute
-# add test for create with wrong attribute
-# add test for update right
-# add test for update with missing attribute
-# add test for update with wrong attribute
-# for update show only relevant attributes are affected
-# show how phone number is reformatted
