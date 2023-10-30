@@ -2,6 +2,7 @@
 
 class Restaurant < ApplicationRecord
     has_many :menu_items, dependent: :destroy
+    has_many :carts
   
     validates :name, presence: true
     validates :address, presence: true

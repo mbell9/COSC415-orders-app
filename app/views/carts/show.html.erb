@@ -1,0 +1,37 @@
+<!-- app/views/carts/show.html.erb -->
+
+<h1>Shopping Cart</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Item Name</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Total</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+        <% if @cart_items.empty? %>
+            <tr><td colspan="5">Your cart is empty.</td></tr>
+        <% else %>
+            <% @cart_items.each do |cart_item| %>
+                <tr>
+                <td><%= cart_item.menu_item.name %></td>
+                <td>$<%= cart_item.menu_item.price %></td>
+                <td><%= cart_item.quantity %></td>
+                <td>$<%= cart_item.menu_item.price * cart_item.quantity %></td>
+                <td>
+                    <%= link_to 'Add', add_to_cart_cart_cart_item_path(@cart, cart_item), method: :patch, class: 'btn btn-primary' %>
+                    <%= link_to 'Remove', remove_from_cart_cart_cart_item_path(@cart, cart_item), method: :patch, class: 'btn btn-warning' if cart_item.quantity > 1 %>
+                </td>
+                </tr>
+            <% end %>
+        <% end %>
+  </tbody>
+</table>
+
+<div>
+  <strong>Total:</strong> $<%= @cart_items.sum { |item| item.menu_item.price * item.quantity } %>
+</div>
