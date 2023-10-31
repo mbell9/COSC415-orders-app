@@ -6,7 +6,7 @@ class MenuItem < ApplicationRecord
   enum category: { appetizer: 0, main_course: 1, dessert: 2, beverage: 3 }
   enum spiciness: { mild: 0, medium: 1, spicy: 2, very_spicy: 3 }
 
-  has_one_attached :image  # Assuming we're using ActiveStorage for images
+  has_one_attached :image  # Using ActiveStorage for images
 
   validates :name, presence: true
   validates :price, presence: true, numericality: { greater_than: 0 }
@@ -14,20 +14,21 @@ class MenuItem < ApplicationRecord
   validates :featured, inclusion: { in: [true, false] }
   validates :calories, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :category, presence: true
-  validates :spiciness, presence: true
+  # Removed the mandatory presence validation for spiciness to make it optional
+  validates :stock, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_blank: true
+  validates :discount, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, allow_blank: true
 
   scope :featured_items, -> { where(featured: true) }
   scope :available_items, -> { where(availability: true) }
 
-  # Add the callback here
   before_save :update_availability_based_on_stock
 
   def in_stock?
-    availability && stock > 0
+    availability && stock.to_i > 0
   end
 
   def decrease_stock(amount = 1)
-    update(stock: stock - amount) if stock >= amount
+    update(stock: stock - amount) if stock && stock >= amount
   end
 
   def discounted_price
@@ -40,8 +41,7 @@ class MenuItem < ApplicationRecord
 
   private
 
-  # And the associated method here
   def update_availability_based_on_stock
-    self.availability = stock > 0
+    self.availability = stock && stock > 0
   end
 end

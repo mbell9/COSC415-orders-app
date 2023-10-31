@@ -1,9 +1,26 @@
-<h1>Menu Items for <%= @restaurant.name %></h1>
+<div class="menu-items-container">
+  <h1 class="menu-title">Menu for <%= @restaurant.name %></h1>
 
-<ul>
-  <% @menu_items.each do |item| %>
-    <li>
-      <strong><%= item.name %></strong>: $<%= item.price %>
-    </li>
-  <% end %>
-</ul>
+  <table class="menu-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Spiciness</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @menu_items.each do |item| %>
+        <tr>
+          <td><%= item.name %></td>
+          <td><%= item.description %></td>
+          <td><%= item.category.to_s.titleize %></td>
+          <td><%= item.spiciness.to_s.titleize %></td>
+          <td>$<%= '%.2f' % item.price %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
