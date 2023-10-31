@@ -6,6 +6,13 @@ RSpec.describe MenuItem, type: :model do
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:price) }
   it { should validate_numericality_of(:price) }
+  let(:valid_attributes) {
+    {
+      name: "Test Item",
+      price: 10.0,
+      restaurant: FactoryBot.create(:restaurant) # Assuming you have a restaurant factory set up
+    }
+  }
 
   it "is valid with valid attributes" do
     expect(build(:menu_item)).to be_valid
@@ -25,4 +32,115 @@ RSpec.describe MenuItem, type: :model do
     association = described_class.reflect_on_association(:restaurant)
     expect(association.macro).to eq :belongs_to
   end
+
+  # Availability and Featured
+  it "validates availability to be either true or false" do
+    menu_item = build(:menu_item, availability: true)
+    expect(menu_item).to be_valid
+
+    menu_item.availability = true
+    expect(menu_item).to be_valid
+
+    menu_item.availability = false
+    expect(menu_item).to be_valid
+  end
+
+  it "validates featured to be either true or false" do
+    menu_item = build(:menu_item, featured: true)  # Using the factory ensures that all required attributes are set
+    expect(menu_item).to be_valid
+
+    menu_item.featured = true
+    expect(menu_item).to be_valid
+
+    menu_item.featured = false
+    expect(menu_item).to be_valid
+  end
+
+  # Calories
+  it "validates calories to be non-negative or nil" do
+    menu_item = build(:menu_item, calories: 5)  # Using the factory ensures that all required attributes are set
+    expect(menu_item).to be_valid
+
+    menu_item.calories = 5
+    expect(menu_item).to be_valid
+
+    menu_item.calories = 0
+    expect(menu_item).to be_valid
+
+    menu_item.calories = nil
+    expect(menu_item).to be_valid
+  end
+
+  # Category and Spiciness
+  it "requires a category" do
+    menu_item = MenuItem.new(valid_attributes.merge(category: nil))
+    expect(menu_item).not_to be_valid
+  end
+
+  it "accepts only valid categories" do
+    expect {
+      MenuItem.new(valid_attributes.merge(category: "invalid_category"))
+    }.to raise_error(ArgumentError, "'invalid_category' is not a valid category")
+  end
+
+  it "requires spiciness" do
+    menu_item = MenuItem.new(valid_attributes.merge(spiciness: nil))
+    expect(menu_item).not_to be_valid
+  end
+
+  it "accepts only valid spiciness levels" do
+    expect {
+      MenuItem.new(valid_attributes.merge(spiciness: "invalid_spiciness"))
+    }.to raise_error(ArgumentError, "'invalid_spiciness' is not a valid spiciness")
+  end
+
+  it "returns true for in_stock? when availability is true and stock is greater than 0" do
+    menu_item = build(:menu_item, availability: true, stock: 5)
+    expect(menu_item.in_stock?).to be_truthy
+  end
+  
+  it "returns false for in_stock? when availability is false, regardless of stock count" do
+    menu_item = build(:menu_item, availability: false, stock: 5)
+    expect(menu_item.in_stock?).to be_falsey
+  end
+  
+  it "returns false for in_stock? when stock is 0, even if availability is true" do
+    menu_item = build(:menu_item, availability: true, stock: 0)
+    expect(menu_item.in_stock?).to be_falsey
+  end
+  
+  it "decreases stock by a given amount" do
+    menu_item = create(:menu_item, stock: 5)
+    menu_item.decrease_stock(2)
+    expect(menu_item.reload.stock).to eq(3)
+  end
+  
+  it "does not decrease stock if the requested amount is more than available stock" do
+    menu_item = create(:menu_item, stock: 2)
+    menu_item.decrease_stock(5)
+    expect(menu_item.reload.stock).to eq(2)
+  end
+
+  it "returns discounted price when a discount is present" do
+    menu_item = build(:menu_item, price: 100, discount: 10) # 10% off
+    expect(menu_item.discounted_price).to eq(90.0)
+  end
+  
+  it "returns original price when no discount is present" do
+    menu_item = build(:menu_item, price: 100, discount: nil)
+    expect(menu_item.discounted_price).to eq(100.0)
+  end
+  
+  it "sets availability to false when stock reaches 0" do
+    menu_item = create(:menu_item, stock: 1)
+    menu_item.decrease_stock(1)
+    expect(menu_item.reload.availability).to be_falsey
+  end
+  
+  it "sets availability to true when stock is more than 0" do
+    menu_item = create(:menu_item, stock: 0, availability: false)
+    menu_item.update(stock: 5)
+    expect(menu_item.reload.availability).to be_truthy
+  end
+``  
 end

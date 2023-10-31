@@ -1,0 +1,12 @@
+<div class="customer-profile">
+  <h1>Customer Profile</h1>
+
+  <div class="customer-info">
+    <h2><%= @customer.name %></h2>
+    <p><strong>Email:</strong> <%= @customer.email %></p>
+    <p><strong>Phone Number:</strong> <%= @customer.phone_number %></p>
+    <p><strong>Address:</strong> <%= @customer.address %></p>
+
+    <%= link_to 'Edit', edit_customer_path(@customer) %> 
+  </div>
+</div>

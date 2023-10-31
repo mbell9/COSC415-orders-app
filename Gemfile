@@ -53,9 +53,13 @@ group :development, :test do
   gem 'rspec-rails', '~> 5.0' # Use the appropriate version.
   gem 'sassc-rails'
   gem 'capybara', '>= 3.26'
+  gem 'selenium-webdriver'
+  gem 'webdrivers'
   gem 'factory_bot_rails', '~> 6.2'
   gem 'shoulda-matchers', '~> 4.0'
   gem 'rails-controller-testing'
+
+  gem 'simplecov', require: false
 end
 
 group :development do
