@@ -1,5 +1,8 @@
-<% @reviews.each do |review| %>
-  <p><strong>Rating:</strong> <%= review.rating %> Stars</p>
-  <p><%= review.text %></p>
-  <hr>
-<% end %>
+<div class="reviews-list">
+    <% @reviews.each do |review| %>
+    <p><strong>Customer:</strong> <%= review.customer.name %> Stars</p>
+    <p><strong>Rating:</strong> <%= review.rating %> Stars</p>
+    <p><%= review.comment %></p>
+    <hr>
+    <% end %>
+</div>
