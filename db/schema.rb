@@ -9,8 +9,20 @@
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
+#wael schema
+#ActiveRecord::Schema[7.1].define(version: 2023_10_30_003510) do
 
 ActiveRecord::Schema[7.1].define(version: 2023_10_30_050408) do
+  
+  create_table "customers", force: :cascade do |t|
+    t.string "name"
+    t.string "phone_number"
+    t.string "email"
+    t.string "address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+  
   create_table "menu_items", force: :cascade do |t|
     t.string "name"
     t.decimal "price"
