@@ -8,6 +8,13 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+5.times do
+  restaurant = FactoryBot.create(:restaurant)
+  3.times do
+    FactoryBot.create(:menu_item, restaurant: restaurant)
+  end
+end
+
 Customer.create([
   {name: "John Doe", phone_number: "123-456-7890", email: "johndoe@example.com", address: "123 Main St"},
   {name: "Jane Smith", phone_number: "987-654-3210", email: "janesmith@example.com", address: "456 Elm St"},

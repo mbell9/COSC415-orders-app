@@ -1,4 +1,4 @@
-# spec/factories/menu_items.rb
+require 'faker'
 
 FactoryBot.define do
   factory :menu_item do
