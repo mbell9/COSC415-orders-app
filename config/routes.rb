@@ -16,4 +16,6 @@ Rails.application.routes.draw do
 
   resources :customers, only: [:show, :edit, :update]
 
+  resources :menu_items, only: [:show, :edit, :update, :destroy]
+
 end

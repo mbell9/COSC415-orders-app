@@ -55,8 +55,8 @@ group :development, :test do
   gem 'factory_bot_rails', '~> 6.2'
   gem 'shoulda-matchers', '~> 4.0'
   gem 'rails-controller-testing'
-  gem 'simplecov'
-  # gem 'database_cleaner' consider using in future.
+
+  gem 'simplecov', require: false
 end
 
 group :development do
