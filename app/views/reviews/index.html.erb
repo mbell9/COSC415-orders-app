@@ -1,0 +1,5 @@
+<% @reviews.each do |review| %>
+  <p><strong>Rating:</strong> <%= review.rating %> Stars</p>
+  <p><%= review.text %></p>
+  <hr>
+<% end %>
