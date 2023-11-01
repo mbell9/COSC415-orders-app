@@ -9,7 +9,7 @@ class CartsController < ApplicationController
     private
   
     def set_cart
-        @cart = Cart.first || Cart.create
+        @cart = Cart.find(1);
     end
   end
   

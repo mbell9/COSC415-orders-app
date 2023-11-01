@@ -16,6 +16,7 @@ restaurant = Restaurant.create!(name: "Example Restaurant", description: "testin
 
 # Create a menu item
 menu_item = MenuItem.create!(name: "Burger", price: 10.0, description: "this is a burger", restaurant: restaurant)
+menu_item2 = MenuItem.create!(name: "Pasta", price: 5.0, description: "this is pasta", restaurant: restaurant)
 
 # Create a cart
 cart = Cart.create!(customer: customer, restaurant: restaurant)

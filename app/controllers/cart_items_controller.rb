@@ -52,7 +52,7 @@ class CartItemsController < ApplicationController
     private
   
     def set_cart
-        @cart = Cart.first || Cart.create
+      @cart = Cart.find(1)
     end
   
     def set_cart_item
