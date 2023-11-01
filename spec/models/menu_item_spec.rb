@@ -142,5 +142,5 @@ RSpec.describe MenuItem, type: :model do
     menu_item.update(stock: 5)
     expect(menu_item.reload.availability).to be_truthy
   end
-``  
+    
 end
