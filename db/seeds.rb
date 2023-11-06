@@ -7,3 +7,9 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+Restaurant.delete_all
+
+Restaurant.create(name: "D&D", description: "Try our new fried dragon.", address: "Forest 310", phone_number: "718-302-4911")
+Restaurant.create(name: "Powerful", description: "Feel the power!", address: "Pow 90", phone_number: "962-004-4258")
+Restaurant.create(name: "Delish", description: "It's delicious!", address: "Del 25", phone_number: "110-387-9012")

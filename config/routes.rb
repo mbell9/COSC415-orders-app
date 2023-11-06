@@ -11,4 +11,5 @@ Rails.application.routes.draw do
     resources :menu_items, only: [:index, :new, :create]
   end
   
+  root "restaurants#new"
 end

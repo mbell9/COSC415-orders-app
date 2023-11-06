@@ -1,0 +1,19 @@
+<h2>Details for <%= @restaur.name %></h2>
+
+<section id="main" class="container">
+
+  <p class="lead"></p>
+  <dl>
+    <dt>Description:
+      <dd> <%= @restaur.description %>
+    <dt>Address:
+      <dd> <%= @restaur.address %>
+    <dt>Phone number:
+      <dd> <%= @restaur.phone_number %>
+    <dt>Operating hours:
+      <dd> <%= @restaur.operating_hours %>
+  </dl>
+
+  <%= link_to "Back to restaurant list", restaurants_path, class: "btn btn-primary" %>
+
+</section>

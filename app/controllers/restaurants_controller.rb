@@ -5,6 +5,14 @@ class RestaurantsController < ApplicationController
       @restaurant = Restaurant.new
     end
   
+    def index
+      @restaurants = Restaurant.all.order(:name)
+    end
+
+    def show
+      @restaur = Restaurant.find(params[:id])
+    end
+
     def create
       @restaurant = Restaurant.new(restaurant_params)
       if @restaurant.save
