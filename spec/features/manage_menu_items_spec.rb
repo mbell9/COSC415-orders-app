@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.feature "ManageMenuItems", type: :feature do
   let(:restaurant) { Restaurant.create!(name: "Test Restaurant", address: "123 Test St.", phone_number: "123-456-7890") }
+  let!(:menu_item) { MenuItem.create!(name: "Original Item", description: "Original Description", price: 10.99, restaurant: restaurant) }
 
   it "Restaurant owner creates a new menu item" do
     visit new_restaurant_menu_item_path(restaurant.id)
@@ -67,5 +68,16 @@ RSpec.feature "ManageMenuItems", type: :feature do
     expect(page).to have_text("$8.0")  # Regular price
   end
 
-  # ... Similar tests for editing and deleting menu items ...
+  scenario "Restaurant owner edits an existing menu item" do
+    visit edit_restaurant_menu_item_path(restaurant, menu_item)
+
+    fill_in "Menu Item Name", with: "Updated Item"
+    fill_in "Description", with: "Updated Description"
+    fill_in "Price ($)", with: 12.99
+    click_button "Update Menu item"
+
+    expect(page).to have_text("Menu item was successfully updated.")
+    expect(page).to have_text("Updated Item")
+    expect(page).to have_text("$12.99")
+  end
 end

@@ -142,5 +142,42 @@ RSpec.describe MenuItem, type: :model do
     menu_item.update(stock: 5)
     expect(menu_item.reload.availability).to be_truthy
   end
-    
+end
+
+
+RSpec.describe "MenuItems", type: :request do
+  let(:menu_item) { create(:menu_item) }  # Assuming you have a menu_item factory
+  let(:valid_attributes) { { name: "Updated Item", price: 20.0 } }
+  let(:invalid_attributes) { { name: "", price: "" } }
+
+  describe "GET /edit" do
+    it "renders a successful response" do
+      get edit_menu_item_path(menu_item)
+      expect(response).to be_successful
+    end
+  end
+
+  describe "PATCH /update" do
+    context "with valid parameters" do
+      it "updates the requested menu_item" do
+        patch menu_item_path(menu_item), params: { menu_item: valid_attributes }
+        menu_item.reload
+        expect(menu_item.name).to eq("Updated Item")
+        expect(menu_item.price).to eq(20.0)
+      end
+
+      it "redirects to the menu_item" do
+        patch menu_item_path(menu_item), params: { menu_item: valid_attributes }
+        menu_item.reload
+        expect(response).to redirect_to(menu_item)
+      end
+    end
+
+    context "with invalid parameters" do
+      it "renders a successful response (i.e., to display the 'edit' template)" do
+        patch menu_item_path(menu_item), params: { menu_item: invalid_attributes }
+        expect(response).to be_successful
+      end
+    end
+  end
 end
