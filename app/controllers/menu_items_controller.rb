@@ -24,14 +24,18 @@ class MenuItemsController < ApplicationController
   def show
     # No changes needed here for now
   end
-
+  
+  # GET /restaurants/:restaurant_id/menu_items/:id/edit
   def edit
-    # No changes needed here for now
+    # The `set_menu_item` before_action already sets the @menu_item instance variable
+    # which will be used in the edit form.
   end
 
+  # PATCH/PUT /restaurants/:restaurant_id/menu_items/:id
   def update
     if @menu_item.update(menu_item_params)
-      redirect_to @menu_item, notice: 'Menu item was successfully updated.'
+      # Redirect to the menu_item's show page or the restaurant's menu_item list
+      redirect_to [@restaurant, @menu_item], notice: 'Menu item was successfully updated.'
     else
       render :edit
     end
