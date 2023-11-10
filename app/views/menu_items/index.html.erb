@@ -1,6 +1,8 @@
 <div class="menu-items-container">
   <h1 class="menu-title">Menu for <%= @restaurant.name %></h1>
 
+  <%= link_to 'Create New Item', new_restaurant_menu_item_path(@restaurant), class: 'btn btn-primary' %>
+
   <table class="menu-table">
     <thead>
       <tr>
@@ -9,6 +11,7 @@
         <th>Category</th>
         <th>Spiciness</th>
         <th>Price</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -19,6 +22,11 @@
           <td><%= item.category.to_s.titleize %></td>
           <td><%= item.spiciness.to_s.titleize %></td>
           <td>$<%= '%.2f' % item.price %></td>
+          <td>
+            <%= link_to 'Edit', edit_restaurant_menu_item_path(@restaurant, item), class: 'btn btn-secondary' %>
+            <%= button_to 'Delete', restaurant_menu_item_path(@restaurant, item), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+
+          </td>
         </tr>
       <% end %>
     </tbody>

@@ -2,7 +2,7 @@
 
 class MenuItemsController < ApplicationController
   before_action :set_menu_item, only: [:show, :edit, :update, :destroy]
-  before_action :set_restaurant, only: [:new, :create, :index, :edit, :update]
+  before_action :set_restaurant
 
   def new
     @menu_item = @restaurant.menu_items.build

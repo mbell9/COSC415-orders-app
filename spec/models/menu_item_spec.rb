@@ -187,7 +187,6 @@ RSpec.describe "MenuItems", type: :request do
       end
     end
 
-    context "with invalid parameters" do
       it "renders a successful response (i.e., to display the 'edit' template)" do
         patch restaurant_menu_item_path(restaurant, menu_item), params: { menu_item: invalid_attributes }
         expect(response).to be_successful
