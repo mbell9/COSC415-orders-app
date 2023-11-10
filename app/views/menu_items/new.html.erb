@@ -14,6 +14,11 @@
   <% end %>
 
   <div class="field-group">
+  <%= f.label :image, "Image", class: "field-label" %>
+  <%= f.file_field :image, class: "file-field" %>
+  </div>
+
+  <div class="field-group">
     <%= f.label :name, "Menu Item Name", class: "field-label" %>
     <%= f.text_field :name, placeholder: 'e.g. Chicken Tikka Masala', class: "text-field" %>
   </div>

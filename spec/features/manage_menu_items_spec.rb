@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.feature "ManageMenuItems", type: :feature do
   let(:restaurant) { Restaurant.create!(name: "Test Restaurant", address: "123 Test St.", phone_number: "123-456-7890") }
-  let!(:menu_item) { MenuItem.create!(name: "Original Item", description: "Original Description", price: 10.99, restaurant: restaurant) }
+  let(:menu_item) { MenuItem.create!(name: "Original Item", description: "Original Description", price: 10.99, restaurant: restaurant) }
 
   it "Restaurant owner creates a new menu item" do
     visit new_restaurant_menu_item_path(restaurant.id)

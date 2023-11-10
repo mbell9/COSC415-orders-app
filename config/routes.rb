@@ -17,7 +17,7 @@ get 'restaurants/:id', to: 'browse#show', as: :restaurant
 
 # Restaurant routes with nested resources for menu_items and reviews
 resources :restaurants do
-  resources :menu_items, only: [:index, :new, :create]
+  resources :menu_items, only: [:index, :new, :create, :edit, :update]
   resources :reviews, only: [:index, :new, :create, :edit, :update, :destroy]
 end
 
@@ -25,6 +25,6 @@ end
 resources :customers, only: [:show, :edit, :update]
 
 # MenuItems routes
-resources :menu_items, only: [:show, :edit, :update, :destroy]
+#resources :menu_items, only: [:show, :edit, :update, :destroy]
 
 end

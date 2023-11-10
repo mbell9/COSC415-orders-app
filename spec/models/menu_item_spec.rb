@@ -144,15 +144,29 @@ RSpec.describe MenuItem, type: :model do
   end
 end
 
-
+# new edit tests
 RSpec.describe "MenuItems", type: :request do
-  let(:menu_item) { create(:menu_item) }  # Assuming you have a menu_item factory
-  let(:valid_attributes) { { name: "Updated Item", price: 20.0 } }
+  let(:restaurant) { create(:restaurant) }
+  let(:menu_item) { create(:menu_item, restaurant: restaurant) }
+  let(:valid_attributes) {
+    { 
+      name: "Updated Item TEST!!!",
+      description: "Delicious and spicy",
+      category: "main_course", # Assuming your MenuItem model translates this to the appropriate enum value
+      spiciness: "medium",     # Same assumption as above
+      price: 20.0,
+      discount: 0.50,
+      stock: 10,
+      availability: true
+    }
+  }
   let(:invalid_attributes) { { name: "", price: "" } }
 
-  describe "GET /edit" do
-    it "renders a successful response" do
-      get edit_menu_item_path(menu_item)
+
+
+  describe 'GET /edit' do
+    it 'renders a successful response' do
+      get edit_restaurant_menu_item_path(restaurant, menu_item)
       expect(response).to be_successful
     end
   end
@@ -160,22 +174,22 @@ RSpec.describe "MenuItems", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       it "updates the requested menu_item" do
-        patch menu_item_path(menu_item), params: { menu_item: valid_attributes }
+        patch restaurant_menu_item_path(restaurant, menu_item), params: { menu_item: valid_attributes }
         menu_item.reload
-        expect(menu_item.name).to eq("Updated Item")
+        expect(menu_item.name).to eq("Updated Item TEST!!!")
         expect(menu_item.price).to eq(20.0)
       end
-
-      it "redirects to the menu_item" do
-        patch menu_item_path(menu_item), params: { menu_item: valid_attributes }
+  
+      it "redirects to the menu_item index page" do
+        patch restaurant_menu_item_path(restaurant, menu_item), params: { menu_item: valid_attributes }
         menu_item.reload
-        expect(response).to redirect_to(menu_item)
+        expect(response).to redirect_to restaurant_menu_items_path(restaurant)
       end
     end
 
     context "with invalid parameters" do
       it "renders a successful response (i.e., to display the 'edit' template)" do
-        patch menu_item_path(menu_item), params: { menu_item: invalid_attributes }
+        patch restaurant_menu_item_path(restaurant, menu_item), params: { menu_item: invalid_attributes }
         expect(response).to be_successful
       end
     end

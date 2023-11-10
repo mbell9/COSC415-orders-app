@@ -1,0 +1,69 @@
+<!-- app/views/menu_items/edit.html.erb -->
+
+<h1>Edit Menu Item for <%= @restaurant.name %></h1>
+
+<%= form_for [@restaurant, @menu_item], html: { class: 'menu-item-form-container' } do |f| %>
+
+<% if @menu_item.errors.any? %>
+<div id="error_explanation" class="error-messages">
+<h3><%= pluralize(@menu_item.errors.count, "error") %> prohibited this menu item from being saved:</h3>
+<ul>
+<% @menu_item.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+<% end %>
+</ul>
+</div>
+<% end %>
+
+<div class="field-group">
+<%= f.label :name, "Menu Item Name", class: "field-label" %>
+<%= f.text_field :name, placeholder: 'e.g. Chicken Tikka Masala', class: "text-field" %>
+</div>
+
+<div class="field-group">
+<%= f.label :description, "Description", class: "field-label" %>
+<%= f.text_area :description, placeholder: 'A brief description of the item', rows: 5, class: "text-area" %>
+</div>
+
+<div class="field-group">
+<%= f.label :category, "Category", class: "field-label" %>
+<%= f.select :category, MenuItem.categories.keys.map { |key| [key.to_s.titleize, key] }, { selected: @menu_item.category }, prompt: 'Select a category', class: "select-field" %>
+</div>
+
+<div class="field-group">
+<%= f.label :spiciness, "Spiciness (Optional)", class: "field-label" %>
+<%= f.select :spiciness, MenuItem.spicinesses.keys.map { |key| [key.to_s.gsub('_', ' ').titleize, key] }, { selected: @menu_item.spiciness }, prompt: 'Select spiciness level', class: "select-field" %>
+</div>
+
+<div class="field-group">
+<%= f.label :price, "Price ($)", class: "field-label" %>
+<%= f.number_field :price, step: 0.01, placeholder: 'e.g. 15.99', class: "number-field" %>
+</div>
+
+<div class="field-group">
+<%= f.label :discount, "Discount (%) - Optional", class: "field-label" %>
+<%= f.number_field :discount, step: 0.01, placeholder: 'Enter discount percentage if any', class: "number-field" %>
+</div>
+
+<div class="field-group">
+<%= f.label :stock, "Stock - Optional", class: "field-label" %>
+<%= f.number_field :stock, placeholder: 'Enter stock quantity if available', class: "number-field" %>
+</div>
+
+<div class="field-group">
+  <%= f.label :availability, "Available for Order", class: "field-label" %>
+  <%= f.check_box :availability, class: "checkbox" %>
+  <%= f.label :availability, 'Available', class: "checkbox-label" %>
+</div>
+
+<div class="actions">
+<%= f.submit "Update Menu item", class: 'submit-button btn btn-primary' %>
+</div>
+
+<div class="field-group">
+<%= f.label :image, "Image", class: "field-label" %>
+<%= f.file_field :image, class: "file-field" %>
+</div>
+<% end %>
+
+<%= link_to 'Back', restaurant_menu_items_path(@restaurant), class: 'back-link btn btn-secondary mt-3' %>
