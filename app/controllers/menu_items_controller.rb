@@ -43,8 +43,15 @@ class MenuItemsController < ApplicationController
   
 
   def destroy
-    @menu_item.destroy
-    redirect_to restaurant_menu_items_path(@restaurant), notice: 'Menu item was successfully destroyed.'
+    @menu_item = MenuItem.find(params[:id])
+    Rails.logger.debug "Attempting to destroy menu_item with id: #{params[:id]}"
+    if @menu_item.destroy
+      Rails.logger.debug "Menu_item destroyed."
+      redirect_to restaurant_menu_items_path(@restaurant), notice: 'Menu item was successfully destroyed.'
+    else
+      Rails.logger.debug "Menu_item could not be destroyed: #{menu_item.errors.full_messages.join(", ")}"
+      redirect_to restaurant_menu_items_path(@restaurant), alert: 'Menu item could not be destroyed.'
+    end
   end
 
   private
