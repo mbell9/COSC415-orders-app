@@ -1,5 +1,5 @@
 class Customer < ApplicationRecord
-  has_many :carts, dependent: :destroy
+  has_one :cart, dependent: :destroy
   PHONE_REGEX = /\A(\+1|1)?[-.\s]?(\()?(\d{3})(?(2)\))[-.\s]?(\d{3})[-.\s]?(\d{4})\z/
 
   has_many :reviews, dependent: :destroy

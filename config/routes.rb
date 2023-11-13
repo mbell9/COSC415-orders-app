@@ -22,8 +22,9 @@ resources :restaurants do
 end
 
 # Customer routes
-resources :customers, only: [:show, :edit, :update]
-
+resources :customers, only: [:show, :edit, :update] do
+  resource :cart, only: [:show]
+end
 # MenuItems routes
 #resources :menu_items, only: [:show, :edit, :update, :destroy]
 
@@ -33,13 +34,10 @@ resources :customers, only: [:show, :edit, :update]
     resources :menu_items, only: [:index, :new, :create]
   end
 
-  resources :carts, only: [:show] do
-    resources :cart_items, only: [:create, :destroy] do
-      member do
-        patch :add_to_cart
-        patch :remove_from_cart
-      end
-    end
-  end
+  get 'restaurants/:restaurant_id/customer_menu', to: 'menu_items#customer_index', as: :customer_menu
+  post 'add_to_cart/:menu_item_id', to: 'cart_items#add_to_cart', as: :add_to_cart
+  patch 'remove_from_cart/:menu_item_id', to: 'cart_items#remove_from_cart', as: :remove_from_cart
+
+
 
 end
