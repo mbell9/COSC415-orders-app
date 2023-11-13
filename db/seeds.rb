@@ -8,18 +8,16 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-# Create a customer
-customer = Customer.create!(name: "John Doe", email: "john.doe@example.com")
 
-# Create a restaurant
-restaurant = Restaurant.create!(name: "Example Restaurant", description: "testing testing", address: "Hamilton123", phone_number: "000", operating_hours: "never")
+5.times do
+  restaurant = FactoryBot.create(:restaurant)
+  3.times do
+    FactoryBot.create(:menu_item, restaurant: restaurant)
+  end
+end
 
-# Create a menu item
-menu_item = MenuItem.create!(name: "Burger", price: 10.0, description: "this is a burger", restaurant: restaurant)
-menu_item2 = MenuItem.create!(name: "Pasta", price: 5.0, description: "this is pasta", restaurant: restaurant)
+Customer.create([
+  {name: "John Doe", phone_number: "123-456-7890", email: "johndoe@example.com", address: "123 Main St"},
+  {name: "Jane Smith", phone_number: "987-654-3210", email: "janesmith@example.com", address: "456 Elm St"},
+])
 
-# Create a cart
-cart = Cart.create!(customer: customer, restaurant: restaurant)
-
-# Add items to the cart
-CartItem.create!(cart: cart, menu_item: menu_item, quantity: 1)

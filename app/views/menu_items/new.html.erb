@@ -1,37 +1,61 @@
-<!-- app/views/menu_items/new.html.erb -->
-
 <h1>Add New Menu Item for <%= @restaurant.name %></h1>
 
-<%= form_for [@restaurant, @menu_item] do |f| %>
+<%= form_for [@restaurant, @menu_item], html: { class: 'menu-item-form-container' } do |f| %>
+  
   <% if @menu_item.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@menu_item.errors.count, "error") %> prohibited this menu item from being saved:</h2>
+    <div id="error_explanation" class="error-messages">
+      <h3><%= pluralize(@menu_item.errors.count, "error") %> prohibited this menu item from being saved:</h3>
       <ul>
-      <% @menu_item.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% @menu_item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+  <div class="field-group">
+  <%= f.label :image, "Image", class: "field-label" %>
+  <%= f.file_field :image, class: "file-field" %>
   </div>
 
-  <div class="field">
-    <%= f.label :description %>
-    <%= f.text_area :description %>
+  <div class="field-group">
+    <%= f.label :name, "Menu Item Name", class: "field-label" %>
+    <%= f.text_field :name, placeholder: 'e.g. Chicken Tikka Masala', class: "text-field" %>
   </div>
 
-  <div class="field">
-    <%= f.label :price %>
-    <%= f.number_field :price, step: 0.01 %>
+  <div class="field-group">
+    <%= f.label :description, "Description", class: "field-label" %>
+    <%= f.text_area :description, placeholder: 'A brief description of the item', rows: 5, class: "text-area" %>
+  </div>
+
+  <div class="field-group">
+    <%= f.label :category, "Category", class: "field-label" %>
+    <%= f.select :category, MenuItem.categories.keys.map { |key| [key.to_s.titleize, key] }, prompt: 'Select a category', class: "text-field" %>
+  </div>
+
+  <div class="field-group">
+    <%= f.label :spiciness, "Spiciness (Optional)", class: "field-label" %>
+    <%= f.select :spiciness, MenuItem.spicinesses.keys.map { |key| [key.to_s.gsub('_', ' ').titleize, key] }, prompt: 'Select spiciness level', class: "text-field" %>
+  </div>
+
+  <div class="field-group">
+    <%= f.label :price, "Price ($)", class: "field-label" %>
+    <%= f.number_field :price, step: 0.01, placeholder: 'e.g. 15.99', class: "number-field" %>
+  </div>
+
+  <div class="field-group">
+    <%= f.label :discount, "Discount (%) - Optional", class: "field-label" %>
+    <%= f.number_field :discount, step: 0.01, placeholder: 'Enter discount percentage if any', class: "number-field" %>
+  </div>
+
+  <div class="field-group">
+    <%= f.label :stock, "Stock - Optional", class: "field-label" %>
+    <%= f.number_field :stock, placeholder: 'Enter stock quantity if available', class: "number-field" %>
   </div>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Create Menu item", class: 'submit-button btn btn-primary' %>
   </div>
 <% end %>
 
-<%= link_to 'Back', restaurant_path(@restaurant) %>
+<%= link_to 'Back', restaurant_path(@restaurant), class: 'back-link btn btn-secondary mt-3' %>

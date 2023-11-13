@@ -1,11 +1,11 @@
-# spec/factories/restaurants.rb
+require 'faker'
 
 FactoryBot.define do
-    factory :restaurant do
-      name { "Sample Restaurant" }
-      description { "Delicious food from around the world." }
-      address { "123 Food St, Hamilton" }
-      phone_number { "123-456-7890" }
-      operating_hours { "9:00 AM - 9:00 PM" }
-    end
+  factory :restaurant do
+    name { Faker::Restaurant.name }
+    description { Faker::Lorem.sentence }
+    address { Faker::Address.full_address }
+    phone_number { Faker::PhoneNumber.phone_number }
+    operating_hours { Faker::Time.between(from: DateTime.now - 1, to: DateTime.now) }
   end
+end
