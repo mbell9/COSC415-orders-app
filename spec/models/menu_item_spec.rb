@@ -142,5 +142,74 @@ RSpec.describe MenuItem, type: :model do
     menu_item.update(stock: 5)
     expect(menu_item.reload.availability).to be_truthy
   end
-    
+end
+
+# new edit tests
+RSpec.describe "MenuItems", type: :request do
+  let(:restaurant) { create(:restaurant) }
+  let(:menu_item) { create(:menu_item, restaurant: restaurant) }
+  let(:valid_attributes) {
+    { 
+      name: "Updated Item TEST!!!",
+      description: "Delicious and spicy",
+      category: "main_course", # Assuming your MenuItem model translates this to the appropriate enum value
+      spiciness: "medium",     # Same assumption as above
+      price: 20.0,
+      discount: 0.50,
+      stock: 10,
+      availability: true
+    }
+  }
+  let(:invalid_attributes) { { name: "", price: "" } }
+
+
+
+  describe 'GET /edit' do
+    it 'renders a successful response' do
+      get edit_restaurant_menu_item_path(restaurant, menu_item)
+      expect(response).to be_successful
+    end
+  end
+
+  describe "PATCH /update" do
+    context "with valid parameters" do
+      it "updates the requested menu_item" do
+        patch restaurant_menu_item_path(restaurant, menu_item), params: { menu_item: valid_attributes }
+        menu_item.reload
+        expect(menu_item.name).to eq("Updated Item TEST!!!")
+        expect(menu_item.price).to eq(20.0)
+      end
+  
+      it "redirects to the menu_item index page" do
+        patch restaurant_menu_item_path(restaurant, menu_item), params: { menu_item: valid_attributes }
+        menu_item.reload
+        expect(response).to redirect_to restaurant_menu_items_path(restaurant)
+      end
+
+      it "renders a successful response (i.e., to display the 'edit' template)" do
+        patch restaurant_menu_item_path(restaurant, menu_item), params: { menu_item: invalid_attributes }
+        expect(response).to be_successful
+      end
+    end
+  end
+
+  describe "DELETE /destroy" do
+    let!(:restaurant) { create(:restaurant) }  # Ensure restaurant is created and persisted
+    let!(:menu_item) { create(:menu_item, restaurant: restaurant) }  # Create and persist a menu_item associated with the restaurant
+    it "destroys the requested menu_item" do
+      expect {
+        delete restaurant_menu_item_path(restaurant, menu_item)
+      }.to change(MenuItem, :count).by(-1)
+    end
+
+    it "redirects to the menu_items list" do
+      delete restaurant_menu_item_path(restaurant, menu_item)
+      expect(response).to redirect_to(restaurant_menu_items_path(restaurant))
+    end
+
+    it "sets a flash notice" do
+      delete restaurant_menu_item_path(restaurant, menu_item)
+      expect(flash[:notice]).to match(/Menu item was successfully destroyed./)
+    end
+  end
 end
