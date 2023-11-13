@@ -27,4 +27,19 @@ resources :customers, only: [:show, :edit, :update]
 # MenuItems routes
 #resources :menu_items, only: [:show, :edit, :update, :destroy]
 
+  # Defines the root path route ("/")
+  # root "posts#index"
+  resources :restaurants do
+    resources :menu_items, only: [:index, :new, :create]
+  end
+
+  resources :carts, only: [:show] do
+    resources :cart_items, only: [:create, :destroy] do
+      member do
+        patch :add_to_cart
+        patch :remove_from_cart
+      end
+    end
+  end
+
 end

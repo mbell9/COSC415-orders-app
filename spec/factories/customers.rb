@@ -1,3 +1,4 @@
+
 # spec/factories/customers.rb
 
 FactoryBot.define do

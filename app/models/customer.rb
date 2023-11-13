@@ -1,4 +1,5 @@
 class Customer < ApplicationRecord
+  has_many :carts, dependent: :destroy
   PHONE_REGEX = /\A(\+1|1)?[-.\s]?(\()?(\d{3})(?(2)\))[-.\s]?(\d{3})[-.\s]?(\d{4})\z/
 
   has_many :reviews, dependent: :destroy
@@ -17,5 +18,4 @@ class Customer < ApplicationRecord
     digits = digits[1..10] if digits.length == 11
     self.phone_number = "#{digits[0..2]}-#{digits[3..5]}-#{digits[6..9]}" if digits.length == 10
   end
-
 end
