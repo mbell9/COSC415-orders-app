@@ -1,8 +1,17 @@
 <h1>Browse Restaurants</h1>
 
+<!-- Add links for user authentication -->
+<% if user_signed_in? %>
+  <%= button_to 'Sign out', destroy_user_session_path, method: :delete %>
+  <%= csrf_meta_tags %>
+  <p>Welcome, <%= current_user.email %></p>
+<% else %>
+  <%= link_to 'Sign in', new_user_session_path %> |
+  <%= link_to 'Sign up', new_user_registration_path %>
+<% end %>
+
 <ul>
   <% @restaurants.each do |restaurant| %>
     <li><%= link_to restaurant.name, browse_path(restaurant) %></li>
   <% end %>
 </ul>
-
