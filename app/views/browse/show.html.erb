@@ -3,3 +3,4 @@
 <p>Address: <%= @restaurant.address %></p>
 <p>Phone Number: <%= @restaurant.phone_number %></p>
 <p>Operating Hours: <%= @restaurant.operating_hours %></p>
+<%= link_to 'View Menu', customer_menu_path(restaurant_id: @restaurant.id), class: 'btn btn-primary' %>
