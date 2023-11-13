@@ -55,6 +55,11 @@ class MenuItemsController < ApplicationController
     end
   end
 
+  def customer_index
+    @restaurant = Restaurant.find(params[:restaurant_id])
+    @menu_items = @restaurant.menu_items
+  end
+
   private
 
   def set_menu_item
