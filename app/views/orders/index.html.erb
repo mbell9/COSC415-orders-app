@@ -1,0 +1,19 @@
+
+<% @orders.each do |order| %>
+    <div>
+    <strong>Customer:</strong> <%= order.customer.name %>,
+    <strong>Order #:</strong> <%= link_to order.id, order_path(order) %>,
+    </div>
+    <p></p>
+    <div>
+    <strong>Start Time:</strong> <%= order.start_time %>
+    <strong>End Time:</strong> <%= order.end_time %>        ,
+    <strong>Total:</strong> <%= order.total_price %> $,
+    <strong>Status:</strong> <%= order.status %>
+    </div>
+    <p></p>
+    <div>
+    <%= button_to 'Change Status', update_status_order_path(order), method: :patch, data: { confirm: 'Are you sure?' } %>
+    </div>
+    <hr>
+<% end %>
