@@ -37,3 +37,8 @@ cart = Cart.create!(customer: customer, restaurant: restaurant)
 # Add items to the cart
 CartItem.create!(cart: cart, menu_item: menu_item, quantity: 1)
 
+#Create an order
+order  = Order.create!(customer: customer, restaurant: restaurant, total_price: 30)
+
+
+

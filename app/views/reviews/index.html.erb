@@ -3,6 +3,7 @@
     <p><strong>Customer:</strong> <%= review.customer.name %> Stars</p>
     <p><strong>Rating:</strong> <%= review.rating %> Stars</p>
     <p><%= review.comment %></p>
+    <%= button_to 'Change Status', update_status_order_path(order), method: :patch, data: { confirm: 'Are you sure?' } %>
     <hr>
     <% end %>
 </div>

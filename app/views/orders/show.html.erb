@@ -1,0 +1,15 @@
+<h2>Order Details</h2>
+
+<p><strong>Customer:</strong> <%= @order.customer.name %></p>
+<p><strong>Order #:</strong> <%= @order.id %></p>
+<p><strong>Start Time:</strong> <%= @order.start_time %></p>
+<p><strong>End Time:</strong> <%= @order.end_time %></p>
+<p><strong>Total:</strong> <%= number_to_currency(@order.total_price) %></p>
+<p><strong>Status:</strong> <%= @order.status %></p>
+
+<%= button_to 'Update Status', update_status_order_path(@order), method: :patch, data: { confirm: 'Are you sure you want to update the status?' } %>
+
+<%= button_to 'Cancel Order', cancel_restaurant_order_path(@order), method: :patch, data: { confirm: 'Are you sure you want to cancel this order?' } %>
+
+
+<%= link_to 'Back to Orders', restaurant_orders_path(@order.restaurant), class: 'button' %>

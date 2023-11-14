@@ -4,6 +4,7 @@ class Restaurant < ApplicationRecord
     has_many :menu_items, dependent: :destroy
     has_many :carts
     has_many :reviews, dependent: :destroy
+    has_many :orders, dependent: :destroy
     belongs_to :user
 
     validates :name, presence: true

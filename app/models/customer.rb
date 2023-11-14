@@ -4,6 +4,7 @@ class Customer < ApplicationRecord
   PHONE_REGEX = /\A(\+1|1)?[-.\s]?(\()?(\d{3})(?(2)\))[-.\s]?(\d{3})[-.\s]?(\d{4})\z/
 
   has_many :reviews, dependent: :destroy
+  has_many :orders, dependent: :destroy
 
   validates :name, presence: { on: :create }
   validates :phone_number, presence: { on: :create }
