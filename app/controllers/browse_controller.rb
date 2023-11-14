@@ -1,6 +1,7 @@
 class BrowseController < ApplicationController
   def index
     @restaurants = Restaurant.all
+
   end
 
   def show
