@@ -37,11 +37,18 @@
 <!-- Add links for user authentication -->
 <% if user_signed_in? %>
   <%= button_to 'Sign out', destroy_user_session_path, method: :delete %>
+  <%if current_user.role == 'customer'%>
+     <%= link_to 'Profile', customer_path(current_user.customer)%>
+  <%end%>
+  <%if current_user.role == 'owner'%>
+     <%= link_to 'Restaurant', restaurant_path(current_user.restaurant)%>
+  <%end%>
   <%= csrf_meta_tags %>
   <p>Welcome, <%= current_user.email %></p>
 <% else %>
   <%= link_to 'Sign in', new_user_session_path %> |
-  <%= link_to 'Sign up', new_user_registration_path %>
+  <%= link_to 'Sign up customer', new_customer_registration_path %>
+  <%= link_to 'Sign up Owner', new_owner_registration_path %>
 <% end %>
 
 <ul>

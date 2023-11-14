@@ -1,5 +1,6 @@
 class BrowseController < ApplicationController
   def index
+
       @restaurants = Restaurant.all
 
       # Sorting logic based on params

@@ -1,8 +1,16 @@
 Rails.application.routes.draw do
   # Devise routes for User
-  devise_for :users, controllers: {
+
+  devise_for :users, skip: :registrations, controllers: {
     sessions: 'users/sessions'
   }
+
+  devise_scope :user do
+    get 'customers/sign_up', to: 'customers/registrations#new', as: :new_customer_registration
+    post 'customers', to: 'customers/registrations#create', as: :customer_registration
+    get 'owners/sign_up', to: 'owners/registrations#new', as: :new_owner_registration
+    post 'owners', to: 'owners/registrations#create', as: :owner_registration
+  end
 
   # Health check route
   get 'up' => 'rails/health#show', as: :rails_health_check
@@ -12,8 +20,9 @@ Rails.application.routes.draw do
 
 
 # Browse routes
-resources :browse, only: [:index, :show]
+resources :browse, only: [:index, :show, :new]
 get 'restaurants', to: 'browse#index'
+get 'restaurants/new', to: 'restaurants#new'
 get 'restaurants/:id', to: 'browse#show', as: :restaurant
 
 # Restaurant routes with nested resources for menu_items and reviews
