@@ -23,19 +23,19 @@ class OrdersController < ApplicationController
             @order.update(status: "None")
         end
          # Change this to your desired logic
-    
+
          redirect_to restaurant_orders_path(@order.restaurant), notice: 'Order status updated successfully.'
     end
     def cancel
         @order = Order.find(params[:id])
-        
+
         @order.update(status: 'Canceled')
         if @order.update(status: 'Canceled')
             redirect_to order_path(@order), notice: 'Order was successfully canceled.'
         else
             redirect_to order_path(@order), alert: 'Failed to cancel the order.'
         end
-    
+
         # redirect_to order_path(@order), notice: 'Order was successfully canceled.'
     end
 
@@ -43,7 +43,7 @@ class OrdersController < ApplicationController
         @order = current_customer.orders.build(order_params)
         @order.restaurant_id = params[:restaurant_id]
         @order.cart_items = current_customer.cart.cart_items
-    
+
         if @order.save
           # here I need to handle the logic for clearing the cart, setting order status, etc.
           redirect_to @order, notice: 'Order was successfully placed.'
