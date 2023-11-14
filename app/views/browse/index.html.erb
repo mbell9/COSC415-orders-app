@@ -1,13 +1,54 @@
-<h1>Browse Restaurants</h1>
+<!-- app/views/restaurants/index.html.erb -->
+<%= content_for :head do %>
+  <%= stylesheet_link_tag 'browse', media: 'all', 'data-turbolinks-track': 'reload' %>
+<% end %>
 
+<div class="browse-container">
+  <!-- Sidebar with menu buttons -->
+  <div class="sidebar">
+    <!-- Add your menu buttons here -->
+    <button class="menu-button"><%= link_to 'Sort by Location', :sort => "location" %></button>
+    <button class="menu-button"><%= link_to 'Sort by Operating Hours', :sort => "operating_hours" %></button>
+    <!-- Add more buttons as needed -->
+  </div>
+
+  <!-- Main content area with restaurant boxes -->
+  <div class="main-content">
+    <h1>Browse Restaurants</h1>
+
+    <div class="restaurant-list">
+      <% @restaurants.each do |restaurant| %>
+        <%= link_to browse_path(restaurant), class: 'restaurant-box' do %>
+          <div class="restaurant-image">
+            <%= image_tag 'https://picsum.photos/300/200/?blur', class: 'card-image' %>
+          </div>
+          <div class="restaurant-details">
+            <h2><%= restaurant.name %></h2>
+            <p><strong>Address:</strong> <%= restaurant.address %></p>
+            <p><strong>Phone Number:</strong> <%= restaurant.phone_number %></p>
+            <p><strong>Operating Hours:</strong> <%= "0000-0000" %></p>
+            <!-- Add other restaurant information as needed -->
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
 <!-- Add links for user authentication -->
 <% if user_signed_in? %>
   <%= button_to 'Sign out', destroy_user_session_path, method: :delete %>
+  <%if current_user.role == 'customer'%>
+     <%= link_to 'Profile', customer_path(current_user.customer)%>
+  <%end%>
+  <%if current_user.role == 'owner'%>
+     <%= link_to 'Restaurant', restaurant_path(current_user.restaurant)%>
+  <%end%>
   <%= csrf_meta_tags %>
   <p>Welcome, <%= current_user.email %></p>
 <% else %>
   <%= link_to 'Sign in', new_user_session_path %> |
-  <%= link_to 'Sign up', new_user_registration_path %>
+  <%= link_to 'Sign up customer', new_customer_registration_path %>
+  <%= link_to 'Sign up Owner', new_owner_registration_path %>
 <% end %>
 
 <ul>

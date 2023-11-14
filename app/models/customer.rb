@@ -1,16 +1,16 @@
 class Customer < ApplicationRecord
   has_one :cart, dependent: :destroy
+  belongs_to :user
   PHONE_REGEX = /\A(\+1|1)?[-.\s]?(\()?(\d{3})(?(2)\))[-.\s]?(\d{3})[-.\s]?(\d{4})\z/
 
   has_many :reviews, dependent: :destroy
   has_many :orders, dependent: :destroy
 
   validates :name, presence: { on: :create }
-  validates :email, presence: { on: :create }
   validates :phone_number, presence: { on: :create }
   validates :address, presence: { on: :create }
 
-  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: "is not a valid email address" }, if: -> { email.present? }
+  # validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: "is not a valid email address" }, if: -> { email.present? }
   validates :phone_number, format: { with: PHONE_REGEX, message: "is not a valid US phone number" }, if: -> { phone_number.present? }
   before_save :reformat_phone_number
 

@@ -20,7 +20,7 @@ class CustomersController < ApplicationController
   end
 
   def customer_params
-    params.require(:customer).permit(:name, :email, :phone_number, :address)
+    params.require(:customer).permit(:name, :phone_number, :address)
   end
 
   def filter_blank_params

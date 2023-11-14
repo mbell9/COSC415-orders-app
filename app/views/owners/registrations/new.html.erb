@@ -1,0 +1,61 @@
+<h2>Sign up owner</h2>
+
+<%= form_for(resource, as: resource_name, url: owner_registration_path) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "new-password" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  </div>
+
+  <%= f.fields_for :restaurant do |restaurant_fields| %>
+
+      <div class="field">
+        <%= restaurant_fields.label :restaurant_name %>
+        <%= restaurant_fields.text_field :name %>
+      </div>
+
+      <div class="field">
+        <%= restaurant_fields.label :description %>
+        <%= restaurant_fields.text_area :description %>
+      </div>
+
+      <div class="field">
+        <%= restaurant_fields.label :address %>
+        <%= restaurant_fields.text_area :address %>
+      </div>
+
+      <div class="field">
+        <%= restaurant_fields.label :phone_number %>
+        <%= restaurant_fields.text_field :phone_number %>
+      </div>
+
+      <div class="field">
+        <%= restaurant_fields.label :operating_hours %>
+        <%= restaurant_fields.text_field :operating_hours %>
+      </div>
+    <% end %>
+
+  <%= f.hidden_field :role, value: "owner" %>
+  
+
+  <div class="actions">
+    <%= f.submit "Sign up" %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>

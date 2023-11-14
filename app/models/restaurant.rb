@@ -5,10 +5,10 @@ class Restaurant < ApplicationRecord
     has_many :carts
     has_many :reviews, dependent: :destroy
     has_many :orders, dependent: :destroy
-  
+    belongs_to :user
+
     validates :name, presence: true
     validates :address, presence: true
     validates :phone_number, presence: true
     # ... any other validations you want to include ...
   end
-  
