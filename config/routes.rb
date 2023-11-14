@@ -1,14 +1,15 @@
 Rails.application.routes.draw do
-  get 'customers/show'
-  get 'customers/edit'
-  get 'customers/update'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  # Devise routes for User
+  devise_for :users, controllers: {
+    sessions: 'users/sessions'
+  }
 
-# Health check route
-get "up" => "rails/health#show", as: :rails_health_check
+  # Health check route
+  get 'up' => 'rails/health#show', as: :rails_health_check
 
-# Root route
-root 'browse#index'
+  # Root route
+  root 'browse#index'
+
 
 # Browse routes
 resources :browse, only: [:index, :show]
@@ -31,13 +32,13 @@ end
   # Defines the root path route ("/")
   # root "posts#index"
   resources :restaurants do
-    resources :menu_items, only: [:index, :new, :create]
+    resources :menu_items, only: [:index, :new, :create, :edit, :update, :destroy]
+    resources :reviews, only: [:index, :new, :create, :edit, :update, :destroy]
   end
 
   get 'restaurants/:restaurant_id/customer_menu', to: 'menu_items#customer_index', as: :customer_menu
   post 'add_to_cart/:menu_item_id', to: 'cart_items#add_to_cart', as: :add_to_cart
   patch 'remove_from_cart/:menu_item_id', to: 'cart_items#remove_from_cart', as: :remove_from_cart
-
 
 
 end
