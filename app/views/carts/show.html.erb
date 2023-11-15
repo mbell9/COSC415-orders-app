@@ -23,8 +23,8 @@
                 <td><%= cart_item.quantity %></td>
                 <td>$<%= cart_item.menu_item.price * cart_item.quantity %></td>
                 <td>
-                    <%= button_to 'Add', add_to_cart_path(menu_item_id: cart_item.menu_item.id, customer_id: @customer.id), method: :post, class: 'btn btn-primary' %>
-                    <%= button_to 'Remove', remove_from_cart_path(menu_item_id: cart_item.menu_item.id, customer_id: @customer.id), method: :patch, class: 'btn btn-primary' %>
+                    <%= button_to 'Add', add_to_cart_path(menu_item_id: cart_item.menu_item.id, customer_id: current_user.customer.id), method: :post, class: 'btn btn-primary' %>
+                    <%= button_to 'Remove', remove_from_cart_path(menu_item_id: cart_item.menu_item.id, customer_id: current_user.customer.id), method: :patch, class: 'btn btn-primary' %>
                 </td>
                 </tr>
             <% end %>
