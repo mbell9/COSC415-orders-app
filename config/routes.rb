@@ -44,9 +44,9 @@ resources :restaurants do
 end
 
 # Customer routes
-resources :customers, only: [:show, :edit, :update] do
-  resource :cart, only: [:show]
-end
+resources :customers, only: [:show, :edit, :update]
+resource :cart, only: [:show]
+
 # MenuItems routes
 #resources :menu_items, only: [:show, :edit, :update, :destroy]
 

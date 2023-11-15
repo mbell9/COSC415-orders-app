@@ -7,6 +7,13 @@ class Customers::RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  def create
+    super do |user|
+      if user.persisted?
+        user.customer.create_cart
+      end
+    end
+  end
 
   protected
 

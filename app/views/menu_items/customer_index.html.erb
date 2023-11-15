@@ -20,7 +20,7 @@
           <td><%= item.category.to_s.titleize %></td>
           <td><%= item.spiciness.to_s.titleize %></td>
           <td>$<%= '%.2f' % item.price %></td>
-          <td><%= button_to 'Add to Cart', add_to_cart_path(menu_item_id: item.id, customer_id: 3), method: :post %></td>
+          <td><%= button_to 'Add to Cart', add_to_cart_path(menu_item_id: item.id, customer_id: current_user.customer.id), method: :post %></td>
         </tr>
       <% end %>
     </tbody>
