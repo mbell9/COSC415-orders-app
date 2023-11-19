@@ -22,22 +22,28 @@ class CartItemsController < ApplicationController
       menu_item = MenuItem.find(params[:menu_item_id])
       cart_item = @cart.cart_items.find_or_initialize_by(menu_item: menu_item)
 
-      if params[:set_restaurant_id] && @cart.restaurant_id.nil?
-        @cart.restaurant_id = menu_item.restaurant_id
-        @cart.save
-      elsif params[:set_restaurant_id] && @cart.restaurant_id != menu_item.restaurant_id
-          redirect_to customer_menu_path(restaurant_id: menu_item.restaurant_id), notice: 'You have cart items from another restaurant' and return
+      if params[:set_restaurant_id] && @cart.restaurant_id != menu_item.restaurant_id && @cart.restaurant_id.nil? == false
+          Rails.logger.info "Present Rest ID: #{@cart.restaurant_id}, attempted Rest ID: #{menu_item.restaurant_id}"
+          redirect_to customer_menu_path(restaurant_id: menu_item.restaurant_id, show_clear_cart: true), notice: 'You have cart items from another restaurant' and return
       else
         if cart_item.new_record?
           cart_item.quantity = 1
         else
           cart_item.quantity += 1
         end
+        cart_item.save
 
-        if cart_item.save
-          redirect_to @cart, notice: 'Item quantity increased.'
+        if params[:set_restaurant_id] && current_user.customer.cart.restaurant_id.nil?
+
+          if @cart.update(restaurant_id: menu_item.restaurant_id)
+            Rails.logger.info("SUCCESSFUL UPDATE")
+          else
+            Rails.logger.info "ERRORS: #{@cart.errors.full_messages}"
+          end
+
+          redirect_to customer_menu_path(restaurant_id: menu_item.restaurant_id), notice: "Cart updated to restaurant #{@cart.restaurant_id}"
         else
-          redirect_to @cart, alert: 'Failed to increase item quantity.'
+          redirect_to @cart, notice: "Quantity of #{cart_item.menu_item.name} increased to #{cart_item.quantity}"
         end
       end
     end

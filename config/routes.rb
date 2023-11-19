@@ -60,6 +60,7 @@ resource :cart, only: [:show]
   get 'restaurants/:restaurant_id/customer_menu', to: 'menu_items#customer_index', as: :customer_menu
   post 'add_to_cart/:menu_item_id', to: 'cart_items#add_to_cart', as: :add_to_cart
   patch 'remove_from_cart/:menu_item_id', to: 'cart_items#remove_from_cart', as: :remove_from_cart
+  delete 'clear_cart', to: 'carts#clear_cart'
 
 
 end
