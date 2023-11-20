@@ -35,3 +35,7 @@
 <div>
   <strong>Total:</strong> $<%= @cart_items.sum { |item| item.menu_item.price * item.quantity } %>
 </div>
+
+<div>
+    <%= button_to 'Clear Cart', clear_cart_path, method: :delete, class: 'btn btn-warning' %>
+</div>

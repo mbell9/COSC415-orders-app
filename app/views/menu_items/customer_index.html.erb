@@ -25,4 +25,7 @@
       <% end %>
     </tbody>
   </table>
+    <% if params[:show_clear_cart] %>
+      <%= button_to 'Clear Cart', clear_cart_path(restaurant_id: @restaurant.id), method: :delete, class: 'btn btn-warning' %>
+    <% end %>
 </div>
