@@ -62,5 +62,12 @@ resource :cart, only: [:show]
   patch 'remove_from_cart/:menu_item_id', to: 'cart_items#remove_from_cart', as: :remove_from_cart
   delete 'clear_cart', to: 'carts#clear_cart'
 
+  resource :checkout, only: [:create], controller: 'checkouts' do
+    collection do
+      get 'success', to: 'checkouts#success'
+      get 'cancel', to: 'checkouts#cancel'
+    end
+  end
+
 
 end

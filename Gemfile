@@ -49,6 +49,9 @@ gem "bootsnap", require: false
 # for factorybot fake restaurant/menu item generation
 gem 'faker'
 
+#for checkout stripe sessions
+gem 'stripe'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
