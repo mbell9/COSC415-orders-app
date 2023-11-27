@@ -25,27 +25,27 @@
   <%= f.fields_for :restaurant do |restaurant_fields| %>
 
       <div class="field">
-        <%= restaurant_fields.label :restaurant_name %>
+        <%= restaurant_fields.label :restaurant_name %><br />
         <%= restaurant_fields.text_field :name %>
       </div>
 
       <div class="field">
-        <%= restaurant_fields.label :description %>
+        <%= restaurant_fields.label :description %><br />
         <%= restaurant_fields.text_area :description %>
       </div>
 
       <div class="field">
-        <%= restaurant_fields.label :address %>
+        <%= restaurant_fields.label :address %><br />
         <%= restaurant_fields.text_area :address %>
       </div>
 
       <div class="field">
-        <%= restaurant_fields.label :phone_number %>
+        <%= restaurant_fields.label :phone_number %><br />
         <%= restaurant_fields.text_field :phone_number %>
       </div>
 
       <div class="field">
-        <%= restaurant_fields.label :operating_hours %>
+        <%= restaurant_fields.label :operating_hours %><br />
         <%= restaurant_fields.text_field :operating_hours %>
       </div>
     <% end %>
