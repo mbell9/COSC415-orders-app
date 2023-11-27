@@ -45,14 +45,5 @@
   <%end%>
   <%= csrf_meta_tags %>
   <p>Welcome, <%= current_user.email %></p>
-<% else %>
-  <%= link_to 'Sign in', new_user_session_path %> |
-  <%= link_to 'Sign up customer', new_customer_registration_path %>
-  <%= link_to 'Sign up Owner', new_owner_registration_path %>
-<% end %>
 
-<ul>
-  <% @restaurants.each do |restaurant| %>
-    <li><%= link_to restaurant.name, browse_path(restaurant) %></li>
-  <% end %>
-</ul>
+<% end %>

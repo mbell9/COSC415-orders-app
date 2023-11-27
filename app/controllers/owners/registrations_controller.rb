@@ -1,5 +1,6 @@
 class Owners::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
+  skip_before_action :authenticate_user!, only: [:create, :new]
 
   def new
     super do |user|

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'home/main'
   # Devise routes for User
 
   devise_for :users, skip: :registrations, controllers: {
@@ -16,12 +17,14 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   # Root route
-  root 'browse#index'
+  # root 'browse#index'
+  get 'home', to: 'home#main'
+  root 'home#main'
 
   resources :orders do
     member do
       patch :update_status
-      
+
     end
   end
 
@@ -69,5 +72,6 @@ resource :cart, only: [:show]
     end
   end
 
+  get '*path', to: 'home#main'
 
 end
