@@ -32,7 +32,7 @@ Rails.application.routes.draw do
 # Browse routes
 resources :browse, only: [:index, :show, :new]
 get 'restaurants', to: 'browse#index'
-get 'restaurants/new', to: 'restaurants#new'
+# get 'restaurants/new', to: 'restaurants#new'
 get 'restaurants/:id', to: 'browse#show', as: :restaurant
 
 # Restaurant routes with nested resources for menu_items and reviews
@@ -44,8 +44,8 @@ end
 # Customer routes
 resources :customers, only: [:update]
 resource :cart, only: [:show]
-get '/profile', to: 'customers#show', as: :profile
-get '/edit_profile', to: 'customers#edit', as: :edit_profile
+get '/profile', to: 'profiles#show', as: :profile
+get '/edit_profile', to: 'profiles#edit', as: :edit_profile
 
 # MenuItems routes
 #resources :menu_items, only: [:show, :edit, :update, :destroy]
