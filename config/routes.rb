@@ -69,7 +69,7 @@ get '/edit_profile', to: 'customers#edit', as: :edit_profile
     end
   end
 
-  get '*path', to: redirect('/home')
+  #get '*path', to: redirect('/home')
 
 
 end

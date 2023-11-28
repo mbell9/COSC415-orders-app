@@ -6,6 +6,7 @@ class OrdersController < ApplicationController
 
     def show
         @order = Order.find(params[:id])
+        @order_items = @order.order_items
     end
 
     def new
@@ -44,13 +45,12 @@ class OrdersController < ApplicationController
 
   def set_orders
     if current_user.is_customer?
-        @orders = Order.where(customer_id: current_user.customer.id)
         Rails.logger.info("CUSTOMER ID: #{current_user.customer.id}")
+        @orders = Order.where(customer_id: current_user.customer.id)
     elsif current_user.is_restaurant?
-        @orders = Order.where(restaurant_id: current_user.restaurant.id)
         Rails.logger.info("RESTAURANT ID: #{current_user.customer.id}")
+        @orders = Order.where(restaurant_id: current_user.restaurant.id)
     else
-        Rails.logger.info("ERROR")
     end
   end
 

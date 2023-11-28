@@ -3,7 +3,7 @@
 
 <% @orders.each do |order| %>
     <div>
-    <strong>Customer:</strong> <%= order.customer.name %>,
+    <strong>Customer:</strong> <%= current_user.customer.name %>,
     <strong>Order #:</strong> <%= link_to order.id, order_path(order) %>,
     </div>
     <p></p>
@@ -15,7 +15,9 @@
     </div>
     <p></p>
     <div>
-    <%= button_to 'Change Status', update_status_order_path(order), method: :patch, data: { confirm: 'Are you sure?' } %>
+    <% if current_user.is_restaurant? %>
+        <%= button_to 'Change Status', update_status_order_path(order), method: :patch, data: { confirm: 'Are you sure?' } %>
+    <% end %>
     </div>
     <hr>
 <% end %>
