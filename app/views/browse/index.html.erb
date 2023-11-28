@@ -26,7 +26,7 @@
             <h2><%= restaurant.name %></h2>
             <p><strong>Address:</strong> <%= restaurant.address %></p>
             <p><strong>Phone Number:</strong> <%= restaurant.phone_number %></p>
-            <p><strong>Operating Hours:</strong> <%= "0000-0000" %></p>
+            <p><strong>Operating Hours:</strong> <%= restaurant.operating_hours %></p>
             <!-- Add other restaurant information as needed -->
           </div>
         <% end %>
@@ -38,7 +38,7 @@
 <% if user_signed_in? %>
   <%= button_to 'Sign out', destroy_user_session_path, method: :delete %>
   <%if current_user.role == 'customer'%>
-     <%= link_to 'Profile', customer_path(current_user.customer)%>
+     <%= link_to 'Profile', profile_path%>
   <%end%>
   <%if current_user.role == 'owner'%>
      <%= link_to 'Restaurant', restaurant_path(current_user.restaurant)%>

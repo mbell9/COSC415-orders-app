@@ -6,7 +6,7 @@ RSpec.feature "CustomerProfile", type: :feature do
   let(:customer) { FactoryBot.create(:customer) }
 
   scenario "Customer views their profile" do
-    visit customer_path(customer)
+    visit profile_path
 
     expect(page).to have_content("Customer Profile")
     expect(page).to have_content(customer.name)
@@ -18,12 +18,12 @@ RSpec.feature "CustomerProfile", type: :feature do
   end
 
   scenario "Customer access the edit page" do
-    visit customer_path(customer)
+    visit profile_path
 
     click_link 'Edit'
     sleep 1
 
-    expect(current_path).to eq(edit_customer_path(customer))
+    expect(current_path).to eq(edit_profile_path)
 
     # Check the content of the Edit page
     expect(page).to have_content("Edit Customer Profile")
@@ -41,13 +41,13 @@ RSpec.feature "CustomerProfile", type: :feature do
   end
 
   scenario "Customer edits their profile with valid input" do
-    visit edit_customer_path(customer)
+    visit edit_profile_path
 
     fill_in 'Name', with: 'New Name'
     click_button 'Update Customer'
     sleep 1
 
-    expect(current_path).to eq(customer_path(customer))
+    expect(current_path).to eq(profile_path)
     expect(page).to have_content('Customer Profile')
     expect(page).to have_content('New Name')
     expect(page).to have_content('Profile updated successfully.')
@@ -55,26 +55,26 @@ RSpec.feature "CustomerProfile", type: :feature do
   end
 
   scenario "Customer edits their profile with invalid input" do
-    visit edit_customer_path(customer)
+    visit edit_profile_path
 
     fill_in 'Phone number', with: '112132314'
     click_button 'Update Customer'
     sleep 1
 
-    expect(current_path).to eq(customer_path(customer))
+    expect(current_path).to eq(profile_path)
     expect(page).to have_content('Edit Customer Profile')
     expect(page).to have_content('Phone number is not a valid US phone number')
 
   end
 
   scenario "Customer edits their profile with valid input and phone num is reformatted" do
-    visit edit_customer_path(customer)
+    visit edit_profile_path
 
     fill_in 'Phone number', with: '111.222.3333'
     click_button 'Update Customer'
     sleep 1
 
-    expect(current_path).to eq(customer_path(customer))
+    expect(current_path).to eq(profile_path)
     expect(page).to have_content('Customer Profile')
     expect(page).to have_content('111-222-3333')
     expect(page).to have_content('Profile updated successfully.')
@@ -82,12 +82,12 @@ RSpec.feature "CustomerProfile", type: :feature do
   end
 
   scenario "Customer goes back to customer profile from edit page" do
-    visit edit_customer_path(customer)
+    visit edit_profile_path
 
     click_link 'Back'
     sleep 1
 
-    expect(current_path).to eq(customer_path(customer))
+    expect(current_path).to eq(profile_path)
     expect(page).to have_content("Customer Profile")
   end
 end

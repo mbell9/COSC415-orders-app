@@ -2,7 +2,7 @@
 
 class MenuItem < ApplicationRecord
   belongs_to :restaurant
-  
+
   enum category: { appetizer: 0, main_course: 1, dessert: 2, beverage: 3 }
   enum spiciness: { mild: 0, medium: 1, spicy: 2, very_spicy: 3 }
 
@@ -14,6 +14,7 @@ class MenuItem < ApplicationRecord
   validates :featured, inclusion: { in: [true, false] }
   validates :calories, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :category, presence: true
+
   # Removed the mandatory presence validation for spiciness to make it optional
   validates :stock, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_blank: true
   validates :discount, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, allow_blank: true

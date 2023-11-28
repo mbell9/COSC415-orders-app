@@ -2,22 +2,24 @@ class CustomersController < ApplicationController
   before_action :filter_blank_params, only: [:update]
 
   def show
-    @customer = Customer.find(params[:id])
+    @customer = current_user.customer
   end
 
   def edit
-    @customer = Customer.find(params[:id])
+    @customer = current_user.customer
   end
+
 
   def update
     @customer = Customer.find(params[:id])
     if @customer.update(customer_params)
-      redirect_to customer_path(@customer), notice: "Profile updated successfully."
+      redirect_to profile_path, notice: "Profile updated successfully."
     else
       flash.now[:error] = @customer.errors.full_messages.join(", ")
       render :edit
     end
   end
+
 
   def customer_params
     params.require(:customer).permit(:name, :phone_number, :address)
