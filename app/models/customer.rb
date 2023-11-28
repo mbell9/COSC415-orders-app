@@ -4,7 +4,9 @@ class Customer < ApplicationRecord
   PHONE_REGEX = /\A(\+1|1)?[-.\s]?(\()?(\d{3})(?(2)\))[-.\s]?(\d{3})[-.\s]?(\d{4})\z/
 
   has_many :reviews, dependent: :destroy
-  has_many :orders, dependent: :destroy
+  has_many :orders #, dependent: :destroy #restaurants should access orders even if user doesn't exist
+
+  has_many :restaurants, through: :orders
 
   validates :name, presence: { on: :create }
   validates :phone_number, presence: { on: :create }
@@ -12,6 +14,8 @@ class Customer < ApplicationRecord
 
   # validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: "is not a valid email address" }, if: -> { email.present? }
   validates :phone_number, format: { with: PHONE_REGEX, message: "is not a valid US phone number" }, if: -> { phone_number.present? }
+  validates :name, length: { maximum: 50 }, if: -> { name.present? }
+  validates :address, length: { minimum: 10, maximum: 100 }, if: -> { address.present? }
   before_save :reformat_phone_number
 
   def reformat_phone_number

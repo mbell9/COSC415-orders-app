@@ -42,8 +42,10 @@ resources :restaurants do
 end
 
 # Customer routes
-resources :customers, only: [:show, :edit, :update]
+resources :customers, only: [:update]
 resource :cart, only: [:show]
+get '/profile', to: 'customers#show', as: :profile
+get '/edit_profile', to: 'customers#edit', as: :edit_profile
 
 # MenuItems routes
 #resources :menu_items, only: [:show, :edit, :update, :destroy]
@@ -67,6 +69,7 @@ resource :cart, only: [:show]
     end
   end
 
-  get '*path', to: 'home#main'
+  get '*path', to: redirect('/home')
+
 
 end
