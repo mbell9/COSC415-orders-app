@@ -54,7 +54,7 @@ RSpec.describe CustomersController, type: :controller do
         # test that after a successful update, it redirects back to the profile
         customer = FactoryBot.create(:customer)
         put :update, params: { id: customer.id, customer: {name: "my new name"} }
-        expect(response).to redirect_to(customer_path(customer))
+        expect(response).to redirect_to(profile_path)
       end
     end
 

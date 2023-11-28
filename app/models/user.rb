@@ -4,9 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  # enum role: { customer: 0, owner: 1 }
-  has_one :customer
-  has_one :restaurant
+  has_one :customer, dependent: :destroy
+  has_one :restaurant, dependent: :destroy
   accepts_nested_attributes_for :customer
   accepts_nested_attributes_for :restaurant
 end
