@@ -9,4 +9,13 @@ class User < ApplicationRecord
   has_one :restaurant
   accepts_nested_attributes_for :customer
   accepts_nested_attributes_for :restaurant
+  # validates role is required
+
+  def is_customer?
+    self.role == 'customer'
+  end
+  
+  def is_restaurant?
+    self.role == 'owner'
+  end
 end

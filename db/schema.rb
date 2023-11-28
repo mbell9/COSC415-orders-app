@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_14_235125) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_28_034712) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -85,6 +85,16 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_14_235125) do
     t.index ["restaurant_id"], name: "index_menu_items_on_restaurant_id"
   end
 
+  create_table "order_items", force: :cascade do |t|
+    t.integer "menu_item_id", null: false
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "order_id", null: false
+    t.index ["menu_item_id"], name: "index_order_items_on_menu_item_id"
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+  end
+
   create_table "orders", force: :cascade do |t|
     t.integer "customer_id", null: false
     t.integer "restaurant_id", null: false
@@ -143,6 +153,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_14_235125) do
   add_foreign_key "carts", "restaurants"
   add_foreign_key "customers", "users"
   add_foreign_key "menu_items", "restaurants"
+  add_foreign_key "order_items", "menu_items"
+  add_foreign_key "order_items", "orders"
   add_foreign_key "orders", "customers"
   add_foreign_key "orders", "restaurants"
   add_foreign_key "restaurants", "users"

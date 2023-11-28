@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
+    before_action :set_orders, only: [:index]
     def index
-        @orders = Order.where(restaurant_id: params[:restaurant_id])
+        @orders = set_orders
     end
 
     def show
@@ -24,20 +25,9 @@ class OrdersController < ApplicationController
         end
          # Change this to your desired logic
 
-         redirect_to restaurant_orders_path(@order.restaurant), notice: 'Order status updated successfully.'
+         #redirect_to restaurant_orders_path(@order.restaurant), notice: 'Order status updated successfully.'
     end
-    def cancel
-        @order = Order.find(params[:id])
 
-        @order.update(status: 'Canceled')
-        if @order.update(status: 'Canceled')
-            redirect_to order_path(@order), notice: 'Order was successfully canceled.'
-        else
-            redirect_to order_path(@order), alert: 'Failed to cancel the order.'
-        end
-
-        # redirect_to order_path(@order), notice: 'Order was successfully canceled.'
-    end
 
     def create
         @order = current_customer.orders.build(order_params)
@@ -46,12 +36,23 @@ class OrdersController < ApplicationController
 
         if @order.save
           # here I need to handle the logic for clearing the cart, setting order status, etc.
-          redirect_to @order, notice: 'Order was successfully placed.'
+          #redirect_to @order, notice: 'Order was successfully placed.'
         else
           render :new
         end
     end
-    private
+
+  def set_orders
+    if current_user.is_customer?
+        @orders = Order.where(customer_id: current_user.customer.id)
+        Rails.logger.info("CUSTOMER ID: #{current_user.customer.id}")
+    elsif current_user.is_restaurant?
+        @orders = Order.where(restaurant_id: current_user.restaurant.id)
+        Rails.logger.info("RESTAURANT ID: #{current_user.customer.id}")
+    else
+        Rails.logger.info("ERROR")
+    end
+  end
 
   def order_params
     params.require(:order).permit(:restaurant_id, :customer_id, :status, :total_price)

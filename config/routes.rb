@@ -39,11 +39,6 @@ get 'restaurants/:id', to: 'browse#show', as: :restaurant
 resources :restaurants do
   resources :menu_items, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :reviews, only: [:index, :new, :create, :edit, :update, :destroy]
-  resources :orders, only: [:index, :new, :create, :edit, :update, :destroy] do
-    member do
-      patch :cancel, to: 'orders#cancel'
-    end
-  end
 end
 
 # Customer routes
