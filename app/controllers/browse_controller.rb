@@ -1,6 +1,11 @@
 class BrowseController < ApplicationController
   def index
 
+      if current_user.is_restaurant?
+        redirect_to home_path
+        return
+      end
+
       @restaurants = Restaurant.all
 
       # Sorting logic based on params
@@ -14,6 +19,12 @@ class BrowseController < ApplicationController
     end
 
   def show
+
+    if current_user.is_restaurant?
+      redirect_to home_path
+      return
+    end
+
     begin
         @restaurant = Restaurant.find(params[:id])
     rescue ActiveRecord::RecordNotFound

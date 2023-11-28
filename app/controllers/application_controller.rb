@@ -10,6 +10,10 @@ class ApplicationController < ActionController::Base
   protected
 
   def after_sign_in_path_for(resource)
-    restaurants_path
+    if current_user.is_customer?
+      restaurants_path
+    elsif current_user.is_restaurant?
+      profile_path
+    end
   end
 end
