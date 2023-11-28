@@ -42,6 +42,16 @@ class CheckoutsController < ApplicationController
     end
 
     def success
+        order = Order.create!(customer_id: current_user.customer.id, restaurant_id: @cart.restaurant_id, status: "pending")
+
+        @cart.cart_items.each do |cart_item|
+            order.order_items.create!(
+                menu_item_id: cart_item.menu_item_id,
+                quantity: cart_item.quantity
+            )
+        end
+        @cart.clear_cart
+        redirect_to home_path, notice: 'Order was successful!'
     end
 
     def cancel

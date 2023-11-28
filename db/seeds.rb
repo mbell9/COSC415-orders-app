@@ -89,7 +89,7 @@ end
 3.times do |i|
   customer_user = create_user("customer#{i}@example.com", "password", "customer")
   customer = create_customer(customer_user, "Customer #{i}", generate_us_phone_number(), "456 Elm St")
-
+  #order = Order.create!(customer_id: customer_user, restaurant_id: rests.sample, status: 'done', total_price: 20)
   # Each customer reviews 3 random restaurants
   3.times do
     restaurant = rests.sample
