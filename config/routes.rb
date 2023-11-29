@@ -69,7 +69,10 @@ get '/edit_profile', to: 'profiles#edit', as: :edit_profile
     end
   end
 
-  #get '*path', to: redirect('/home')
+  get 'stripe_callback', to: 'stripe#callback'
+
+  get 'owners/confirm', to: 'owners/registrations#confirm'
+  get '*path', to: redirect('/home')
 
 
 end
