@@ -11,7 +11,7 @@ class MenuItemsController < ApplicationController
   def index
     @menu_items = @restaurant.menu_items
   end
-  
+
   def create
     @menu_item = @restaurant.menu_items.build(menu_item_params)
     if @menu_item.save
@@ -41,7 +41,7 @@ class MenuItemsController < ApplicationController
       render :edit
     end
   end
-  
+
 
   def destroy
     @menu_item = MenuItem.find(params[:id])
@@ -66,13 +66,13 @@ class MenuItemsController < ApplicationController
     @menu_item = MenuItem.find(params[:id])
   end
 
-    
+
   def set_restaurant
     @restaurant = Restaurant.find(params[:restaurant_id]) if params[:restaurant_id].present?
   end
-  
+
   def menu_item_params
     params.require(:menu_item).permit(:name, :description, :category, :spiciness, :price, :discount, :stock, :availability, :image)
   end
-  
+
 end

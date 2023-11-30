@@ -2,7 +2,11 @@
 <p><strong>Order ID:</strong> <%= @order.id %></p>
 <p><strong>Order Status:</strong> <%= @order.status %></p>
 <!-- Add other order details you want to show -->
-
+<p><strong>Start Time:</strong> <%= @order.start_time %> 
+<%if @order.end_time != nil%>
+<br><strong>End Time:</strong> <%= @order.end_time %>
+<%end%></p>
+<p><strong>Total:</strong> <%= @order.total_price %> $</p>
 <h3>Order Items</h3>
 <table>
   <thead>
@@ -25,8 +29,8 @@
   </tbody>
 </table>
 
-<% if current_user.is_restaurant?%>
-    <%= button_to 'Update Status', update_status_order_path(@order), method: :patch, data: { confirm: 'Are you sure you want to update the status?' } %>
+<% if current_user.is_restaurant? && @order.status != "Picked Up"%>
+    <%= button_to 'Update Status', update_status_path(@order), method: :patch, class: 'update-status-button' %>
 <% end %>
 
-<%= link_to 'Back to Orders', orders_path(@order), class: 'button' %>
+<%= link_to 'Back to Orders', orders_path, class: 'button' %>

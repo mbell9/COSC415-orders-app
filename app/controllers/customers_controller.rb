@@ -2,7 +2,16 @@ class CustomersController < ApplicationController
   before_action :filter_blank_params, only: [:update]
 
   def show
-    @customer = current_user.customer
+    if current_user.is_restaurant?
+      begin
+        @customer = Customer.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        redirect_to home_path
+      end
+    else
+      redirect_to profile_path
+    end
+
   end
 
   def edit
