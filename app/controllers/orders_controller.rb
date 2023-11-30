@@ -26,14 +26,17 @@ class OrdersController < ApplicationController
             return
         elsif @order.status == "Pending"
             @order.update(status: "Order Taken")
+            UserMailer.status_update_email(@order, "Your order ##{@order.id} has been received by the restaurant!").deliver_now
         elsif @order.status == "Order Taken"
             @order.update(status: "Being Prepared")
+            UserMailer.status_update_email(@order, "Your order ##{@order.id} is being prepared!").deliver_now
         elsif @order.status == "Being Prepared"
             @order.update(status: "Ready for Pickup")
+            UserMailer.status_update_email(@order, "Your order ##{@order.id} is ready for pickup!").deliver_now
         elsif @order.status == "Ready for Pickup"
             @order.update(status: "Picked Up", end_time: Time.current.strftime("%Y-%m-%d %H:%M"))
+            UserMailer.status_update_email(@order, "Your order ##{@order.id} has been picked up!").deliver_now
         end
-         # Change this to your desired logic
 
          redirect_to orders_path, notice: 'Order status updated successfully.'
     end

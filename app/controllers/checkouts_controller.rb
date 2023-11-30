@@ -52,6 +52,8 @@ class CheckoutsController < ApplicationController
                 quantity: cart_item.quantity
             )
         end
+        UserMailer.new_order_email(order).deliver_now
+        UserMailer.placed_order_email(order).deliver_now
         @cart.clear_cart
         redirect_to home_path, notice: 'Order was successful!'
     end

@@ -63,14 +63,16 @@ group :development, :test do
   gem 'factory_bot_rails', '~> 6.2'
   gem 'shoulda-matchers', '~> 4.0'
   gem 'rails-controller-testing'
-
   gem 'simplecov', require: false
+  gem 'dotenv-rails'
+  gem "web-console"
+  gem 'letter_opener'
+
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
-  gem "web-console"
-
+  
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
