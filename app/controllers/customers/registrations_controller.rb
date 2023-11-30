@@ -1,6 +1,6 @@
 class Customers::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
-  skip_before_action :authenticate_user!, only: [:create, :new]
+  # skip_before_action :authenticate_user!, only: [:create, :new, :edit, :update]
 
   def new
     super do |user|
@@ -15,6 +15,7 @@ class Customers::RegistrationsController < Devise::RegistrationsController
       end
     end
   end
+
 
   protected
 

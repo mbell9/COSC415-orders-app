@@ -1,6 +1,6 @@
 class Owners::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
-  skip_before_action :authenticate_user!, only: [:create, :new]
+  # skip_before_action :authenticate_user!, only: [:create, :new, :edit, :confirm]
 
   def new
     super do |user|
@@ -19,12 +19,13 @@ class Owners::RegistrationsController < Devise::RegistrationsController
     end
   end
 
+
   def generate_stripe_onboarding_link
     stripe_client_id = Rails.application.credentials.stripe[:client_id]
     redirect_uri = "#{root_url}stripe_callback"
     state_value = SecureRandom.hex(15)
     session[:oauth_state] = state_value
-  
+
     # Construct the Stripe authorization URL manually
     "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=#{stripe_client_id}&scope=read_write&redirect_uri=#{CGI.escape(redirect_uri)}&state=#{CGI.escape(state_value)}"
   end

@@ -3,10 +3,10 @@
 class Restaurant < ApplicationRecord
   PHONE_REGEX = /\A(\+1|1)?[-.\s]?(\()?(\d{3})(?(2)\))[-.\s]?(\d{3})[-.\s]?(\d{4})\z/
 
-    has_many :menu_items, dependent: :destroy
-    has_many :carts #does this relationship matter?
+    has_many :carts, dependent: :destroy
     has_many :reviews, dependent: :destroy
     has_many :orders, dependent: :destroy
+    has_many :menu_items, dependent: :destroy
     belongs_to :user
 
     has_many :customers, through: :orders
