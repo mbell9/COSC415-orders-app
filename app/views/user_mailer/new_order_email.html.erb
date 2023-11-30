@@ -1,0 +1,25 @@
+Dear Restaurant Owner,
+<br><br>
+A new order has been received from <%=@order.customer.name%> with the following details:
+<br><br>
+Order Details<br>
+=============<br>
+Order ID: <%= @order.id %><br>
+Status: <%= @order.status %><br>
+Time Placed: <%= @order.start_time %><br>
+Total Price: $<%= sprintf('%.2f', @order.total_price) %>
+<br><br>
+Order Items<br>
+===========<br>
+<% @order.order_items.each do |item| %>
+- Item Name: <%= item.menu_item.name %><br>
+  Quantity: <%= item.quantity %><br>
+  Price: $<%= sprintf('%.2f', item.menu_item.price) %>
+<% end %>
+<br><br>
+Please review the order and proceed with the necessary preparation. The detailed information of the order is accessible in your order management system.
+<br><br>
+Thank you for your prompt attention to this new order.
+<br><br>
+Sincerely,<br>
+[The silly geese]<br>

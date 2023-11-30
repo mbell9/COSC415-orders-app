@@ -1,0 +1,23 @@
+Dear <%= @order.customer.name %>,
+<br><br>
+Thank you for placing an order at <%=@order.restaurant.name%> with the following details:
+<br><br>
+Order Details<br>
+=============<br>
+Order ID: <%= @order.id %><br>
+Status: <%= @order.status %><br>
+Time Placed: <%= @order.start_time %><br>
+Total Price: $<%= sprintf('%.2f', @order.total_price) %>
+<br><br>
+Order Items<br>
+===========<br>
+<% @order.order_items.each do |item| %>
+- Item Name: <%= item.menu_item.name %><br>
+  Quantity: <%= item.quantity %><br>
+  Price: $<%= sprintf('%.2f', item.menu_item.price) %>
+<% end %>
+<br><br>
+You will receive updates on your order shortly!
+<br><br>
+Sincerely,<br>
+[The silly geese]<br>

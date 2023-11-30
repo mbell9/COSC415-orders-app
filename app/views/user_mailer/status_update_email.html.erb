@@ -1,0 +1,30 @@
+Dear <%= @order.customer.name %>,
+<br><br>
+We are writing to inform you of a status update on your recent order with us.
+<br><br>
+Order Details<br>
+=============<br>
+Order ID: <%= @order.id %><br>
+Current Status: <%= @order.status %><br>
+Total Price: $<%= sprintf('%.2f', @order.total_price) %>
+<br><br>
+Your order was placed at: <%= @order.created_at.strftime('%I:%M%p %Z on %B %d, %Y') %>
+<%if @order.status == "Picked Up"%>
+    <br>Order picked up at: <%= @order.end_time.strftime('%I:%M%p %Z on %B %d, %Y') %>
+<%end%>
+<br><br>
+Order Items<br>
+===========<br>
+<% @order.order_items.each do |item| %>
+- Item Name: <%= item.menu_item.name %><br>
+  Quantity: <%= item.quantity %><br>
+  Price: $<%= sprintf('%.2f', item.menu_item.price * item.quantity) %><br>
+  <br>
+<% end %>
+
+We appreciate your patience and are working diligently to prepare your order. 
+<br><br>
+Thank you for choosing <%@order.restaurant.name%>! We hope to serve you again soon.
+<br><br>
+Warm regards,<br>
+The Team at [The silly geese]<br>

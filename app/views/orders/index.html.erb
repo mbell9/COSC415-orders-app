@@ -23,9 +23,9 @@
     </div>
     <p></p>
     <div>
-    <!-- <% if current_user.is_restaurant? %>
-        <%= button_to 'Change Status', update_status_path(order), method: :patch, data: { confirm: 'Are you sure?' } %>
-    <% end %> -->
+    <% if current_user.is_restaurant? && order.status != "Picked Up" %>
+        <%= button_to 'Update Status', update_status_path(order), method: :patch, class: 'update-status-button' %>
+    <% end %>
     </div>
     <hr>
 <% end %>
