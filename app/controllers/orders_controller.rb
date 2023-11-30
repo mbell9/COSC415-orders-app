@@ -5,8 +5,14 @@ class OrdersController < ApplicationController
     end
 
     def show
+
         @order = Order.find(params[:id])
         @order_items = @order.order_items
+
+        if @order.customer != current_user.customer && @order.restaurant != current_user.restaurant
+            redirect_to home_path
+        end
+
     end
 
     def new
@@ -15,18 +21,21 @@ class OrdersController < ApplicationController
 
     def update_status
         @order = Order.find(params[:id])
-        if @order.status == nil || @order.status == "None"
+        if @order.status == "Picked Up"
+            redirect_to orders_path
+            return
+        elsif @order.status == "Pending"
             @order.update(status: "Order Taken")
         elsif @order.status == "Order Taken"
-            @order.update(status: "In Progress")
-        elsif @order.status == "In Progress"
-            @order.update(status: "Complete!")
-        else
-            @order.update(status: "None")
+            @order.update(status: "Being Prepared")
+        elsif @order.status == "Being Prepared"
+            @order.update(status: "Ready for Pickup")
+        elsif @order.status == "Ready for Pickup"
+            @order.update(status: "Picked Up", end_time: Time.current.strftime("%Y-%m-%d %H:%M"))
         end
          # Change this to your desired logic
 
-         #redirect_to restaurant_orders_path(@order.restaurant), notice: 'Order status updated successfully.'
+         redirect_to orders_path, notice: 'Order status updated successfully.'
     end
 
 
@@ -48,7 +57,7 @@ class OrdersController < ApplicationController
         Rails.logger.info("CUSTOMER ID: #{current_user.customer.id}")
         @orders = Order.where(customer_id: current_user.customer.id)
     elsif current_user.is_restaurant?
-        Rails.logger.info("RESTAURANT ID: #{current_user.customer.id}")
+        Rails.logger.info("RESTAURANT ID: #{current_user.restaurant.id}")
         @orders = Order.where(restaurant_id: current_user.restaurant.id)
     else
     end

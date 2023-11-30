@@ -8,6 +8,8 @@
     <p><strong>Phone Number:</strong> <%= @customer.phone_number %></p>
     <p><strong>Address:</strong> <%= @customer.address %></p>
 
+    <% if current_user.is_customer? %>
     <%= link_to 'Edit', edit_profile_path %> 
+    <%end %>
   </div>
 </div>
