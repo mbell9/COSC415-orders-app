@@ -9,7 +9,8 @@
     <p><strong>Address:</strong> <%= @customer.address %></p>
 
     <% if current_user.is_customer? %>
-    <%= link_to 'Edit', edit_profile_path %> 
+    <%= link_to 'Edit', edit_profile_path %> |
+    <%= link_to 'Edit_login', edit_customer_registration_path%>
     <%end %>
   </div>
 </div>

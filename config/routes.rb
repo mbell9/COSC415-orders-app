@@ -8,10 +8,22 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     get 'customers/sign_up', to: 'customers/registrations#new', as: :new_customer_registration
+    get 'edit_customer_login', to: 'customers/registrations#edit', as: :edit_customer_registration
+
     post 'customers', to: 'customers/registrations#create', as: :customer_registration
+    put 'customers', to: 'customers/registrations#update'
+    delete 'customers', to: 'customers/registrations#destroy'
+
+
     get 'owners/sign_up', to: 'owners/registrations#new', as: :new_owner_registration
+    get 'edit_owner_login', to: 'owners/registrations#edit', as: :edit_owner_registration
+
     post 'owners', to: 'owners/registrations#create', as: :owner_registration
+    put 'owners', to: 'owners/registrations#update'
+    delete 'owners', to: 'owners/registrations#destroy'
+
   end
+
 
   # Health check route
   get 'up' => 'rails/health#show', as: :rails_health_check

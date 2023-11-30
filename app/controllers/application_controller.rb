@@ -3,7 +3,8 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def authenticate_user!
+  def authenticate_user!(*)
+    return if devise_controller?
     redirect_to home_path unless user_signed_in?
   end
 
