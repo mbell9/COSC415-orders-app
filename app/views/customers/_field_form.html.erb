@@ -1,0 +1,5 @@
+<%= form_with(model: @customer, local: true) do |form| %>
+  <%= form.label label %>
+  <%= form.text_field field %>
+  <%= form.submit "Save" %>
+<% end %>

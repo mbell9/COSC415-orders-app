@@ -3,14 +3,31 @@
   <h1>Customer Profile</h1>
   
   <div class="customer-info">
-    <h2><%= @customer.name %></h2>
+    <%= turbo_frame_tag "customer_name" do %>
+      <h2><%= @customer.name %> 
+        <%if current_user.customer == @customer%>
+            <%= link_to '*', edit_profile_path %>
+        <%end%>
+      </h2>
+    <%end%>
+    <%= turbo_frame_tag "customer_phone_number" do %>
+      <p><strong>Phone Number:</strong><%= @customer.phone_number %> 
+        <%if current_user.customer == @customer%>
+            <%= link_to '*', edit_profile_path %>
+        <%end%> 
+      </p>
+    <%end%>
+    <%= turbo_frame_tag "customer_address" do %>
+      <p><strong>Address:</strong><%= @customer.address %>
+        <%if current_user.customer == @customer%>
+            <%= link_to '*', edit_profile_path %>
+        <%end%>  
+      </p>
+    <%end%>
     <p><strong>Email:</strong> <%= @customer.user.email %></p>
-    <p><strong>Phone Number:</strong> <%= @customer.phone_number %></p>
-    <p><strong>Address:</strong> <%= @customer.address %></p>
-
     <% if current_user.is_customer? %>
-    <%= link_to 'Edit', edit_profile_path %> |
-    <%= link_to 'Edit_login', edit_customer_registration_path%>
+    <%= link_to 'Update_login_info', edit_customer_registration_path %>
     <%end %>
+    
   </div>
 </div>

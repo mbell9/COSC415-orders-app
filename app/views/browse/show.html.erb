@@ -1,6 +1,2 @@
-<h1><%= @restaurant.name %></h1>
-<p><%= @restaurant.description %></p>
-<p>Address: <%= @restaurant.address %></p>
-<p>Phone Number: <%= @restaurant.phone_number %></p>
-<p>Operating Hours: <%= @restaurant.operating_hours %></p>
+<%= render 'restaurants/rest_info'%>
 <%= link_to 'View Menu', customer_menu_path(restaurant_id: @restaurant.id), class: 'btn btn-primary' %>

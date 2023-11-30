@@ -1,0 +1,21 @@
+
+<div>
+  
+  <h1>Edit Restaurant Information</h1>
+  <%= turbo_frame_tag "restaurant_name" do %>
+    <%= render 'restaurants/field_form', label: '', field: :name %>
+  <% end %>
+  <%= turbo_frame_tag "restaurant_description" do %>
+    <%= render 'restaurants/field_form', label: '', field: :description %>
+  <% end %>
+  <%= turbo_frame_tag "restaurant_address" do %>
+    <%= render 'restaurants/field_form', label: 'Address:', field: :address %>
+  <% end %>
+  <%= turbo_frame_tag "restaurant_phone_number" do %>
+    <%= render 'restaurants/field_form', label: 'Phone Number:', field: :phone_number %>
+  <% end %>
+  <%= turbo_frame_tag "restaurant_operating_hours" do %>
+    <%= render 'restaurants/field_form', label: 'Operating Hours:', field: :operating_hours %>
+  <% end %>
+
+</div>

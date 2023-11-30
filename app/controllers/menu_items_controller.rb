@@ -22,7 +22,13 @@ class MenuItemsController < ApplicationController
   end
 
   def show
-    @restaurant = Restaurant.find(params[:id])
+
+    begin
+      @restaurant = Restaurant.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to home_path
+      return
+    end
     # No changes needed here for now
   end
 
@@ -44,7 +50,14 @@ class MenuItemsController < ApplicationController
 
 
   def destroy
-    @menu_item = MenuItem.find(params[:id])
+
+    begin
+      @menu_item = MenuItem.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to home_path
+      return
+    end
+
     Rails.logger.debug "Attempting to destroy menu_item with id: #{params[:id]}"
     if @menu_item.destroy
       Rails.logger.debug "Menu_item destroyed."
@@ -56,19 +69,39 @@ class MenuItemsController < ApplicationController
   end
 
   def customer_index
-    @restaurant = Restaurant.find(params[:restaurant_id])
+
+    begin
+      @restaurant = Restaurant.find(params[:restaurant_id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to home_path
+      return
+    end
+
     @menu_items = @restaurant.menu_items
   end
 
   private
 
   def set_menu_item
-    @menu_item = MenuItem.find(params[:id])
+
+    begin
+      @menu_item = MenuItem.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to home_path
+      return
+    end
+
   end
 
 
   def set_restaurant
-    @restaurant = Restaurant.find(params[:restaurant_id]) if params[:restaurant_id].present?
+
+    begin
+      @restaurant = Restaurant.find(params[:restaurant_id]) if params[:restaurant_id].present?
+    rescue ActiveRecord::RecordNotFound
+      redirect_to home_path
+      return
+    end
   end
 
   def menu_item_params

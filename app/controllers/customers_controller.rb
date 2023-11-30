@@ -20,12 +20,14 @@ class CustomersController < ApplicationController
 
 
   def update
-    @customer = Customer.find(params[:id])
+    @customer = current_user.customer
+
     if @customer.update(customer_params)
-      redirect_to profile_path, notice: "Profile updated successfully."
+      flash.now[:notice] = "Profile updated successfully."
+      redirect_to profile_path
     else
       flash.now[:error] = @customer.errors.full_messages.join(", ")
-      render :edit
+      redirect_to profile_path
     end
   end
 
@@ -36,7 +38,7 @@ class CustomersController < ApplicationController
 
   def filter_blank_params
     params[:customer].each do |key, value|
-      params[:customer].delete(key) if value.blank?
+      params[:customer][key] = current_user.customer[key] if value.blank?
     end
   end
 end

@@ -53,10 +53,10 @@ Rails.application.routes.draw do
   get 'restaurants/:id', to: 'browse#show', as: :restaurant
 
   # Restaurant routes with nested resources for menu_items and reviews
-  resources :restaurants do
-    resources :menu_items, only: [:index, :new, :create, :edit, :update, :destroy]
-    resources :reviews, only: [:index, :new, :create, :edit, :update, :destroy]
-  end
+  # resources :restaurants do
+  #   resources :menu_items, only: [:index, :new, :create, :edit, :update, :destroy]
+  #   resources :reviews, only: [:index, :new, :create, :edit, :update, :destroy]
+  # end
 
   # Customer routes
   resources :customers, only: [:update]
