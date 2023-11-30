@@ -21,7 +21,12 @@ class CartsController < ApplicationController
     end
 
     def back
-        @cart = Cart.find(params[:cart_id])
+        begin
+            @cart = Cart.find(params[:cart_id])
+        rescue ActiveRecord::RecordNotFound
+            redirect_to home_path
+            return
+        end
         if @cart.restaurant_id.nil?
             redirect_to home_path
         else

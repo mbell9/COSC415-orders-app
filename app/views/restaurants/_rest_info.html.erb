@@ -1,0 +1,39 @@
+<%= turbo_frame_tag "restaurant_name" do %>
+    <h1><%= @restaurant.name %> 
+        <%if current_user.restaurant == @restaurant%>
+            <%= link_to '*', edit_profile_path %> 
+        <%end%>
+    </h1>
+<%end%>
+<%= turbo_frame_tag "restaurant_description" do %>
+    <p><%= @restaurant.description %> 
+        <%if current_user.restaurant == @restaurant%>
+            <%= link_to '*', edit_profile_path %> 
+        <%end%>
+    </p>
+<%end%>
+<%= turbo_frame_tag "restaurant_address" do %>
+    <p>Address: <%= @restaurant.address %> 
+        <%if current_user.restaurant == @restaurant%>
+            <%= link_to '*', edit_profile_path %> 
+        <%end%>
+    </p>
+<%end%>
+<%= turbo_frame_tag "restaurant_phone_number" do %>
+    <p>Phone Number: <%= @restaurant.phone_number %> 
+        <%if current_user.restaurant == @restaurant%>
+            <%= link_to '*', edit_profile_path %> 
+        <%end%>
+    </p>
+<%end%>
+<%= turbo_frame_tag "restaurant_operating_hours" do %>
+    <p>Operating Hours: <%= @restaurant.operating_hours %> 
+        <%if current_user.restaurant == @restaurant%>
+            <%= link_to '*', edit_profile_path %> 
+        <%end%>
+    </p>
+<%end%>
+
+
+
+<!-- <%= link_to 'View Menu', customer_menu_path(restaurant_id: @restaurant.id), class: 'btn btn-primary' %> -->

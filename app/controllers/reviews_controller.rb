@@ -1,19 +1,42 @@
 class ReviewsController < ApplicationController
 
     def index
-        @restaurant = Restaurant.find(params[:restaurant_id])
+
+        begin
+            @restaurant = Restaurant.find(params[:restaurant_id])
+        rescue ActiveRecord::RecordNotFound
+            redirect_to home_path
+            return
+        end
         @reviews = @restaurant.reviews
     end
 
     def new
-        @restaurant = Restaurant.find(params[:restaurant_id])
+        begin
+            @restaurant = Restaurant.find(params[:restaurant_id])
+        rescue ActiveRecord::RecordNotFound
+            redirect_to home_path
+            return
+        end
+
         @review = @restaurant.reviews.build
     end
 
     def create
-        @restaurant = Restaurant.find(params[:restaurant_id])
+        begin
+            @restaurant = Restaurant.find(params[:restaurant_id])
+        rescue ActiveRecord::RecordNotFound
+            redirect_to home_path
+            return
+        end
+
         @review = @restaurant.reviews.build(review_params)
-        @review.customer = Customer.find(1)
+        begin
+            @review.customer = Customer.find(1)
+        rescue ActiveRecord::RecordNotFound
+            redirect_to home_path
+            return
+        end
         if @review.save
           redirect_to restaurant_reviews_path(@restaurant)
         else

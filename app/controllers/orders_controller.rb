@@ -6,7 +6,14 @@ class OrdersController < ApplicationController
 
     def show
 
-        @order = Order.find(params[:id])
+
+        begin
+            @order = Order.find(params[:id])
+        rescue ActiveRecord::RecordNotFound
+            redirect_to home_path
+            return
+        end
+
         @order_items = @order.order_items
 
         if @order.customer != current_user.customer && @order.restaurant != current_user.restaurant
@@ -20,7 +27,13 @@ class OrdersController < ApplicationController
     end
 
     def update_status
-        @order = Order.find(params[:id])
+
+        begin
+            @order = Order.find(params[:id])
+        rescue ActiveRecord::RecordNotFound
+            redirect_to home_path
+            return
+        end
         if @order.status == "Picked Up"
             redirect_to orders_path
             return

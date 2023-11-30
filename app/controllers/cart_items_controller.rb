@@ -2,7 +2,14 @@ class CartItemsController < ApplicationController
     before_action :set_cart, only: [:create, :add_to_cart, :remove_from_cart, :destroy]
 
     def create
-      menu_item = MenuItem.find(params[:menu_item_id])
+
+      begin
+        menu_item = MenuItem.find(params[:menu_item_id])
+      rescue ActiveRecord::RecordNotFound
+        redirect_to home_path
+        return
+      end
+
       cart_item = @cart.cart_items.find_by(menu_item: menu_item)
 
       if cart_item
@@ -19,7 +26,14 @@ class CartItemsController < ApplicationController
     end
 
     def add_to_cart
-      menu_item = MenuItem.find(params[:menu_item_id])
+
+      begin
+        menu_item = MenuItem.find(params[:menu_item_id])
+      rescue ActiveRecord::RecordNotFound
+        redirect_to home_path
+        return
+      end
+
       cart_item = @cart.cart_items.find_or_initialize_by(menu_item: menu_item)
 
       if params[:set_restaurant_id] && @cart.restaurant_id != menu_item.restaurant_id && @cart.restaurant_id.nil? == false
@@ -51,7 +65,12 @@ class CartItemsController < ApplicationController
     end
 
     def remove_from_cart
-        menu_item = MenuItem.find(params[:menu_item_id])
+        begin
+          menu_item = MenuItem.find(params[:menu_item_id])
+        rescue ActiveRecord::RecordNotFound
+          redirect_to home_path
+          return
+        end
         cart_item = @cart.cart_items.find_by(menu_item: menu_item)
 
         if cart_item.nil?
