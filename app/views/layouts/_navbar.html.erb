@@ -9,6 +9,9 @@
       <% if current_user.is_customer?%>
         <%= link_to 'My Cart', cart_path%>
       <%end%>
+      <% if !current_user.is_customer?%>
+        <%= link_to 'Menu Items', '/menu_items'%>
+      <%end%>
       <%= link_to 'Profile', profile_path%>
       <%= button_to 'Sign out', destroy_user_session_path, method: :delete %>
     </div>
