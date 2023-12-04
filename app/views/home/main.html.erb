@@ -1,7 +1,81 @@
-<div class="links-container">
-  <%= link_to 'Sign in', new_user_session_path, class: 'link-button' %>
-  <span class="separator">|</span>
-  <%= link_to 'Sign up customer', new_customer_registration_path, class: 'link-button' %>
-  <span class="separator">|</span>
-  <%= link_to 'Sign up Owner', new_owner_registration_path, class: 'link-button' %>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Pickup Service App</title>
+</head>
+<body>
+    <div class="hero-section">
+        <h1>Delicious Meals, Ready for Pickup</h1>
+        <p>Order from your favorite restaurants and pick up at your convenience.</p>
+      <div class="links-container">
+        <%= link_to 'Sign in', new_user_session_path, class: 'link-button' %>
+        <span class="separator">|</span>
+        <%= link_to 'Sign up customer', new_customer_registration_path, class: 'link-button' %>
+        <span class="separator">|</span>
+        <%= link_to 'Sign up Owner', new_owner_registration_path, class: 'link-button' %>
+      </div>
+    </div>
+
+    <div class="how-it-works-section">
+        <h2>How It Works</h2>
+        <div class="steps">
+            <div class="step">
+                <h3>Choose a Restaurant</h3>
+                <p>Explore a variety of cuisines from our list of partnered restaurants.</p>
+            </div>
+            <div class="step">
+                <h3>Select Your Meal</h3>
+                <p>Browse menus and select your favorite dishes.</p>
+            </div>
+            <div class="step">
+                <h3>Place an Order</h3>
+                <p>Order your meal in just a few clicks.</p>
+            </div>
+            <div class="step">
+                <h3>Pick Up & Enjoy</h3>
+                <p>Pick up your meal at the scheduled time and enjoy.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="featured-restaurants">
+        <h2>Featured Restaurants</h2>
+        <div class="restaurant-list">
+            <!-- Replace with actual restaurant data -->
+            <div class="restaurant">
+                <img src="restaurant_image.jpg" alt="Restaurant Name">
+                <h3>Restaurant Name</h3>
+                <p>Description of the restaurant.</p>
+            </div>
+            <!-- Repeat for other restaurants -->
+        </div>
+    </div>
+
+    <div class="testimonials-section">
+        <h2>What Our Customers Say</h2>
+        <div class="testimonials">
+            <div class="testimonial">
+                <p>"Great service! The food was ready right on time and delicious."</p>
+                <cite>- Customer Name</cite>
+            </div>
+            <!-- Repeat for other testimonials -->
+        </div>
+    </div>
+
+    <div class="app-features-section">
+        <h2>Why Choose Us</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>Wide Variety of Cuisines</h3>
+                <p>From local favorites to international dishes, find it all here.</p>
+            </div>
+            <!-- Repeat for other features -->
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2023 Your Pickup Service App. All rights reserved.</p>
+        <!-- Add additional footer content as needed -->
+    </div>
+</body>
+</html>
