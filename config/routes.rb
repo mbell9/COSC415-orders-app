@@ -80,6 +80,9 @@ Rails.application.routes.draw do
   get '/cartback', to: 'carts#back', as: :cart_back
   delete 'clear_cart', to: 'carts#clear_cart'
 
+  # Owner path only
+  get '/menu_items', to: 'menu_items#index'
+
   resource :checkout, only: [:create], controller: 'checkouts' do
     collection do
       get 'success', to: 'checkouts#success'
