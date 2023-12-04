@@ -3,6 +3,8 @@ application.scss
 */
 
 // import statements - be sure to use the correct path - the lower ones override the ones above them
+
+// base
 @import 'base';
 
 // bootstrap
@@ -20,3 +22,5 @@ application.scss
 @import 'views/customers';
 @import 'views/landing_page';
 @import 'views/menu_items';
+
+
