@@ -5,10 +5,12 @@ application.scss
 // import statements - be sure to use the correct path - the lower ones override the ones above them
 
 // base
-@import 'base';
+
 
 // bootstrap
+@import 'views/landing_page';
 @import 'bootstrapped';
+@import 'base';
 
 // components
 @import 'components/flash';
@@ -20,7 +22,7 @@ application.scss
 // views
 @import 'views/browse';
 @import 'views/customers';
-@import 'views/landing_page';
+
 @import 'views/menu_items';
 
 
