@@ -1,0 +1,63 @@
+
+/* Hero Section Styles */
+.hero-section {
+    background: url('path_to_your_hero_image.jpg') no-repeat center center;
+    background-size: cover;
+    padding: 60px 0;
+    color: white;
+    text-align: center;
+  }
+  
+  /* How It Works Section Styles */
+  .how-it-works-section {
+    background-color: #f8f9fa;
+    padding: 40px 0;
+  }
+  
+  .how-it-works-section .steps .step {
+    margin-bottom: 20px;
+  }
+  
+  /* Featured Restaurants Section Styles */
+  .featured-restaurants {
+    padding: 40px 0;
+  }
+  
+  .featured-restaurants .restaurant-list .restaurant {
+    margin-bottom: 20px;
+  }
+  
+  /* Testimonials Section Styles */
+  .testimonials-section {
+    background-color: #e9ecef;
+    padding: 40px 0;
+  }
+  
+  .testimonials-section .testimonials .testimonial {
+    margin-bottom: 20px;
+  }
+  
+  /* App Features Section Styles */
+  .app-features-section {
+    padding: 40px 0;
+  }
+  
+  .app-features-section .features .feature {
+    margin-bottom: 20px;
+  }
+  
+  /* Footer Styles */
+  .footer {
+    background-color: #343a40;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .navbar-container {
+        flex-direction: column;
+    }
+  }
+  
