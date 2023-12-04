@@ -3,6 +3,11 @@
 class MenuItemsController < ApplicationController
   before_action :set_menu_item, only: [:show, :edit, :update, :destroy]
   before_action :set_restaurant
+  before_action :authenticate_user!, only: [:edit, :update, :destroy]
+  before_action :check_ownership, only: [:edit, :update, :destroy]
+
+
+
 
   def new
     @menu_item = @restaurant.menu_items.build
@@ -107,5 +112,13 @@ class MenuItemsController < ApplicationController
   def menu_item_params
     params.require(:menu_item).permit(:name, :description, :category, :spiciness, :price, :discount, :stock, :availability, :image)
   end
+
+  private
+
+def check_ownership
+  unless current_user.is_restaurant? && @menu_item.restaurant.user == current_user
+    redirect_to root_path, alert: "You are not authorized to perform this action."
+  end
+end
 
 end
