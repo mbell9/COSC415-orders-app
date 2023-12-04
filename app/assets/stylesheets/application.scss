@@ -1,119 +1,22 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- */
- @import 'landing_page';
- @import 'bootstrapped';
+application.scss
+*/
 
- 
-.flash {
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
+// import statements - be sure to use the correct path - the lower ones override the ones above them
+@import 'base';
 
-  &.notice {
-    background-color: #dff0d8;
-    border: 1px solid #d6e9c6;
-    color: #3c763d;
-  }
+// bootstrap
+@import 'bootstrapped';
 
-  &.error {
-    background-color: #f2dede;
-    border: 1px solid #ebccd1;
-    color: #a94442;
-  }
-}
+// components
+@import 'components/flash';
+@import 'components/links';
+@import 'components/navbar';
 
-/* General Page Styling */
-body {
-  font-family: "Arial", sans-serif;
-  background-color: #f4f4f4;
-  color: #333;
-  text-align: center;
-  padding: 50px;
-}
+// layouts
 
-a {
-  text-decoration: none;
-  color: #007bff;
-  transition: color 0.2s ease-in-out;
-}
-
-a:hover {
-  color: #0056b3;
-}
-
-/* Link Styling */
-.link-button {
-  display: inline-block;
-  padding: 10px 20px;
-  margin: 10px;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.link-button:hover {
-  background-color: #0056b3;
-}
-
-/* Container for Links */
-.links-container {
-  margin-top: 30px;
-}
-
-.separator {
-  margin: 0 10px;
-  color: #666;
-}
-
-.navbar {
-  background-color: #333;
-  color: white;
-  padding: 15px 0;
-  position: fixed; /* Fixed positioning to stick to the top */
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%; /* Set the width to cover the screen width */
-  z-index: 1000; /* Ensure it stays on top of other content */
-}
-
-.navbar-container {
-  width: 80%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.navbar-logo {
-  font-size: 24px;
-  font-weight: bold;
-  text-decoration: none;
-  color: white;
-}
-
-.navbar-links a {
-  color: white;
-  text-decoration: none;
-  margin-left: 20px;
-}
-
-.navbar-links a:hover {
-  text-decoration: underline;
-}
+// views
+@import 'views/browse';
+@import 'views/customers';
+@import 'views/landing_page';
+@import 'views/menu_items';
