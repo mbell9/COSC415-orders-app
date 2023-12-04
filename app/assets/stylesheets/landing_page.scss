@@ -1,63 +1,176 @@
+/* Global Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-/* Hero Section Styles */
+h1, h2, h3 {
+  color: #333;
+  animation: simpleFadeIn 2s ease-in-out;
+}
+
+p {
+  color: #666;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Link Button Styles with Hover Animation */
+.link-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  
+  &:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+}
+
+
+.separator {
+  color: #333;
+  margin: 0 10px;
+}
+
+/* Hero Section Styles with Background Parallax Effect */
 .hero-section {
-    background: url('path_to_your_hero_image.jpg') no-repeat center center;
-    background-size: cover;
-    padding: 60px 0;
-    color: white;
-    text-align: center;
+  background: url('path_to_your_hero_image.jpg') no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  padding: 80px 0;
+  color: white;
+  text-align: center;
+  h1 {
+    font-size: 2.5rem;
   }
-  
-  /* How It Works Section Styles */
-  .how-it-works-section {
-    background-color: #f8f9fa;
-    padding: 40px 0;
+  p {
+    font-size: 1.2rem;
   }
-  
-  .how-it-works-section .steps .step {
-    margin-bottom: 20px;
+}
+
+/* Section Entry Animations */
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.section-animation {
+  opacity: 1; /* Temporarily set opacity to 1 for testing */
+  animation: simpleFadeIn 2s ease-in-out;
+}
+
+.how-it-works-section, .featured-restaurants, .testimonials-section, .app-features-section {
+  & > * {
+    opacity: 0;
+    animation-fill-mode: forwards;
   }
-  
-  /* Featured Restaurants Section Styles */
-  .featured-restaurants {
-    padding: 40px 0;
-  }
-  
-  .featured-restaurants .restaurant-list .restaurant {
-    margin-bottom: 20px;
-  }
-  
-  /* Testimonials Section Styles */
-  .testimonials-section {
-    background-color: #e9ecef;
-    padding: 40px 0;
-  }
-  
-  .testimonials-section .testimonials .testimonial {
-    margin-bottom: 20px;
-  }
-  
-  /* App Features Section Styles */
-  .app-features-section {
-    padding: 40px 0;
-  }
-  
-  .app-features-section .features .feature {
-    margin-bottom: 20px;
-  }
-  
-  /* Footer Styles */
-  .footer {
-    background-color: #343a40;
-    color: white;
-    padding: 20px 0;
-    text-align: center;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .navbar-container {
-        flex-direction: column;
+  & > *:nth-child(1) { animation-delay: 0.3s; }
+  & > *:nth-child(2) { animation-delay: 0.6s; }
+  & > *:nth-child(3) { animation-delay: 0.9s; }
+  & > *:nth-child(4) { animation-delay: 1.2s; }
+}
+
+/* How It Works Section Styles */
+.how-it-works-section {
+  background-color: #f8f9fa;
+  padding: 60px 0;
+  .steps {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    .step {
+      width: 45%;
+      margin-bottom: 30px;
+      text-align: center;
+      h3 {
+        font-size: 1.5rem;
+      }
     }
   }
-  
+}
+
+/* Featured Restaurants Section Styles */
+.featured-restaurants {
+  padding: 60px 0;
+  .restaurant-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    .restaurant {
+      width: 45%;
+      margin-bottom: 30px;
+      text-align: center;
+      img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+      }
+    }
+  }
+}
+
+/* Testimonials Section Styles */
+.testimonials-section {
+  background-color: #e9ecef;
+  padding: 60px 0;
+  .testimonials {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    .testimonial {
+      width: 45%;
+      margin-bottom: 30px;
+      text-align: center;
+      p {
+        font-style: italic;
+      }
+      cite {
+        display: block;
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
+/* App Features Section Styles */
+.app-features-section {
+  padding: 60px 0;
+  .features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    .feature {
+      width: 45%;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+  }
+}
+
+/* Footer Styles */
+.footer {
+  background-color: #343a40;
+  color: white;
+  padding: 30px 0;
+  text-align: center;
+  animation: fadeIn 2s ease-in-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .how-it-works-section .steps .step,
+  .featured-restaurants .restaurant-list .restaurant,
+  .testimonials-section .testimonials .testimonial,
+  .app-features-section .features .feature {
+    width: 90%;
+  }
+}
