@@ -49,23 +49,11 @@ class OrdersController < ApplicationController
         elsif @order.status == "Ready for Pickup"
             @order.update(status: "Picked Up", end_time: Time.current.strftime("%Y-%m-%d %H:%M"))
             UserMailer.status_update_email(@order, "Your order ##{@order.id} has been picked up!").deliver_now
-            transfer_funds_to_restaurant(@order)
         end
 
          redirect_to orders_path, notice: 'Order status updated successfully.'
     end
 
-    def transfer_funds_to_restaurant(order)
-        begin
-            Stripe::Transfer.create({
-                amount: order.calculate_total_cents,
-                currency: 'usd',
-                destination: order.restaurant.stripe_account_id
-            })
-        rescue Stripe::StripeError => e
-            Rails.logger.error "Stripe Transfer error: #{e.message}"
-        end
-    end
 
     def create
         @order = current_customer.orders.build(order_params)
