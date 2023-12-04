@@ -12,7 +12,7 @@ body {
 
 h1, h2, h3 {
   color: #333;
-  animation: simpleFadeIn 2s ease-in-out;
+  animation: fadeIn 1s ease-in-out;
 }
 
 p {
@@ -64,8 +64,7 @@ p {
 }
 
 .section-animation {
-  opacity: 1; /* Temporarily set opacity to 1 for testing */
-  animation: simpleFadeIn 2s ease-in-out;
+  animation: slideUp 1s ease-out;
 }
 
 .how-it-works-section, .featured-restaurants, .testimonials-section, .app-features-section {
