@@ -68,12 +68,12 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'simplecov', require: false
   gem 'dotenv-rails'
-  gem "web-console"
   gem 'letter_opener'
 
 end
 
 group :development do
+  gem "web-console"
   # Use console on exceptions pages [https://github.com/rails/web-console]
   
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
