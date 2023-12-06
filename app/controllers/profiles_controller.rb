@@ -5,6 +5,7 @@ class ProfilesController < ApplicationController
       render 'customers/show'
     elsif current_user.is_restaurant?
       @restaurant = current_user.restaurant
+      @reviews = @restaurant.reviews.order(created_at: :desc).limit(5)
       render 'restaurants/profile'
     end
   end

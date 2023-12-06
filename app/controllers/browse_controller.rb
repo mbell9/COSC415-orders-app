@@ -27,6 +27,14 @@ class BrowseController < ApplicationController
 
     begin
         @restaurant = Restaurant.find(params[:id])
+        @reviews = @restaurant.reviews.where.not(customer_id: current_user.customer.id).order(created_at: :desc).limit(5)
+        # @reviews = @restaurant.reviews.order(created_at: :desc).limit(5)
+        @spec_review = @restaurant.reviews.find_by(customer_id: current_user.customer.id)
+        # if !@spec_review.nil?
+        #   @reviews.delete(@spec_review)
+        # end
+
+        
     rescue ActiveRecord::RecordNotFound
         redirect_to home_path
     end
