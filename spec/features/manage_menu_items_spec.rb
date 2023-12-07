@@ -1,11 +1,18 @@
 # spec/features/manage_menu_items_spec.rb
-#NOTICE: PLACES WHERE IT GIVES ERROR: "Unknown action\nThe action 'show' could not be found for RestaurantsController"
 require 'rails_helper'
 
 RSpec.feature "ManageMenuItems", type: :feature do
-  let(:restaurant) { Restaurant.create!(name: "Test Restaurant", address: "123 Test St.", phone_number: "123-456-7890") }
-  let(:menu_item) { MenuItem.create!(name: "Original Item", description: "Original Description", price: 10.99, category: "appetizer", restaurant: restaurant) }
-#NOTE FOR SOME REASON CATEGORY HERE IS LOWER CASE IN THE LET... and then in the tests its something else
+  let(:restaurant_user) { FactoryBot.create(:user_owner) }
+  let(:restaurant) { FactoryBot.create(:restaurant, user: restaurant_user) }
+  let(:menu_item_attributes) { FactoryBot.attributes_for(:menu_item) }
+
+  before do
+    visit new_user_session_path
+    fill_in 'Email', with: restaurant_user.email
+    fill_in 'Password', with: restaurant_user.password
+    click_button 'Log in'
+  end
+
   it "Restaurant owner creates a new menu item" do
     visit new_restaurant_menu_item_path(restaurant.id)
     fill_in "Menu Item Name", with: "Test Item"
