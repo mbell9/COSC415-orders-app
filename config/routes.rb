@@ -90,5 +90,8 @@ Rails.application.routes.draw do
   get 'owners/confirm', to: 'owners/registrations#confirm'
   get '*path', to: redirect('/home')
 
+  resources :cart_items, only: [:create, :destroy]
+
+
 
 end
