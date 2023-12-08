@@ -1,6 +1,6 @@
 class CartItemsController < ApplicationController
     before_action :set_cart, only: [:add_to_cart, :remove_from_cart]
-
+#whoops
 
     def add_to_cart
 
@@ -54,7 +54,7 @@ class CartItemsController < ApplicationController
           if cart_item.save
             redirect_to cart_path, notice: 'Item quantity reduced.'
           else
-            redirect_to cart_path, alert: 'Unable to update the item.'
+            redirect_to home_path, alert: 'Unable to update the item.'
             return
           end
         else
