@@ -6,14 +6,21 @@ class BrowseController < ApplicationController
       return
     end
 
-    session[:sorted_by_location] = !session[:sorted_by_location] if params[:toggle_sort] == 'location'
-  
     @restaurants = Restaurant.all
 
-    if session[:sorted_by_location]
-      @restaurants = @restaurants.order('address ASC')
+    # Sorting logic based on params
+    case params[:sort]
+    when 'location'
+      if params[:order] == 'desc'
+        @restaurants = @restaurants.order(address: :desc)
+      else
+        @restaurants = @restaurants.order(address: :asc)
+      end
+    when 'operating_hours'
+      @restaurants = @restaurants.sort_by { |restaurant| total_weekly_operating_hours(restaurant.operating_hours) }
     end
   end
+
   
   def show
 
