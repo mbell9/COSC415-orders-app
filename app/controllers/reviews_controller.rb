@@ -40,7 +40,7 @@ class ReviewsController < ApplicationController
         @review = @restaurant.reviews.build(review_params)
 
         @review.customer = Customer.find_by(user_id: current_user.id)
-  
+
         if @review.customer.nil?
             redirect_to home_path
             return
@@ -62,7 +62,7 @@ class ReviewsController < ApplicationController
     def edit
         # Corrected the typo from 'rastaurant_id' to 'restaurant_id'
         @review = Review.find_by(customer_id: current_user.customer.id, restaurant_id: params[:restaurant_id])
-      
+
         if @review
           @restaurant = @review.restaurant
         else
@@ -73,14 +73,14 @@ class ReviewsController < ApplicationController
           redirect_to restaurants_path # Adjust the redirection path as per your routes
         end
       end
-      
+
 
     def update
         @review = Review.find_by(customer_id: current_user.customer.id, restaurant_id: params[:restaurant_id])
         if @review.update(review_params)
           redirect_to restaurant_path(@review.restaurant_id), notice: 'Review was successfully updated.'
         else
-          render :edit
+          redirect_to edit_restaurant_review_path(@review.restaurant, @review), alert: "Review wasn't updated."
         end
     end
     private
