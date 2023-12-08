@@ -15,7 +15,6 @@ class StripeController < ApplicationController
           code: params[:code],
         })
 
-        Rails.logger.info("STRIPE ID: #{response.stripe_user_id}")
         # Assuming the current user's restaurant needs to be updated
         if user && user.restaurant.update(stripe_account_id: response.stripe_user_id)
             redirect_to root_path, notice: "Successfully connected Stripe and created restuarant"

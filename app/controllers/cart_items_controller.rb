@@ -74,7 +74,8 @@ class CartItemsController < ApplicationController
         cart_item = @cart.cart_items.find_by(menu_item: menu_item)
 
         if cart_item.nil?
-          redirect_back(fallback_location: root_path, alert: 'Item not found in cart.') and return
+          redirect_to home_path, alert: "Item not found in cart."
+          return
         end
 
         if cart_item.quantity > 1
@@ -82,7 +83,7 @@ class CartItemsController < ApplicationController
           if cart_item.save
             redirect_to cart_path, notice: 'Item quantity reduced.'
           else
-            redirect_back(fallback_location: root_path, alert: 'Unable to update the item.')
+            redirect_to home_path, alert: 'Unable to update the item.'
           end
         else
           cart_item.destroy
