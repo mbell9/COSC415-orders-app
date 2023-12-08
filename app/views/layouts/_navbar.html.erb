@@ -1,6 +1,7 @@
 <nav class="navbar">
   <div class="navbar-container">
-    <a href=<%=home_path%> class="navbar-logo">The Silly Geese</a>
+    <a href=<%=home_path%> class="navbar-logo">
+    Foody</a>
     <div class="navbar-links">
       <%= link_to 'Orders', orders_path%>
       <% if current_user.is_customer?%>
