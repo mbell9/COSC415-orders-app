@@ -17,7 +17,7 @@
     <p><strong>Rating:</strong> <%= review.rating %> Stars</p>
     <p><%= review.comment %></p>
     <p><%= review.recorded_date %></p>
-    <!-- Add other review details you want to show -->
+    
   </div>
 <% end %>
 <%= link_to 'Add New Review', new_restaurant_review_path(@restaurant.id), class: 'btn btn-primary' %>
