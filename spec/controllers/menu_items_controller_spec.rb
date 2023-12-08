@@ -110,6 +110,7 @@ RSpec.describe MenuItemsController, type: :controller do
     end
 
     it "does not delete the menu item" do
+
       expect {
         delete :destroy, params: { restaurant_id: restaurant.id, id: menu_item.id }
       }.not_to change(MenuItem, :count)
@@ -117,21 +118,39 @@ RSpec.describe MenuItemsController, type: :controller do
 
     it "redirects to the root path" do
       delete :destroy, params: { restaurant_id: restaurant.id, id: menu_item.id }
-      expect(response).to redirect_to root_path
+      expect(response).to redirect_to home_path
     end
   end
 
   context "with a non-existent menu item" do
+    before do
+      sign_in restaurant_user
+    end
     it "does not change the MenuItem count" do
       expect {
         delete :destroy, params: { restaurant_id: restaurant.id, id: -1 }
       }.not_to change(MenuItem, :count)
       expect(assigns(:menu_item)).to be_nil
+      expect(response).to redirect_to(home_path)
     end
 
     it "redirects to the home page" do
       delete :destroy, params: { restaurant_id: restaurant.id, id: -1 }
       expect(response).to redirect_to(home_path)
+    end
+  end
+  context "when menu item cannot be destroyed" do
+    before do
+      allow_any_instance_of(MenuItem).to receive(:destroy).and_return(false)
+      delete :destroy, params: { restaurant_id: restaurant.id, id: menu_item }
+    end
+
+    it "redirects to the restaurant menu items path" do
+      expect(response).to redirect_to(restaurant_menu_items_path(restaurant))
+    end
+
+    it "sets an alert flash message" do
+      expect(flash[:alert]).to eq('Menu item could not be destroyed.')
     end
   end
 end
