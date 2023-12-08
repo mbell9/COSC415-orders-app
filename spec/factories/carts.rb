@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :cart do
     association :customer
-    association :restaurant, optional: true
+    association :restaurant
 
     # Traits for specific scenarios, such as a cart without a restaurant
     trait :without_restaurant do
