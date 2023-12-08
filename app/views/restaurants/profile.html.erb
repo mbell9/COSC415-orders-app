@@ -7,3 +7,26 @@ I'm a restaurant
 
 <%= button_to 'Sign out', destroy_user_session_path, method: :delete %>
 <%= link_to 'Edit_login', edit_customer_registration_path%>
+
+<h2>Reviews</h2>
+<!--
+<%if !@spec_review.empty?%>
+    <div class="review">
+    <p><strong>Customer:</strong> <%= @spec_review.customer.name %> Stars</p>
+    <p><strong>Rating:</strong> <%= @spec_review.rating %> Stars</p>
+    <p><%= @spec_review.comment %></p>
+    <p><%= @spec_review.recorded_date %></p>
+    <%= link_to 'Edit Review', edit_review_path(@spec_review), class: 'btn btn-primary' %>
+    
+  </div>
+<%end%>
+-->
+<% @reviews.each do |review| %>
+  <div class="review">
+    <p><strong>Customer:</strong> <%= review.customer.name %> Stars</p>
+    <p><strong>Rating:</strong> <%= review.rating %> Stars</p>
+    <p><%= review.comment %></p>
+    <p><%= review.recorded_date %></p>
+    <!-- Add other review details you want to show -->
+  </div>
+<% end %>

@@ -10,6 +10,7 @@
         <%= link_to 'Menu Items', '/menu_items'%>
       <%end%>
       <%= link_to 'Profile', profile_path%>
+
       <%= link_to 'Sign out', destroy_user_session_path, data: { turbo_method: :delete} %>
     </div>
   </div>

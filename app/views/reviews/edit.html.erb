@@ -1,0 +1,7 @@
+<!-- app/views/reviews/edit.html.erb -->
+
+<h1>Edit Review</h1>
+
+<%= render 'form', review: @review %>
+
+<%= link_to 'Back to Reviews', restaurant_reviews_path(@review.restaurant_id) %> <!-- Adjust the path as needed -->
