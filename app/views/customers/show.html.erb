@@ -25,7 +25,7 @@
       </p>
     <%end%>
     <p><strong>Email:</strong> <%= @customer.user.email %></p>
-    <% if current_user.is_customer? %>
+    <% if current_user.is_customer? && current_user.customer == @customer%>
     <%= link_to 'Update_login_info', edit_customer_registration_path %>
     <%end %>
     
