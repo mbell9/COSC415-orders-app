@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+#hello
 describe BrowseController, type: :controller do
   let(:user) { FactoryBot.create(:user_customer) }
   let(:customer) { FactoryBot.create(:customer, user: user) }
