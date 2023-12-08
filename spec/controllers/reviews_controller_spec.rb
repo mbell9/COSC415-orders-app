@@ -132,12 +132,12 @@ RSpec.describe ReviewsController, type: :controller do
         end
       end
 
-    #   context 'with invalid attributes' do
-    #     it 'does not update the review and re-renders the edit template' do
-    #       patch :update, params: { restaurant_id: restaurant.id, id: review.id, review: invalid_attributes }
-    #       expect(response).to render_template(:edit)
-    #     end
-    #   end
+      context 'with invalid attributes' do
+        it 'does not update the review and re-renders the edit template' do
+          patch :update, params: { restaurant_id: restaurant.id, id: review.id, review: invalid_attributes }
+          expect(response).to redirect_to edit_restaurant_review_path(restaurant, review)
+        end
+      end
     end
 
     # context 'when the review does not exist or does not belong to the current user' do
