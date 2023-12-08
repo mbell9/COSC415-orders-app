@@ -5,15 +5,22 @@ describe BrowseController, type: :controller do
   let(:customer) { FactoryBot.create(:customer, user: user) }
 
   let(:restaurant_user) { FactoryBot.create(:user_owner) }
-  let(:restaurant) { FactoryBot.create(:restaurant, user: restaurant_user) }
-  let!(:restaurants) { FactoryBot.create_list(:restaurant, 3) }
+  let(:restaurant) { FactoryBot.create(:restaurant, user: restaurant_user, address: 'D Street12345') }
+  let!(:first_restaurant) { FactoryBot.create(:restaurant, address: 'A Street12345') }
+  let!(:second_restaurant) { FactoryBot.create(:restaurant, address: 'B Street12345') }
+  let!(:third_restaurant) { FactoryBot.create(:restaurant, address: 'C Street12345') }
+  let!(:restaurants) {[first_restaurant, second_restaurant, third_restaurant, restaurant] }
+
+
+
+
 
   render_views
 
   describe 'GET #index' do
     context 'when user is a customer' do
       before do
-        sign_in customer
+        sign_in customer.user
         get :index
       end
 
@@ -32,12 +39,35 @@ describe BrowseController, type: :controller do
         expect(response).to redirect_to(home_path)
       end
     end
+
+    context 'sorting by location in ascending order' do
+      before do
+        sign_in customer.user
+        
+      end
+      it 'sorts restaurants by address in ascending order' do
+        get :index, params: { sort: 'location', order: 'asc' }
+        sorted_addresses = ['A Street12345', 'B Street12345', 'C Street12345', 'D Street12345']
+        expect(assigns(:restaurants).map(&:address)).to eq(sorted_addresses)
+      end
+    end
+
+    context 'sorting by location in descending order' do
+      before do
+        sign_in customer.user
+      end
+      it 'sorts restaurants by address in descending order' do
+        get :index, params: { sort: 'location', order: 'desc' }
+        sorted_addresses = ['D Street12345', 'C Street12345', 'B Street12345', 'A Street12345']
+        expect(assigns(:restaurants).map(&:address)).to eq(sorted_addresses)
+      end
+    end
   end
 
   describe 'GET #show' do
     context 'when user is a customer' do
       before do
-        sign_in customer
+        sign_in customer.user
         get :show, params: { id: restaurant.id }
       end
 
