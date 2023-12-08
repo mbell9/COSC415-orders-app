@@ -11,6 +11,7 @@ $box-hover-scale: 1.05;
   .sidebar {
     width: $sidebar-width;
     padding: 20px;
+    padding-top: 62px;
     background-color: #f4f4f4;
 
     .menu-button {
@@ -28,7 +29,7 @@ $box-hover-scale: 1.05;
 
   .main-content {
     flex: 1;
-    padding: 20px;
+    // padding: 20px;
     overflow-y: auto;
 
     .restaurant-list {

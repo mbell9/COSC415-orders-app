@@ -1,15 +1,9 @@
-I'm a restaurant
-
-<%= @restaurant.name %>
-
 <%= render 'restaurants/rest_info'%>
-
 
 <%= button_to 'Sign out', destroy_user_session_path, method: :delete %>
 <%= link_to 'Edit_login', edit_customer_registration_path%>
 
 <h2>Reviews</h2>
-
 
 <% @reviews.each do |review| %>
   <div class="review">
@@ -20,4 +14,5 @@ I'm a restaurant
     
   </div>
 <% end %>
+
 <%= link_to 'View All Reviews', restaurant_reviews_path(@restaurant), class: 'btn btn-primary' %>
