@@ -27,17 +27,8 @@ class MenuItemsController < ApplicationController
   end
 
   def show
-
-    begin
-      @restaurant = Restaurant.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_to home_path
-      return
-    end
-    # No changes needed here for now
   end
 
-  # GET /restaurants/:restaurant_id/menu_items/:id/edit
   def edit
   end
 
