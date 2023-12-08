@@ -1,16 +1,13 @@
-# fly.toml app configuration file generated for cosc415-orders-app-1 on 2023-12-08T11:46:45-05:00
+# fly.toml app configuration file generated for cosc415-orders-app-1-bold-silence-8209 on 2023-12-08T13:27:44-05:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "cosc415-orders-app-1"
+app = "cosc415-orders-app-1-bold-silence-8209"
 primary_region = "ewr"
 console_command = "/rails/bin/rails console"
 
 [build]
-
-[deploy]
-  release_command = "./bin/rails db:prepare"
 
 [http_service]
   internal_port = 3000

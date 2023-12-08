@@ -86,9 +86,11 @@ end
 
 
 gem "dockerfile-rails", ">= 1.5", :group => :development
-
-gem "pg", "~> 1.5"
+#I thought this would fix everything
+gem 'therubyracer', platforms: :ruby
 
 gem "sentry-ruby", "~> 5.15"
 
 gem "sentry-rails", "~> 5.15"
+
+gem "litestack", "~> 0.4.2"
