@@ -1,3 +1,4 @@
+#spec/factories/menu_items.rb
 FactoryBot.define do
   factory :menu_item do
     association :restaurant
