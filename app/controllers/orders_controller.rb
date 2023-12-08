@@ -22,10 +22,6 @@ class OrdersController < ApplicationController
 
     end
 
-    def new
-        @order = Order.new
-    end
-
     def update_status
 
         begin
