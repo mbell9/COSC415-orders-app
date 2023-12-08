@@ -43,7 +43,7 @@ describe BrowseController, type: :controller do
     context 'sorting by location in ascending order' do
       before do
         sign_in customer.user
-        
+
       end
       it 'sorts restaurants by address in ascending order' do
         get :index, params: { sort: 'location', order: 'asc' }
@@ -73,6 +73,16 @@ describe BrowseController, type: :controller do
 
       it 'assigns @restaurant' do
         expect(assigns(:restaurant)).to eq(restaurant)
+      end
+    end
+
+    context "when restaurant does not exist" do
+      before do
+        sign_in customer.user
+      end
+      it "redirects to the home page" do
+        get :show, params: { id: 'non-existent-id' }
+        expect(response).to redirect_to(home_path)
       end
     end
 
