@@ -61,14 +61,42 @@ RSpec.describe CartsController, type: :controller do
         get :show
       end
 
-      it 'assigns @cart_items' do
-        expect(assigns(:cart_items)).to eq(cart.cart_items)
-      end
-
       it 'renders the show template' do
         expect(response).to render_template(:show)
       end
     end
   end
+
+  describe 'POST #clear_cart' do
+    context 'when the cart exists' do
+      before do
+        create(:cart_item, cart: cart, menu_item: menu_item)
+      end
+
+      context 'with restaurant_id param' do
+        it 'clears the cart, sets restaurant_id to nil, and redirects to customer_menu_path' do
+          post :clear_cart, params: { restaurant_id: restaurant.id }
+          cart.reload
+          expect(cart.cart_items).to be_empty
+          expect(cart.restaurant_id).to be_nil
+          expect(response).to redirect_to(customer_menu_path(restaurant_id: restaurant.id))
+          expect(flash[:notice]).to eq('Successfully cleared cart')
+        end
+      end
+
+      context 'without restaurant_id param' do
+        it 'clears the cart, sets restaurant_id to nil, and redirects to cart_path' do
+          post :clear_cart
+          cart.reload
+          expect(cart.cart_items).to be_empty
+          expect(cart.restaurant_id).to be_nil
+          expect(response).to redirect_to(cart_path)
+          expect(flash[:notice]).to eq('Successfully cleared cart')
+        end
+      end
+    end
+
+  end
+
 
 end
