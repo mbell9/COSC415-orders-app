@@ -100,5 +100,7 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
   SimpleCov.start 'rails' do
     add_filter '/app/controllers/users/'
+    add_filter '/app/channels'
+    add_filter '/app/jobs'
   end
 end
