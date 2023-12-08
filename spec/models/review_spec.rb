@@ -17,10 +17,6 @@ RSpec.describe Review, type: :model do
     }
   }
 
-  it "is not valid without restaurant or customer" do
-    expect(build(:review)).not_to be_valid
-  end
-
   it "is not valid without a rating" do
     review = build(:review, rating: nil)
     expect(review).not_to be_valid

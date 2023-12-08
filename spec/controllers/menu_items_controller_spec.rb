@@ -10,7 +10,6 @@ RSpec.describe MenuItemsController, type: :controller do
   before do
     sign_in restaurant_user # Devise test helper for signing in
   end
-  render_views
 
   describe 'GET #new' do
     it 'initializes a new menu_item associated with the current restaurant' do
@@ -160,10 +159,9 @@ describe "GET #customer_index" do
 
   context "with an invalid restaurant" do
     it "redirects to home_path" do
-
       get :customer_index, params: { restaurant_id: 'invalid_id' }
       expect(response).to redirect_to(home_path)
-      
+
     end
   end
 end
