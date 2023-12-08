@@ -61,6 +61,7 @@ class CheckoutsController < ApplicationController
     def cancel
     end
 
+
     private
 
     def set_cart
