@@ -54,7 +54,8 @@ class CartItemsController < ApplicationController
           if cart_item.save
             redirect_to cart_path, notice: 'Item quantity reduced.'
           else
-            redirect_back(fallback_location: root_path, alert: 'Unable to update the item.')
+            redirect_to cart_path, alert: 'Unable to update the item.'
+            return
           end
         else
           cart_item.destroy
