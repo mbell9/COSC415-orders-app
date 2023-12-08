@@ -32,5 +32,11 @@ RSpec.feature 'Browse Restaurants', type: :feature do
     visit restaurant_path(restaurant)
 
     expect(page).to have_content restaurant.name
+    expect(page).to have_content(restaurant.address)
+    expect(page).to have_content(restaurant.phone_number)
+    expect(page).to have_content(restaurant.operating_hours)
+    expect(page).to have_link('Add New Review', href: new_restaurant_review_path(restaurant.id))
+    expect(page).to have_link('View All Reviews', href: restaurant_reviews_path(restaurant))
+
   end
 end

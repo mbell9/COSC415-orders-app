@@ -74,7 +74,7 @@ rests = []
     "Great food and friendly service.", # Description
     address,
     generate_us_phone_number(),
-    "Mon-Fri: 9am - 9pm"
+    operating_hours = "Mon-Fri: #{rand(1..11)}am - #{rand(1..11)}pm"
   )
   rests << restaurant
 
