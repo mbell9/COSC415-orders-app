@@ -1,0 +1,165 @@
+/* Global Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+h1, h2, h3 {
+  color: #333;
+  animation: fadeIn 1s ease-in-out;
+}
+
+p {
+  color: #666;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Link Button Styles with Hover Animation */
+.link-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+}
+
+.separator {
+  color: #333;
+  margin: 0 10px;
+}
+
+/* Hero Section Styles with Background Parallax Effect */
+.hero-section {
+  background: url('path_to_your_hero_image.jpg') no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  padding: 80px 0;
+  color: white;
+  text-align: center;
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+  }
+}
+
+
+.how-it-works-section, .featured-restaurants, .testimonials-section, .app-features-section {
+  & > * {
+    opacity: 1; /* Make elements initially visible */
+    animation: slideUp 1s ease-out forwards;
+    animation-delay: 0.3s;
+  }
+}
+
+/* How It Works Section Styles */
+.how-it-works-section {
+  background-color: #f8f9fa;
+  padding: 60px 0;
+  .steps {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    .step {
+      width: 45%;
+      margin-bottom: 30px;
+      text-align: center;
+      h3 {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
+
+/* Featured Restaurants Section Styles */
+.featured-restaurants {
+  padding: 60px 0;
+  .restaurant-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    .restaurant {
+      width: 45%;
+      margin-bottom: 30px;
+      text-align: center;
+      img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+      }
+    }
+  }
+}
+
+/* Testimonials Section Styles */
+.testimonials-section {
+  background-color: #e9ecef;
+  padding: 60px 0;
+  .testimonials {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    .testimonial {
+      width: 45%;
+      margin-bottom: 30px;
+      text-align: center;
+      p {
+        font-style: italic;
+      }
+      cite {
+        display: block;
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
+/* App Features Section Styles */
+.app-features-section {
+  padding: 60px 0;
+  .features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    .feature {
+      width: 45%;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+  }
+}
+
+/* Footer Styles */
+.footer {
+  background-color: #343a40;
+  color: white;
+  padding: 30px 0;
+  text-align: center;
+  animation: fadeIn 2s ease-in-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .how-it-works-section .steps .step,
+  .featured-restaurants .restaurant-list .restaurant,
+  .testimonials-section .testimonials .testimonial,
+  .app-features-section .features .feature {
+    width: 90%;
+  }
+}

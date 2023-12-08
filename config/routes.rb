@@ -43,13 +43,8 @@ Rails.application.routes.draw do
   resources :orders, only: [:index, :show]
   patch 'orders/:id/update_status', to: 'orders#update_status', as: :update_status
 
-
-
   # Browse routes
-  resources :browse, only: [:index, :show, :new]
-  resources :customers, only: [:show]
   get 'restaurants', to: 'browse#index'
-  # get 'restaurants/new', to: 'restaurants#new'
   get 'restaurants/:id', to: 'browse#show', as: :restaurant
 
   # Restaurant routes with nested resources for menu_items and reviews
@@ -59,7 +54,7 @@ Rails.application.routes.draw do
   # end
 
   # Customer routes
-  resources :customers, only: [:update]
+  resources :customers, only: [:update, :show]
   resource :cart, only: [:show]
   get '/profile', to: 'profiles#show', as: :profile
   get '/edit_profile', to: 'profiles#edit', as: :edit_profile
@@ -79,6 +74,9 @@ Rails.application.routes.draw do
   patch 'remove_from_cart/:menu_item_id', to: 'cart_items#remove_from_cart', as: :remove_from_cart
   get '/cartback', to: 'carts#back', as: :cart_back
   delete 'clear_cart', to: 'carts#clear_cart'
+
+  # Owner path only
+  get '/menu_items', to: 'menu_items#index'
 
   resource :checkout, only: [:create], controller: 'checkouts' do
     collection do

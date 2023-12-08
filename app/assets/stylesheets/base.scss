@@ -1,0 +1,25 @@
+/*
+stylesheets/base.scss
+Contains the fundamental styles for the proj. This includes resets, typography rules, and any default styles for HTML elements.
+*/
+
+/* General Page Styling */
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  text-align: center;
+  padding: 50px;
+}
+
+a {
+  text-decoration: none;
+  color: #007bff;
+  transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+  color: #0056b3;
+}
+
+// Add other base styles here

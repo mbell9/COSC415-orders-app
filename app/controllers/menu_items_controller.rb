@@ -103,6 +103,9 @@ class MenuItemsController < ApplicationController
 
     begin
       @restaurant = Restaurant.find(params[:restaurant_id]) if params[:restaurant_id].present?
+      if current_user.present? && current_user.is_restaurant?
+        @restaurant = current_user.restaurant
+      end
     rescue ActiveRecord::RecordNotFound
       redirect_to home_path
       return

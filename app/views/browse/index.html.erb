@@ -1,7 +1,4 @@
 <!-- app/views/restaurants/index.html.erb -->
-<%= content_for :head do %>
-  <%= stylesheet_link_tag 'browse', media: 'all', 'data-turbolinks-track': 'reload' %>
-<% end %>
 
 <div class="browse-container">
   <!-- Sidebar with menu buttons -->
@@ -18,7 +15,7 @@
 
     <div class="restaurant-list">
       <% @restaurants.each do |restaurant| %>
-        <%= link_to browse_path(restaurant), class: 'restaurant-box' do %>
+        <%= link_to restaurant_path(restaurant), class: 'restaurant-box' do %>
           <div class="restaurant-image">
             <%= image_tag 'https://picsum.photos/300/200/?blur', class: 'card-image' %>
           </div>

@@ -43,8 +43,7 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
-gem 'bootstrap', '~> 5.0.0.beta1'
-# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
+gem 'bootstrap', '~> 5.3', '>= 5.3.2'# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
 # for factorybot fake restaurant/menu item generation
@@ -52,6 +51,9 @@ gem 'faker'
 
 #for checkout stripe sessions
 gem 'stripe'
+
+gem 'rack-cors', require: 'rack/cors'
+
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -66,12 +68,12 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'simplecov', require: false
   gem 'dotenv-rails'
-  gem "web-console"
   gem 'letter_opener'
 
 end
 
 group :development do
+  gem "web-console"
   # Use console on exceptions pages [https://github.com/rails/web-console]
   
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
