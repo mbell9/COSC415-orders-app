@@ -45,7 +45,8 @@ class CartItemsController < ApplicationController
         cart_item = @cart.cart_items.find_by(menu_item: menu_item)
 
         if cart_item.nil?
-          redirect_back(fallback_location: root_path, alert: 'Item not found in cart.') and return
+          redirect_to home_path, alert: "Item not found in cart."
+          return
         end
 
         if cart_item.quantity > 1
