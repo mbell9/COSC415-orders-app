@@ -1,7 +1,4 @@
 <!-- app/views/restaurants/index.html.erb -->
-<%= content_for :head do %>
-  <%= stylesheet_link_tag 'browse', media: 'all', 'data-turbolinks-track': 'reload' %>
-<% end %>
 
 <div class="browse-container">
   <!-- Sidebar with menu buttons -->
@@ -35,7 +32,7 @@
   </div>
 </div>
 <!-- Add links for user authentication -->
-<% if user_signed_in? %>
+<!-- <% if user_signed_in? %>
   <%= button_to 'Sign out', destroy_user_session_path, method: :delete %>
   <%if current_user.role == 'customer'%>
      <%= link_to 'Profile', profile_path%>
@@ -44,7 +41,7 @@
      <%= link_to 'Restaurant', restaurant_path(current_user.restaurant)%>
   <%end%>
   <%= csrf_meta_tags %>
-  <p>Welcome, <%= current_user.email %></p> 
+  <p>Welcome, <%= current_user.email %></p> -->
 <!-- this should be in nav bar -->
 
 <% end %>

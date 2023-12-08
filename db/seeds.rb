@@ -20,7 +20,7 @@
 
 # Helper method to create a user
 def create_user(email, password, role)
-  User.create!(email: email, password: password, role: role)
+  User.create!(email: email, password: password, role: role, confirmed_at: Time.now)
 end
 
 # Helper method to create a restaurant

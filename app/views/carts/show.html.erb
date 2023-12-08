@@ -41,5 +41,10 @@
 </div>
 
 <div>
-    <%= button_to 'Checkout', checkout_path, method: :post, class: 'btn btn-warning' %>
+    <%= button_to 'Checkout', checkout_path, method: :post, data: { turbo: false }, class: 'btn btn-warning' %>
+</div>
+
+
+<div>
+    <%= link_to 'Back', cart_back_path(cart_id: @cart), class: 'btn btn-warning' %>
 </div>

@@ -1,36 +1,18 @@
 
 
-<div class="customer-edit">
-  
+<div>
   
   <h1>Edit Customer Profile</h1>
-  
-  <%= form_with(model: @customer, data: { turbo: false }) do |form| %>
-    <div class="field">
-      <%= form.label :name %><br>
-      <%= form.text_field :name, value: "" %>
-    </div>
-
-    <div class="field">
-      <%= form.label :email %><br>
-      <%= form.text_field :email, value: "" %>
-    </div>
-
-    <div class="field">
-      <%= form.label :phone_number %><br>
-      <%= form.text_field :phone_number, value: "" %>
-    </div>
-
-    <div class="field">
-      <%= form.label :address %><br>
-      <%= form.text_area :address, value: "" %>
-    </div>
-
-    <div class="actions">
-      <%= form.submit %>
-    </div>
+  <%= turbo_frame_tag "customer_name" do %>
+    <%= render 'customers/field_form', label: '', field: :name %>
   <% end %>
 
-  <br>
-  <div class = "actions"><%= link_to 'Back', profile_path %></div>
+  <%= turbo_frame_tag "customer_phone_number" do %>
+    <%= render 'customers/field_form', label: 'Phone Number:', field: :phone_number %>
+  <% end %>
+
+  <%= turbo_frame_tag "customer_address" do %>
+    <%= render 'customers/field_form', label: 'Address:', field: :address %>
+  <% end %>
+
 </div>

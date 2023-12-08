@@ -28,7 +28,7 @@ class BrowseController < ApplicationController
     begin
         @restaurant = Restaurant.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-        redirect_to restaurants_path
+        redirect_to home_path
     end
   end
 

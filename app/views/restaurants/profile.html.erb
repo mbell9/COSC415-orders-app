@@ -2,4 +2,8 @@ I'm a restaurant
 
 <%= @restaurant.name %>
 
+<%= render 'restaurants/rest_info'%>
+
+
 <%= button_to 'Sign out', destroy_user_session_path, method: :delete %>
+<%= link_to 'Edit_login', edit_customer_registration_path%>

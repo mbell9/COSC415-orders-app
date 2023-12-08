@@ -5,8 +5,21 @@ class OrdersController < ApplicationController
     end
 
     def show
-        @order = Order.find(params[:id])
+
+
+        begin
+            @order = Order.find(params[:id])
+        rescue ActiveRecord::RecordNotFound
+            redirect_to home_path
+            return
+        end
+
         @order_items = @order.order_items
+
+        if @order.customer != current_user.customer && @order.restaurant != current_user.restaurant
+            redirect_to home_path
+        end
+
     end
 
     def new
@@ -14,19 +27,31 @@ class OrdersController < ApplicationController
     end
 
     def update_status
-        @order = Order.find(params[:id])
-        if @order.status == nil || @order.status == "None"
-            @order.update(status: "Order Taken")
-        elsif @order.status == "Order Taken"
-            @order.update(status: "In Progress")
-        elsif @order.status == "In Progress"
-            @order.update(status: "Complete!")
-        else
-            @order.update(status: "None")
-        end
-         # Change this to your desired logic
 
-         #redirect_to restaurant_orders_path(@order.restaurant), notice: 'Order status updated successfully.'
+        begin
+            @order = Order.find(params[:id])
+        rescue ActiveRecord::RecordNotFound
+            redirect_to home_path
+            return
+        end
+        if @order.status == "Picked Up"
+            redirect_to orders_path
+            return
+        elsif @order.status == "Pending"
+            @order.update(status: "Order Taken")
+            UserMailer.status_update_email(@order, "Your order ##{@order.id} has been received by the restaurant!").deliver_now
+        elsif @order.status == "Order Taken"
+            @order.update(status: "Being Prepared")
+            UserMailer.status_update_email(@order, "Your order ##{@order.id} is being prepared!").deliver_now
+        elsif @order.status == "Being Prepared"
+            @order.update(status: "Ready for Pickup")
+            UserMailer.status_update_email(@order, "Your order ##{@order.id} is ready for pickup!").deliver_now
+        elsif @order.status == "Ready for Pickup"
+            @order.update(status: "Picked Up", end_time: Time.current.strftime("%Y-%m-%d %H:%M"))
+            UserMailer.status_update_email(@order, "Your order ##{@order.id} has been picked up!").deliver_now
+        end
+
+         redirect_to orders_path, notice: 'Order status updated successfully.'
     end
 
 
@@ -48,7 +73,7 @@ class OrdersController < ApplicationController
         Rails.logger.info("CUSTOMER ID: #{current_user.customer.id}")
         @orders = Order.where(customer_id: current_user.customer.id)
     elsif current_user.is_restaurant?
-        Rails.logger.info("RESTAURANT ID: #{current_user.customer.id}")
+        Rails.logger.info("RESTAURANT ID: #{current_user.restaurant.id}")
         @orders = Order.where(restaurant_id: current_user.restaurant.id)
     else
     end

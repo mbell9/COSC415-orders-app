@@ -3,6 +3,11 @@
 class MenuItemsController < ApplicationController
   before_action :set_menu_item, only: [:show, :edit, :update, :destroy]
   before_action :set_restaurant
+  before_action :authenticate_user!, only: [:edit, :update, :destroy]
+  before_action :check_ownership, only: [:edit, :update, :destroy]
+
+
+
 
   def new
     @menu_item = @restaurant.menu_items.build
@@ -11,7 +16,7 @@ class MenuItemsController < ApplicationController
   def index
     @menu_items = @restaurant.menu_items
   end
-  
+
   def create
     @menu_item = @restaurant.menu_items.build(menu_item_params)
     if @menu_item.save
@@ -22,7 +27,13 @@ class MenuItemsController < ApplicationController
   end
 
   def show
-    @restaurant = Restaurant.find(params[:id])
+
+    begin
+      @restaurant = Restaurant.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to home_path
+      return
+    end
     # No changes needed here for now
   end
 
@@ -41,10 +52,17 @@ class MenuItemsController < ApplicationController
       render :edit
     end
   end
-  
+
 
   def destroy
-    @menu_item = MenuItem.find(params[:id])
+
+    begin
+      @menu_item = MenuItem.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to home_path
+      return
+    end
+
     Rails.logger.debug "Attempting to destroy menu_item with id: #{params[:id]}"
     if @menu_item.destroy
       Rails.logger.debug "Menu_item destroyed."
@@ -56,23 +74,54 @@ class MenuItemsController < ApplicationController
   end
 
   def customer_index
-    @restaurant = Restaurant.find(params[:restaurant_id])
+
+    begin
+      @restaurant = Restaurant.find(params[:restaurant_id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to home_path
+      return
+    end
+
     @menu_items = @restaurant.menu_items
   end
 
   private
 
   def set_menu_item
-    @menu_item = MenuItem.find(params[:id])
+
+    begin
+      @menu_item = MenuItem.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to home_path
+      return
+    end
+
   end
 
-    
+
   def set_restaurant
-    @restaurant = Restaurant.find(params[:restaurant_id]) if params[:restaurant_id].present?
+
+    begin
+      @restaurant = Restaurant.find(params[:restaurant_id]) if params[:restaurant_id].present?
+      if current_user.present? && current_user.is_restaurant?
+        @restaurant = current_user.restaurant
+      end
+    rescue ActiveRecord::RecordNotFound
+      redirect_to home_path
+      return
+    end
   end
-  
+
   def menu_item_params
     params.require(:menu_item).permit(:name, :description, :category, :spiciness, :price, :discount, :stock, :availability, :image)
   end
-  
+
+  private
+
+def check_ownership
+  unless current_user.is_restaurant? && @menu_item.restaurant.user == current_user
+    redirect_to root_path, alert: "You are not authorized to perform this action."
+  end
+end
+
 end

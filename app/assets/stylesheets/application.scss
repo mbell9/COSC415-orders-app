@@ -1,79 +1,28 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- */
+application.scss
+*/
 
-.flash {
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
+// import statements - be sure to use the correct path - the lower ones override the ones above them
 
-  &.notice {
-    background-color: #dff0d8;
-    border: 1px solid #d6e9c6;
-    color: #3c763d;
-  }
+// base
 
-  &.error {
-    background-color: #f2dede;
-    border: 1px solid #ebccd1;
-    color: #a94442;
-  }
-}
 
-/* General Page Styling */
-body {
-  font-family: "Arial", sans-serif;
-  background-color: #f4f4f4;
-  color: #333;
-  text-align: center;
-  padding: 50px;
-}
+// bootstrap
+@import 'views/landing_page';
+@import 'bootstrapped';
+@import 'base';
 
-a {
-  text-decoration: none;
-  color: #007bff;
-  transition: color 0.2s ease-in-out;
-}
+// components
+@import 'components/flash';
+@import 'components/links';
+@import 'components/navbar';
 
-a:hover {
-  color: #0056b3;
-}
+// layouts
 
-/* Link Styling */
-.link-button {
-  display: inline-block;
-  padding: 10px 20px;
-  margin: 10px;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: background-color 0.3s ease-in-out;
-}
+// views
+@import 'views/browse';
+@import 'views/customers';
 
-.link-button:hover {
-  background-color: #0056b3;
-}
+@import 'views/menu_items';
 
-/* Container for Links */
-.links-container {
-  margin-top: 30px;
-}
 
-.separator {
-  margin: 0 10px;
-  color: #666;
-}

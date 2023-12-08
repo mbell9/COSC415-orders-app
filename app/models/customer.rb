@@ -4,7 +4,7 @@ class Customer < ApplicationRecord
   PHONE_REGEX = /\A(\+1|1)?[-.\s]?(\()?(\d{3})(?(2)\))[-.\s]?(\d{3})[-.\s]?(\d{4})\z/
 
   has_many :reviews, dependent: :destroy
-  has_many :orders #, dependent: :destroy #restaurants should access orders even if user doesn't exist
+  has_many :orders, dependent: :destroy #restaurants should access orders even if user doesn't exist
 
   has_many :restaurants, through: :orders
 

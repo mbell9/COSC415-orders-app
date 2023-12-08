@@ -42,7 +42,9 @@ class CheckoutsController < ApplicationController
     end
 
     def success
-        order = Order.create!(customer_id: current_user.customer.id, restaurant_id: @cart.restaurant_id, status: "pending")
+        order = Order.create!(customer_id: current_user.customer.id, restaurant_id: @cart.restaurant_id, status: "Pending",
+            total_price: @cart.cart_items.sum { |item| item.menu_item.price * item.quantity },
+            start_time: Time.current.strftime("%Y-%m-%d %H:%M"))
 
         @cart.cart_items.each do |cart_item|
             order.order_items.create!(
@@ -50,13 +52,15 @@ class CheckoutsController < ApplicationController
                 quantity: cart_item.quantity
             )
         end
+        UserMailer.new_order_email(order).deliver_now
+        UserMailer.placed_order_email(order).deliver_now
         @cart.clear_cart
         redirect_to home_path, notice: 'Order was successful!'
     end
 
     def cancel
     end
-    
+
     private
 
     def set_cart
