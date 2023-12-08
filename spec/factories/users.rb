@@ -29,7 +29,7 @@ FactoryBot.define do
     remember_created_at { nil }
     role { 'owner' }
     confirmation_token { nil }
-    confirmed_at { nil }
+    confirmed_at { Time.now }
     confirmation_sent_at { nil }
     unconfirmed_email { nil }
 

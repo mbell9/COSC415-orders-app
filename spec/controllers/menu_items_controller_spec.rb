@@ -3,9 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe MenuItemsController, type: :controller do
+  let(:restaurant_user) { FactoryBot.create(:user_owner) }
+  let(:restaurant) { FactoryBot.create(:restaurant, user: restaurant_user) }
+  let(:menu_item) { FactoryBot.create(:menu_item, restaurant: restaurant) }
+  before do
+    sign_in restaurant_user # Devise test helper for signing in
+  end
   render_views
-  let!(:restaurant) { create(:restaurant) }
-
+  
   describe "POST #create" do
     context "with valid attributes" do
       it "creates a new menu item" do
