@@ -1,34 +1,11 @@
 class CartItemsController < ApplicationController
-    before_action :set_cart, only: [:create, :add_to_cart, :remove_from_cart, :destroy]
+    before_action :set_cart, only: [:add_to_cart, :remove_from_cart]
 
-    def create
-
-      begin
-        menu_item = MenuItem.find(params[:menu_item_id])
-      rescue ActiveRecord::RecordNotFound
-        redirect_to home_path
-        return
-      end
-
-      cart_item = @cart.cart_items.find_by(menu_item: menu_item)
-
-      if cart_item
-        cart_item.quantity += 1
-      else
-        cart_item = @cart.cart_items.new(menu_item: menu_item, quantity: 1)
-      end
-
-      if cart_item.save
-        redirect_to @cart, notice: 'Item added to cart successfully.'
-      else
-        redirect_to @cart, alert: 'Failed to add item to cart.'
-      end
-    end
 
     def add_to_cart
 
       begin
-        menu_item = MenuItem.find(params[:menu_item_id])
+         menu_item = MenuItem.find(params[:menu_item_id])
       rescue ActiveRecord::RecordNotFound
         redirect_to home_path
         return
@@ -37,7 +14,6 @@ class CartItemsController < ApplicationController
       cart_item = @cart.cart_items.find_or_initialize_by(menu_item: menu_item)
 
       if params[:set_restaurant_id] && @cart.restaurant_id != menu_item.restaurant_id && @cart.restaurant_id.nil? == false
-          Rails.logger.info "Present Rest ID: #{@cart.restaurant_id}, attempted Rest ID: #{menu_item.restaurant_id}"
           redirect_to customer_menu_path(restaurant_id: menu_item.restaurant_id, show_clear_cart: true), notice: 'You have cart items from another restaurant' and return
       else
         if cart_item.new_record?
@@ -49,16 +25,11 @@ class CartItemsController < ApplicationController
 
         if params[:set_restaurant_id] && current_user.customer.cart.restaurant_id.nil?
 
-          if @cart.update(restaurant_id: menu_item.restaurant_id)
-            Rails.logger.info("SUCCESSFUL UPDATE")
-          else
-            Rails.logger.info "ERRORS: #{@cart.errors.full_messages}"
-          end
+          @cart.update(restaurant_id: menu_item.restaurant_id)
 
-          redirect_to customer_menu_path(restaurant_id: menu_item.restaurant_id), notice: "Cart updated to restaurant #{@cart.restaurant_id}"
+          redirect_to customer_menu_path(restaurant_id: menu_item.restaurant_id), notice: "Cart updated to #{@cart.restaurant.name}"
           return
-          # else
-          # redirect_to cart_path, notice: "Quantity of #{cart_item.menu_item.name} increased to #{cart_item.quantity}"
+
         end
         redirect_to request.referer || home_path, notice: "Quantity of #{cart_item.menu_item.name} increased to #{cart_item.quantity}"
       end
@@ -90,11 +61,6 @@ class CartItemsController < ApplicationController
         end
     end
 
-
-    def destroy
-      @cart_item.destroy
-      redirect_to cart_path, notice: 'Item removed from cart.'
-    end
 
     private
 
