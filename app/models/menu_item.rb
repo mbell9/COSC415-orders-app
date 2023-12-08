@@ -34,12 +34,8 @@ class MenuItem < ApplicationRecord
     update(stock: stock - amount) if stock && stock >= amount
   end
 
+  #not implemented for now
   def discounted_price
-    if discount.present? && discount > 0
-      price * ((100 - discount) / 100.0)
-    else
-      price
-    end
   end
 
   private

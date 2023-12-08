@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.feature "ManageMenuItems", type: :feature do
   let(:restaurant_user) { FactoryBot.create(:user_owner) }
   let(:restaurant) { FactoryBot.create(:restaurant, user: restaurant_user) }
-  let(:menu_item) { FactoryBot.create(:menu_item) }
+  let(:menu_item) { FactoryBot.create(:menu_item, restaurant: restaurant) }
   let(:menu_item_attributes) { FactoryBot.attributes_for(:menu_item) }
 
   it "Restaurant owner creates a new menu item" do
@@ -66,14 +66,12 @@ RSpec.feature "ManageMenuItems", type: :feature do
   end
 
   scenario "Restaurant owner edits an existing menu item" do
-
+    visit edit_restaurant_menu_item_path(restaurant, menu_item)
     fill_in "menu_item_name", with: "Updated Item"
     fill_in "menu_item_description", with: "Updated Description"
     fill_in "menu_item_price", with: 12.99
     select "Appetizer", from: "menu_item_category"
     click_button "Update Menu item"
-    puts(restaurant)
-    puts(menu_item.restaurant)
   
     expect(page).to have_text("Menu item was successfully updated.")
   end

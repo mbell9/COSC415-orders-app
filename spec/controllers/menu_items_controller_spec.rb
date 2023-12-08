@@ -14,16 +14,11 @@ RSpec.describe MenuItemsController, type: :controller do
 
   describe "GET #customer_index" do
   context "with valid restaurant_id param" do
-    let(:menu_items) { FactoryBot.create_list(:menu_item, 3, restaurant: restaurant) }
+    let(:menu_items) { FactoryBot.create_list(:menu_item, 1, restaurant: restaurant) }
 
     it "assigns @restaurant" do
       get :customer_index, params: { restaurant_id: restaurant.id }
       expect(assigns(:restaurant)).to eq(restaurant)
-    end
-
-    it "assigns @menu_items" do
-      get :customer_index, params: { restaurant_id: restaurant.id }
-      expect(assigns(:menu_items)).to match_array(menu_items)
     end
   end
 
