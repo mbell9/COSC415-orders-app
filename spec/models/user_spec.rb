@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+
   let(:user_customer) { FactoryBot.create(:user_customer) }
   let(:user_owner) { FactoryBot.create(:user_owner) }
 
