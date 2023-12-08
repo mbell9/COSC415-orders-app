@@ -6,6 +6,8 @@ class MenuItem < ApplicationRecord
   enum category: { appetizer: 0, main_course: 1, dessert: 2, beverage: 3 }
   enum spiciness: { mild: 0, medium: 1, spicy: 2, very_spicy: 3 }
 
+  has_many :order_items, dependent: :destroy
+
   has_one_attached :image  # Using ActiveStorage for images
 
   validates :name, presence: true
