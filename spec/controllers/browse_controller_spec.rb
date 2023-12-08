@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe RestaurantsController, type: :controller do
+describe BrowseController, type: :controller do
   describe 'GET #index' do
     it 'returns a successful response' do
       get :index
