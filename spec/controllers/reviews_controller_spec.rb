@@ -153,6 +153,3 @@ RSpec.describe ReviewsController, type: :controller do
     # end
   end
 end
-
-
-  

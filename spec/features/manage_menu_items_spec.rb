@@ -2,21 +2,28 @@
 require 'rails_helper'
 
 RSpec.feature "ManageMenuItems", type: :feature do
-  let(:restaurant_user) { FactoryBot.create(:user_owner) }
-  let(:restaurant) { FactoryBot.create(:restaurant, user: restaurant_user) }
-  let(:menu_item) { FactoryBot.create(:menu_item) }
+  let(:restaurant) { FactoryBot.create(:restaurant) }
+  let(:menu_item) { FactoryBot.create(:menu_item, restaurant: restaurant) }
   let(:menu_item_attributes) { FactoryBot.attributes_for(:menu_item) }
+
+  before do
+    visit new_user_session_path
+    fill_in 'Email', with: restaurant.user.email
+    fill_in 'Password', with: restaurant.user.password
+    click_button 'Log in'
+    expect(page).to have_text('Sign out')
+  end
 
   it "Restaurant owner creates a new menu item" do
     visit new_restaurant_menu_item_path(restaurant.id)
     fill_in "Menu Item Name", with: "Test Item"
     fill_in "Description", with: "Test Description"
     select "Appetizer", from: "Category" # Ensure this line exists and is correct
-    fill_in "Price ($)", with: 10.99 
+    fill_in "Price ($)", with: 10.99
     click_button "Create Menu item"
     expect(page).to have_text("Menu item was successfully created.")
   end
-  
+
 
   scenario "Restaurant owner tries to create an invalid menu item" do
     visit new_restaurant_menu_item_path(restaurant)
@@ -66,7 +73,7 @@ RSpec.feature "ManageMenuItems", type: :feature do
   end
 
   scenario "Restaurant owner edits an existing menu item" do
-
+    visit edit_restaurant_menu_item_path(restaurant, menu_item)
     fill_in "menu_item_name", with: "Updated Item"
     fill_in "menu_item_description", with: "Updated Description"
     fill_in "menu_item_price", with: 12.99
@@ -74,8 +81,8 @@ RSpec.feature "ManageMenuItems", type: :feature do
     click_button "Update Menu item"
     puts(restaurant)
     puts(menu_item.restaurant)
-  
+
     expect(page).to have_text("Menu item was successfully updated.")
   end
-  
+
 end
