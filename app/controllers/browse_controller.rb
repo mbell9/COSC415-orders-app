@@ -16,8 +16,8 @@ class BrowseController < ApplicationController
       else
         @restaurants = @restaurants.order(address: :asc)
       end
-    when 'operating_hours'
-      @restaurants = @restaurants.sort_by { |restaurant| total_weekly_operating_hours(restaurant.operating_hours) }
+    # when 'operating_hours'
+    #   @restaurants = @restaurants.sort_by { |restaurant| total_weekly_operating_hours(restaurant.operating_hours) }
     end
   end
 
@@ -44,42 +44,42 @@ class BrowseController < ApplicationController
     end
   end
 
-  def total_weekly_operating_hours(operating_hours)
-    # Assuming format: 'Mon-Fri: 9am - 9pm'
-    days, hours = operating_hours.split(': ')
-    start_day, end_day = days.split('-').map { |day| Date::DAYNAMES.index(day.strip) }
-    start_time, end_time = hours.split(' - ')
+  # def total_weekly_operating_hours(operating_hours)
+  #   # Assuming format: 'Mon-Fri: 9am - 9pm'
+  #   days, hours = operating_hours.split(': ')
+  #   start_day, end_day = days.split('-').map { |day| Date::DAYNAMES.index(day.strip) }
+  #   start_time, end_time = hours.split(' - ')
   
-    # Convert times to 24-hour format
-    start_hour = Time.parse(start_time).hour
-    end_hour = Time.parse(end_time).hour
+  #   # Convert times to 24-hour format
+  #   start_hour = Time.parse(start_time).hour
+  #   end_hour = Time.parse(end_time).hour
   
-    # Adjust for overnight schedules
-    end_hour += 24 if end_hour < start_hour
+  #   # Adjust for overnight schedules
+  #   end_hour += 24 if end_hour < start_hour
   
-    # Calculate daily hours
-    daily_hours = end_hour - start_hour
+  #   # Calculate daily hours
+  #   daily_hours = end_hour - start_hour
   
-    # Adjust for week wrap-around
-    total_days = start_day <= end_day ? (end_day - start_day + 1) : (7 - start_day + end_day + 1)
+  #   # Adjust for week wrap-around
+  #   total_days = start_day <= end_day ? (end_day - start_day + 1) : (7 - start_day + end_day + 1)
   
-    total_days * daily_hours
-  rescue
-    0 # Return 0 if there's any issue with parsing
-  end
+  #   total_days * daily_hours
+  # rescue
+  #   0 # Return 0 if there's any issue with parsing
+  # end
 
   private
 
-  def time_until_closing(operating_hours)
-      # Assuming operating_hours is in the format 'HH:MM - HH:MM'
-      _, closing_time_str = operating_hours.split(' - ')
-      closing_time = Time.parse(closing_time_str)
+  # def time_until_closing(operating_hours)
+  #     # Assuming operating_hours is in the format 'HH:MM - HH:MM'
+  #     _, closing_time_str = operating_hours.split(' - ')
+  #     closing_time = Time.parse(closing_time_str)
 
-      # Calculate time until closing in minutes
-      now = Time.now
-      time_until_closing = (closing_time - now) / 60
+  #     # Calculate time until closing in minutes
+  #     now = Time.now
+  #     time_until_closing = (closing_time - now) / 60
 
-      # Ensure the result is non-negative
-      time_until_closing.negative? ? 0 : time_until_closing
-    end
+  #     # Ensure the result is non-negative
+  #     time_until_closing.negative? ? 0 : time_until_closing
+  #   end
 end
