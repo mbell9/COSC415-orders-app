@@ -4,8 +4,8 @@
   <!-- Sidebar with menu buttons -->
   <div class="sidebar">
     <!-- Add your menu buttons here -->
-    <button class="menu-button"><%= link_to 'Sort by Location', :sort => "location" %></button>
-    <button class="menu-button"><%= link_to 'Sort by Operating Hours', :sort => "operating_hours" %></button>
+    <%= link_to 'Sort by Location', restaurants_path(toggle_sort: "location"), class: 'menu-button' %>
+    <!-- <button class="menu-button"><%= link_to 'Sort by Operating Hours', restaurants_path(sort: "operating_hours") %></button> -->
     <!-- Add more buttons as needed -->
   </div>
 

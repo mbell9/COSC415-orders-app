@@ -6,15 +6,12 @@ class BrowseController < ApplicationController
       return
     end
 
+    session[:sorted_by_location] = !session[:sorted_by_location] if params[:toggle_sort] == 'location'
+  
     @restaurants = Restaurant.all
 
-    # Sorting logic based on params
-    case params[:sort_by]
-    when 'location'
-      @restaurants = @restaurants.order(address: :asc)
-    when 'operating_hours'
-      # Sort by time until closing
-      @restaurants = @restaurants.sort_by { |restaurant| time_until_closing(restaurant.operating_hours) }
+    if session[:sorted_by_location]
+      @restaurants = @restaurants.order('address ASC')
     end
   end
   
@@ -38,6 +35,30 @@ class BrowseController < ApplicationController
     rescue ActiveRecord::RecordNotFound
         redirect_to home_path
     end
+  end
+
+  def total_weekly_operating_hours(operating_hours)
+    # Assuming format: 'Mon-Fri: 9am - 9pm'
+    days, hours = operating_hours.split(': ')
+    start_day, end_day = days.split('-').map { |day| Date::DAYNAMES.index(day.strip) }
+    start_time, end_time = hours.split(' - ')
+  
+    # Convert times to 24-hour format
+    start_hour = Time.parse(start_time).hour
+    end_hour = Time.parse(end_time).hour
+  
+    # Adjust for overnight schedules
+    end_hour += 24 if end_hour < start_hour
+  
+    # Calculate daily hours
+    daily_hours = end_hour - start_hour
+  
+    # Adjust for week wrap-around
+    total_days = start_day <= end_day ? (end_day - start_day + 1) : (7 - start_day + end_day + 1)
+  
+    total_days * daily_hours
+  rescue
+    0 # Return 0 if there's any issue with parsing
   end
 
   private
