@@ -11,6 +11,30 @@ RSpec.describe MenuItemsController, type: :controller do
   end
   render_views
   
+
+  describe "GET #customer_index" do
+  context "with valid restaurant_id param" do
+    let(:menu_items) { FactoryBot.create_list(:menu_item, 3, restaurant: restaurant) }
+
+    it "assigns @restaurant" do
+      get :customer_index, params: { restaurant_id: restaurant.id }
+      expect(assigns(:restaurant)).to eq(restaurant)
+    end
+
+    it "assigns @menu_items" do
+      get :customer_index, params: { restaurant_id: restaurant.id }
+      expect(assigns(:menu_items)).to match_array(menu_items)
+    end
+  end
+
+  context "with invalid restaurant_id param" do
+    it "redirects to the home path" do
+      get :customer_index, params: { restaurant_id: -1 }
+      expect(response).to redirect_to home_path
+    end
+  end
+end
+
   describe "POST #create" do
     context "with valid attributes" do
       it "creates a new menu item" do
@@ -24,7 +48,7 @@ RSpec.describe MenuItemsController, type: :controller do
         expect(response).to redirect_to restaurant
       end
     end
-    
+
     context "with invalid restaurant_id param" do
       it "redirects to the home path" do
         get :index, params: { restaurant_id: -1 }
