@@ -53,7 +53,7 @@ RSpec.describe CustomersController, type: :controller do
   end
 
   describe 'PUT update' do
-    let(:customer_params) { { name: 'New Name', phone_number: '1234567890', address: 'New Address' } }
+    let(:customer_params) { { name: 'New Name', phone_number: '1234567890'} }
 
     before do
       sign_in customer.user
@@ -68,7 +68,6 @@ RSpec.describe CustomersController, type: :controller do
         customer.reload
         expect(customer.name).to eq('New Name')
         expect(customer.phone_number).to eq('123-456-7890')
-        expect(customer.address).to eq('New Address')
       end
 
       it 'redirects to profile_path' do

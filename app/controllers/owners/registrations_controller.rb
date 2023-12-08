@@ -34,13 +34,7 @@ class Owners::RegistrationsController < Devise::RegistrationsController
     @stripe_url = generate_stripe_onboarding_link
   end
 
-  def confirm
-    if current_user.restaurant.stripe_account_id.present?
-      # Redirect to a different page or inform the user they have already connected
-      #redirect_to root_path, notice: 'Your Stripe account is already connected.'
-    end
-    # If not connected, render the confirm view which includes the Stripe connect link
-  end
+
   protected
 
   def configure_sign_up_params

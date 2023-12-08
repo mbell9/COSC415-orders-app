@@ -5,12 +5,53 @@ require 'rails_helper'
 RSpec.describe MenuItemsController, type: :controller do
   let(:restaurant_user) { FactoryBot.create(:user_owner) }
   let(:restaurant) { FactoryBot.create(:restaurant, user: restaurant_user) }
+  let(:customer) { FactoryBot.create(:customer) }
   let(:menu_item) { FactoryBot.create(:menu_item, restaurant: restaurant) }
   before do
     sign_in restaurant_user # Devise test helper for signing in
   end
   render_views
-  
+
+  describe 'GET #new' do
+    it 'initializes a new menu_item associated with the current restaurant' do
+      get :new, params: { restaurant_id: restaurant.id }
+      expect(assigns(:menu_item)).to be_a_new(MenuItem)
+    end
+  end
+
+  describe 'GET #index' do
+    it 'shows the restaurant menu_items' do
+      get :index, params: { restaurant_id: restaurant.id }
+      expect(assigns(:menu_items)).to eq(restaurant.menu_items)
+    end
+  end
+
+
+  describe "PATCH #update" do
+    context "with valid parameters" do
+      it "updates the menu item and redirects to the restaurant's menu items" do
+        new_name = "New Name"
+        patch :update, params: { restaurant_id: restaurant.id, id: menu_item.id, menu_item: { name: new_name } }
+
+        menu_item.reload # Reload the menu item from the database to get the updated attributes
+
+        expect(menu_item.name).to eq(new_name)
+        expect(response).to redirect_to(restaurant_menu_items_path(restaurant))
+        expect(flash[:notice]).to eq('Menu item was successfully updated.')
+      end
+    end
+
+    context "with invalid parameters" do
+      it "renders the edit template" do
+        invalid_name = "" # Invalid name
+        patch :update, params: { restaurant_id: restaurant.id, id: menu_item.id, menu_item: { name: invalid_name } }
+
+        expect(response).to render_template(:edit)
+        expect(flash.now[:alert]).to_not be_empty
+      end
+    end
+  end
+
   describe "POST #create" do
     context "with valid attributes" do
       it "creates a new menu item" do
@@ -24,7 +65,7 @@ RSpec.describe MenuItemsController, type: :controller do
         expect(response).to redirect_to restaurant
       end
     end
-    
+
     context "with invalid restaurant_id param" do
       it "redirects to the home path" do
         get :index, params: { restaurant_id: -1 }
@@ -66,7 +107,6 @@ RSpec.describe MenuItemsController, type: :controller do
     let(:other_user) { FactoryBot.create(:user_owner) }
 
     before do
-      sign_out restaurant_user
       sign_in other_user
     end
 
@@ -87,14 +127,45 @@ RSpec.describe MenuItemsController, type: :controller do
       expect {
         delete :destroy, params: { restaurant_id: restaurant.id, id: -1 }
       }.not_to change(MenuItem, :count)
+      expect(assigns(:menu_item)).to be_nil
     end
 
     it "redirects to the home page" do
       delete :destroy, params: { restaurant_id: restaurant.id, id: -1 }
-      expect(response).to redirect_to home_path
+      expect(response).to redirect_to(home_path)
     end
   end
 end
 
-  # ... any other controller action tests ...
+describe "GET #customer_index" do
+
+  before do
+    sign_in customer.user
+  end
+  context "with a valid restaurant" do
+
+    it "assigns @restaurant" do
+      get :customer_index, params: { restaurant_id: restaurant.id }
+      expect(assigns(:restaurant)).to eq(restaurant)
+    end
+
+    it "assigns @menu_items" do
+      # Create some menu items associated with the restaurant
+      menu_items = create_list(:menu_item, 3, restaurant: restaurant)
+
+      get :customer_index, params: { restaurant_id: restaurant.id }
+      expect(assigns(:menu_items)).to match_array(menu_items)
+    end
+  end
+
+  context "with an invalid restaurant" do
+    it "redirects to home_path" do
+
+      get :customer_index, params: { restaurant_id: 'invalid_id' }
+      expect(response).to redirect_to(home_path)
+      
+    end
+  end
+end
+
 end
