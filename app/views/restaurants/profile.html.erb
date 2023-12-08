@@ -1,26 +1,10 @@
-I'm a restaurant
-
-<%= @restaurant.name %>
-
 <%= render 'restaurants/rest_info'%>
-
 
 <%= button_to 'Sign out', destroy_user_session_path, method: :delete %>
 <%= link_to 'Edit_login', edit_customer_registration_path%>
 
 <h2>Reviews</h2>
-<!--
-<%if !@spec_review.empty?%>
-    <div class="review">
-    <p><strong>Customer:</strong> <%= @spec_review.customer.name %> Stars</p>
-    <p><strong>Rating:</strong> <%= @spec_review.rating %> Stars</p>
-    <p><%= @spec_review.comment %></p>
-    <p><%= @spec_review.recorded_date %></p>
-    <%= link_to 'Edit Review', edit_review_path(@spec_review), class: 'btn btn-primary' %>
-    
-  </div>
-<%end%>
--->
+
 <% @reviews.each do |review| %>
   <div class="review">
     <p><strong>Customer:</strong> <%= review.customer.name %> Stars</p>
@@ -30,3 +14,5 @@ I'm a restaurant
     <!-- Add other review details you want to show -->
   </div>
 <% end %>
+
+<%= link_to 'View All Reviews', restaurant_reviews_path(@restaurant), class: 'btn btn-primary' %>
