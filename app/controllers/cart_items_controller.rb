@@ -53,9 +53,9 @@ class CartItemsController < ApplicationController
           cart_item.quantity -= 1
           if cart_item.save
             redirect_to cart_path, notice: 'Item quantity reduced.'
-          else
-            redirect_to home_path, alert: 'Unable to update the item.'
-            return
+          #else
+            #redirect_to home_path, alert: 'Unable to update the item.'
+            #return
           end
         else
           cart_item.destroy

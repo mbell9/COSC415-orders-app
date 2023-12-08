@@ -2,14 +2,14 @@ require 'rails_helper'
 #whoops
 RSpec.describe CartItemsController, type: :controller do
   describe 'POST #remove_from_cart' do
-    let(:customer) {FactoryBot.create(:customer)}
-    let(:cart) { FactoryBot.create(:cart, customer: customer) }
+
+    let(:cart) { FactoryBot.create(:cart) }
+    let(:customer) {cart.customer}
     let(:menu_item) { FactoryBot.create(:menu_item) }
 
 
     before do
       sign_in customer.user # Assuming you have some authentication
-      controller.instance_variable_set(:@cart, cart)
     end
 
     context 'when menu item does not exist' do
@@ -50,7 +50,7 @@ RSpec.describe CartItemsController, type: :controller do
 
 
   end
-  
+
 
   describe 'POST #add_to_cart' do
 
@@ -79,7 +79,7 @@ RSpec.describe CartItemsController, type: :controller do
       before do
         create(:cart_item, cart: cart, menu_item: create(:menu_item, restaurant: restaurant))
       end
-    
+
       it 'redirects to customer_menu_path with a notice' do
         post :add_to_cart, params: { menu_item_id: another_menu_item.id, set_restaurant_id: true }
         expect(response).to redirect_to(customer_menu_path(restaurant_id: another_menu_item.restaurant_id, show_clear_cart: true))
@@ -127,8 +127,8 @@ RSpec.describe CartItemsController, type: :controller do
         expect(response).to redirect_to(customer_menu_path(restaurant_id: menu_item.restaurant_id))
         expect(flash[:notice]).to eq("Cart updated to #{menu_item.restaurant.name}")
       end
-    end  
-    
+    end
+
   end
 
 end
