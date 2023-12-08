@@ -1,25 +1,36 @@
 require 'rails_helper'
 
-RSpec.feature "Browsing Restaurants" do
-  scenario "Viewing list of restaurants" do
-    restaurant1 = instance_double("Restaurant", id: 1, name: "Royal Indian Grill")
-    restaurant2 = instance_double("Restaurant", id: 2, name: "Main Moon")
+RSpec.feature 'Browse Restaurants', type: :feature do
+  let(:customer) { FactoryBot.create(:customer) }
+  let!(:restaurants) { FactoryBot.create_list(:restaurant, 3) }
 
-    allow(Restaurant).to receive(:all).and_return([restaurant1, restaurant2])
+  scenario 'User views list of restaurants' do
+    visit new_user_session_path
+    fill_in 'Email', with: customer.user.email
+    fill_in 'Password', with: customer.user.password
+    click_button 'Log in'
 
-    visit restaurants_path
+    expect(page).to have_content 'Browse Restaurants'
+    expect(page).to have_css '.restaurant-list'
 
-    expect(page).to have_content("Royal Indian Grill")
-    expect(page).to have_content("Main Moon")
+    restaurants.each do |restaurant|
+      expect(page).to have_content(restaurant.name)
+      expect(page).to have_content(restaurant.address)
+      expect(page).to have_content(restaurant.phone_number)
+      expect(page).to have_content(restaurant.operating_hours)
+    end
+
   end
 
-  scenario "Viewing individual restaurant" do
-    restaurant = instance_double("Restaurant", id: 1, name: "Royal Indian Grill")
+  scenario 'User views details of a restaurant' do
+    visit new_user_session_path
+    fill_in 'Email', with: customer.user.email
+    fill_in 'Password', with: customer.user.password
+    click_button 'Log in'
 
-    allow(Restaurant).to receive(:find).with("1").and_return(restaurant)
-
+    restaurant = restaurants.first
     visit restaurant_path(restaurant)
 
-    expect(page).to have_content("Royal Indian Grill")
+    expect(page).to have_content restaurant.name
   end
 end
