@@ -65,6 +65,14 @@ describe BrowseController, type: :controller do
   end
 
   describe 'GET #show' do
+
+    context 'when the user does not exist' do
+      it 'redirects to the home page' do
+        get :show, params: { id: 'non-existent-id' }
+        expect(response).to redirect_to(home_path)
+      end
+    end
+
     context 'when user is a customer' do
       before do
         sign_in customer.user

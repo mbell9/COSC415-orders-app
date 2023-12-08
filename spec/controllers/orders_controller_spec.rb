@@ -82,7 +82,34 @@ RSpec.describe OrdersController, type: :controller do
     end
   end
 
+  # describe "POST #create" do
+  #   context "with valid attributes" do
+  #     it "creates a new order and redirects" do
+  #       post :create, params: { 
+  #         restaurant_id: restaurant.id,
+  #         order: { 
+  #           customer_id: customer.id, 
+  #           status: "Pending", 
+  #           total_price: 100.0 
+  #         }
+  #       }
+  #       expect(Order.last.cart_items).to match_array(cart_items)
+  #       expect(response).to redirect_to(Order.last)
+  #     end
+  #   end
 
+  #   context "with invalid attributes" do
+  #     it "does not create a new order and renders new" do
+  #       post :create, params: { 
+  #         order: { restaurant_id: -1, customer_id: -1, status: "Hello", total_price: -0.0 }, 
+  #         restaurant_id: restaurant.id 
+  #       }
+
+  #       expect(Order.count).to eq(0)
+  #       expect(response).to render_template(:new)
+  #     end
+  #   end
+  # end
 
   describe "PATCH #update_status" do
     before do

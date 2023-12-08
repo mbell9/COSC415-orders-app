@@ -52,18 +52,18 @@ class OrdersController < ApplicationController
     end
 
 
-    def create
-        @order = current_customer.orders.build(order_params)
-        @order.restaurant_id = params[:restaurant_id]
-        @order.cart_items = current_customer.cart.cart_items
+    # def create
+    #     @order = current_customer.orders.build(order_params)
+    #     @order.restaurant_id = params[:restaurant_id]
+    #     @order.cart_items = current_customer.cart.cart_items
 
-        if @order.save
-          # here I need to handle the logic for clearing the cart, setting order status, etc.
-          #redirect_to @order, notice: 'Order was successfully placed.'
-        else
-          render :new
-        end
-    end
+    #     if @order.save
+    #       # here I need to handle the logic for clearing the cart, setting order status, etc.
+    #       #redirect_to @order, notice: 'Order was successfully placed.'
+    #     else
+    #       render :new
+    #     end
+    # end
 
     def transfer_funds_to_restaurant(order)
         begin
@@ -88,7 +88,7 @@ class OrdersController < ApplicationController
     end
   end
 
-  def order_params
-    params.require(:order).permit(:restaurant_id, :customer_id, :status, :total_price)
-  end
+#   def order_params
+#     params.require(:order).permit(:restaurant_id, :customer_id, :status, :total_price)
+#   end
 end
