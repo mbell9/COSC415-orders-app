@@ -21,7 +21,6 @@ RSpec.describe Cart, type: :model do
       cart.reload
       expect(cart.cart_items.size).to eq(0)
       expect(cart.restaurant_id).to be_nil
-
     end
   end
 end
