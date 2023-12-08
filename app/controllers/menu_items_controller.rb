@@ -46,12 +46,6 @@ class MenuItemsController < ApplicationController
 
   def destroy
 
-    begin
-      @menu_item = MenuItem.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_to home_path
-      return
-    end
 
     if @menu_item.destroy
       redirect_to restaurant_menu_items_path(@restaurant), notice: 'Menu item was successfully destroyed.'
@@ -61,13 +55,7 @@ class MenuItemsController < ApplicationController
   end
 
   def customer_index
-
-    begin
-      @restaurant = Restaurant.find(params[:restaurant_id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_to home_path
-      return
-    end
+    @restaurant = Restaurant.find(params[:restaurant_id])
 
     @menu_items = @restaurant.menu_items
   end
@@ -107,7 +95,7 @@ class MenuItemsController < ApplicationController
 
 def check_ownership
   unless current_user.is_restaurant? && @menu_item.restaurant.user == current_user
-    redirect_to root_path, alert: "You are not authorized to perform this action."
+    redirect_to home_path, alert: "You are not authorized to perform this action."
   end
 end
 
