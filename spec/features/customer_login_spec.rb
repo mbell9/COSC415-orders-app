@@ -1,15 +1,15 @@
 require 'rails_helper'
 
 RSpec.feature 'Customer Features', type: :feature do
-  FactoryBot.create(:user_customer, email: 'customer0@example.com', password: 'password')
+  let(:customer) {FactoryBot.create(:customer)}
 
   scenario "Customer login" do
     visit home_path
 
     click_link 'Sign in'
 
-    fill_in 'Email', with: 'customer0@example.com'
-    fill_in 'Password', with: 'password'
+    fill_in 'Email', with: customer.user.email
+    fill_in 'Password', with: customer.user.password
 
     click_button 'Log in'
 
